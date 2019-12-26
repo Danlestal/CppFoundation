@@ -16,7 +16,7 @@
             "command": "make",
             "args": [
                 "run"
-            ]
+            ],
         },
         {
             "label": "Test project",

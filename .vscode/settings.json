@@ -65,5 +65,8 @@
         "utility": "cpp",
         "vector": "cpp"
     },
+    "CXX_FLAGS": [
+        "/Users/eudvazquez/personal/raylib/raylib/src" // header files
+    ],
     "terminal.integrated.shell.windows": "cmd.exe"
 }
