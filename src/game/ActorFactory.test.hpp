@@ -8,9 +8,7 @@ struct ActorFactoryEmptyFixture {};
 
 class MockIdentifierProvider: public IdentifierProvider {
  public:
-    long getUID() {
-        return 0;
-    }
+    long getUID() { return 0; }
 };
 
 TEST_CASE(ActorFactoryEmptyFixture, checkSpaceInvaderActor) {
