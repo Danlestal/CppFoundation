@@ -23,5 +23,5 @@ clean:
 
 # Tests
 tester:
-	$(CXX) $(CXX_FLAGS) test/tester.cpp -I$(INCLUDE) -L$(LIB) $^ -o bin/tester
+	$(CXX) $(CXX_FLAGS) $(SRC)/**/*.cpp test/tester.cpp -I$(INCLUDE) -L$(LIB) $^ -o bin/tester
 	./$(BIN)/tester

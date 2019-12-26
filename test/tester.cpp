@@ -1,6 +1,7 @@
 #define GENERATE_UNIT_TEST_MAIN
 #include "tester.hpp"
 #include "../src/engine/components/LifeComponent.test.hpp"
+#include "../src/game/ActorFactory.test.hpp"
 
 struct MyFixture {
     const int CommonData = 10;

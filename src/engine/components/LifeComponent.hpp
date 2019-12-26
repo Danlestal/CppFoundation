@@ -1,5 +1,6 @@
 #pragma once
-namespace engine {
+
+#include "Component.hpp"
 
 class LifeComponent {
  private:
@@ -18,4 +19,4 @@ class LifeComponent {
         return (mLife > 0);
     }
 };
-}  // namespace engine
+
