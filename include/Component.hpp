@@ -1,7 +1,7 @@
 #pragma once
+#include <string>
 
 class Component {
  public:
-    Component();
-    ~Component();
+    virtual std::string getType() = 0;
 };

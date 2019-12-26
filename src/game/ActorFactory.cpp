@@ -1,12 +1,17 @@
 #include "ActorFactory.hpp"
+#include "Component.hpp"
+#include "Invader.hpp"
+#include "../engine/components/LifeComponent.hpp"
 
 ActorFactory::ActorFactory(IdentifierProvider* provider) {
     mIdProvider = provider;
 }
 
-Actor* ActorFactory::createInvader() {
+Invader* ActorFactory::createInvader() {
     Actor* invader = new Actor(mIdProvider->getUID());
-    return invader;
+    Component* component = new LifeComponent(10);
+    invader->addComponent(component);
+    return new Invader(invader);
 }
 
 Actor* ActorFactory::createPlayerSpaceship() {

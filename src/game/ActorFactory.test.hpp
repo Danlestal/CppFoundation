@@ -1,5 +1,6 @@
 #pragma once
 #include "../../test/tester.hpp"
+#include "Invader.hpp"
 #include "ActorFactory.hpp"
 #include "IdentifierProvider.hpp"
 
@@ -15,7 +16,6 @@ class MockIdentifierProvider: public IdentifierProvider {
 TEST_CASE(ActorFactoryEmptyFixture, checkSpaceInvaderActor) {
     IdentifierProvider *mock = new MockIdentifierProvider();
     ActorFactory *factory = new ActorFactory(mock);
-    Actor* actor = factory->createInvader();
-
-    CHECK_EQUAL(false, true);
+    Invader* invader = factory->createInvader();
+    CHECK_EQUAL(invader->getLife(), 10);
 };

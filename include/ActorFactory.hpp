@@ -1,5 +1,6 @@
 #pragma once
 #include "Actor.hpp"
+#include "Invader.hpp"
 #include "IdentifierProvider.hpp"
 
 class ActorFactory {
@@ -7,7 +8,7 @@ class ActorFactory {
     IdentifierProvider* mIdProvider;
  public:
     ActorFactory(IdentifierProvider* provider);
-    Actor* createInvader();
+    Invader* createInvader();
     Actor* createPlayerSpaceship();
 
 };
