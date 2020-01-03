@@ -3,5 +3,5 @@ Following a more regular structure.
 
 
 //TODO
-Add the Input to the mix.
+Add the event system.
 Create a Scene Manager.
