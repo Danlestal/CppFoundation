@@ -2,9 +2,10 @@
 #include "raylib.h"
 
 #include "IdentifierProvider.hpp"
-#include "./engine/RandomIdProvider.hpp"
 #include "ActorFactory.hpp"
 #include "Invader.hpp"
+#include "./engine/RandomIdProvider.hpp"
+#include "./engine/KeyboardInputManager.hpp"
 
 int main(void) {
     const int screenWidth = 800;
@@ -19,8 +20,10 @@ int main(void) {
     IdentifierProvider *mock = new RandomIdProvider();
     ActorFactory *factory = new ActorFactory(mock);
     Invader* invader = factory->createInvader();
+    KeyboardInputManager inputManager = KeyboardInputManager();
 
     while (!WindowShouldClose()) {
+        inputManager.proccessInput();
         BeginDrawing();
         ClearBackground(RAYWHITE);
         invader->draw();
