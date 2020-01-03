@@ -8,4 +8,5 @@ class Invader {
     Invader(Actor* actor);
     int getLife();
     int isAlive();
+    void draw();
 };

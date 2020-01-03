@@ -2,6 +2,7 @@
 #include "Component.hpp"
 #include "Invader.hpp"
 #include "../engine/components/LifeComponent.hpp"
+#include "../engine/components/GraphicComponent.hpp"
 
 ActorFactory::ActorFactory(IdentifierProvider* provider) {
     mIdProvider = provider;
@@ -9,8 +10,10 @@ ActorFactory::ActorFactory(IdentifierProvider* provider) {
 
 Invader* ActorFactory::createInvader() {
     Actor* invader = new Actor(mIdProvider->getUID());
-    Component* component = new LifeComponent(10);
-    invader->addComponent(component);
+    invader->addComponent(new LifeComponent(10));
+    invader->addComponent(new GraphicComponent());
+
+
     return new Invader(invader);
 }
 

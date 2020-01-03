@@ -4,7 +4,10 @@
 #include "Component.hpp"
 
 class GraphicComponent : public Component {
+ private:
+    int mPosX;
+    int mPosY;
  public:
-    void draw(int posX, int posY);
+    void draw();
     std::string getType();
 };
