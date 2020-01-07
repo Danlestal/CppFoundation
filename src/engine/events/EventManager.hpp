@@ -21,4 +21,5 @@ class EventManager : public BaseEventManager {
     virtual bool removeListener(const EventListenerDelegate& eventDelegate, const IEventData::EventType& type);
     virtual bool triggerEvent(const IEventData::IEventDataPtr& pEvent) const;
     virtual bool queueEvent(const IEventData::IEventDataPtr& pEvent);
+    virtual bool update();
 };

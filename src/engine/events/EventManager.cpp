@@ -57,3 +57,44 @@ bool EventManager::queueEvent(const IEventData::IEventDataPtr& pEvent) {
         return false;
     }
 }
+
+bool EventManager::update() {
+    // swap active queues and clear the new queue after the swap
+    int queueToProcess = mActiveQueue;
+    mActiveQueue = (mActiveQueue + 1) % EVENTMANAGER_NUM_QUEUES;
+    mQueues[mActiveQueue].clear();
+
+    while (!mQueues[queueToProcess].empty()) {
+        IEventData::IEventDataPtr pEvent = mQueues[queueToProcess].front();
+        mQueues[queueToProcess].pop_front();
+        const IEventData::EventType& eventType = pEvent->VGetEventType();
+        auto findIt = mEventListeners.find(eventType);
+        if (findIt != mEventListeners.end()) {
+            const EventListenerList& eventListeners = findIt->second;
+
+            for (auto it = eventListeners.begin(); it != eventListeners.end(); ++it) {
+                EventListenerDelegate listener = (*it);
+                listener(pEvent);
+            }
+        }
+
+        // check to see if time ran out
+        // currMs = GetTickCount();
+        // if (maxMillis != IEventManager::kINFINITE && currMs >= maxMs)
+        // {
+        //     GCC_LOG("EventLoop", "Aborting event processing; time ran out");
+        // 	break;
+        // }
+    }
+
+    bool queueFlushed = (mQueues[queueToProcess].empty());
+    if (!queueFlushed) {
+        while (!mQueues[queueToProcess].empty()) {
+            IEventData::IEventDataPtr pEvent = mQueues[queueToProcess].back();
+            mQueues[queueToProcess].pop_back();
+            mQueues[mActiveQueue].push_front(pEvent);
+        }
+    }
+
+    return queueFlushed;
+}
