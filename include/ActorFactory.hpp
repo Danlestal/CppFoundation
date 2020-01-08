@@ -2,12 +2,14 @@
 #include "Actor.hpp"
 #include "Invader.hpp"
 #include "IdentifierProvider.hpp"
+#include "../src/engine/events/EventManager.hpp"
 
 class ActorFactory {
  private:
-    IdentifierProvider* mIdProvider;
+   EventManager* mEventManager;
+   IdentifierProvider* mIdProvider;
  public:
-    ActorFactory(IdentifierProvider* provider);
+    ActorFactory(IdentifierProvider* provider, EventManager* eventManager);
     Invader* createInvader();
     Actor* createPlayerSpaceship();
 

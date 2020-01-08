@@ -1,6 +1,7 @@
 #include "EventManager.hpp"
 
-bool EventManager::addListener(const EventListenerDelegate& eventDelegate, const IEventData::EventType& type) {
+
+bool EventManager::addListener(const EventListenerDelegate& eventDelegate, const std::string type) {
     EventListenerList& eventListenerList = mEventListeners[type];
     for (auto it = eventListenerList.begin(); it != eventListenerList.end(); ++it) {
         if (eventDelegate == (*it)) {
@@ -12,10 +13,9 @@ bool EventManager::addListener(const EventListenerDelegate& eventDelegate, const
     return true;
 }
 
-bool EventManager::triggerEvent(const IEventData::IEventDataPtr& pEvent) const {
+bool EventManager::triggerEvent(IEventData* pEvent) const {
     bool processed = false;
-
-    auto findIt = mEventListeners.find(pEvent->VGetEventType());
+    auto findIt = mEventListeners.find(pEvent->getEventType());
     if (findIt != mEventListeners.end()) {
         const EventListenerList& eventListenerList = findIt->second;
         for (EventListenerList::const_iterator it = eventListenerList.begin(); it != eventListenerList.end(); ++it) {
@@ -27,7 +27,7 @@ bool EventManager::triggerEvent(const IEventData::IEventDataPtr& pEvent) const {
     return processed;
 }
 
-bool EventManager::removeListener(const EventListenerDelegate& eventDelegate, const IEventData::EventType& type) {
+bool EventManager::removeListener(const EventListenerDelegate& eventDelegate, const std::string type) {
     bool success = false;
     auto findIt = mEventListeners.find(type);
     if (findIt != mEventListeners.end()) {
@@ -44,12 +44,13 @@ bool EventManager::removeListener(const EventListenerDelegate& eventDelegate, co
     return success;
 }
 
-bool EventManager::queueEvent(const IEventData::IEventDataPtr& pEvent) {
+
+bool EventManager::queueEvent(IEventData* pEvent) {
     if (!pEvent) {
         return false;
     }
 
-    auto findIt = mEventListeners.find(pEvent->VGetEventType());
+    auto findIt = mEventListeners.find(pEvent->getEventType());
     if (findIt != mEventListeners.end()) {
         mQueues[mActiveQueue].push_back(pEvent);
         return true;
@@ -59,15 +60,14 @@ bool EventManager::queueEvent(const IEventData::IEventDataPtr& pEvent) {
 }
 
 bool EventManager::update() {
-    // swap active queues and clear the new queue after the swap
     int queueToProcess = mActiveQueue;
     mActiveQueue = (mActiveQueue + 1) % EVENTMANAGER_NUM_QUEUES;
     mQueues[mActiveQueue].clear();
 
     while (!mQueues[queueToProcess].empty()) {
-        IEventData::IEventDataPtr pEvent = mQueues[queueToProcess].front();
+        IEventData* pEvent = mQueues[queueToProcess].front();
         mQueues[queueToProcess].pop_front();
-        const IEventData::EventType& eventType = pEvent->VGetEventType();
+        const std::string eventType = pEvent->getEventType();
         auto findIt = mEventListeners.find(eventType);
         if (findIt != mEventListeners.end()) {
             const EventListenerList& eventListeners = findIt->second;
@@ -90,7 +90,7 @@ bool EventManager::update() {
     bool queueFlushed = (mQueues[queueToProcess].empty());
     if (!queueFlushed) {
         while (!mQueues[queueToProcess].empty()) {
-            IEventData::IEventDataPtr pEvent = mQueues[queueToProcess].back();
+            IEventData* pEvent = mQueues[queueToProcess].back();
             mQueues[queueToProcess].pop_back();
             mQueues[mActiveQueue].push_front(pEvent);
         }

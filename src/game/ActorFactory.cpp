@@ -4,14 +4,15 @@
 #include "../engine/components/LifeComponent.hpp"
 #include "../engine/components/GraphicComponent.hpp"
 
-ActorFactory::ActorFactory(IdentifierProvider* provider) {
+ActorFactory::ActorFactory(IdentifierProvider* provider, EventManager* eventManager) {
     mIdProvider = provider;
+    mEventManager = eventManager;
 }
 
 Invader* ActorFactory::createInvader() {
     Actor* invader = new Actor(mIdProvider->getUID());
     invader->addComponent(new LifeComponent(10));
-    invader->addComponent(new GraphicComponent());
+    invader->addComponent(new GraphicComponent(mEventManager));
 
 
     return new Invader(invader);
