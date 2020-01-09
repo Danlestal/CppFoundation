@@ -16,7 +16,7 @@ void GraphicComponent::updatePosition(IEventData* pEventData) {
     mPosY += moveEvent->getIncrementY();
 }
 
-void GraphicComponent::draw() {
+virtual GraphicComponent::draw() {
         DrawRectangle(mPosX, mPosY, 30, 30, BLACK);
 }
 

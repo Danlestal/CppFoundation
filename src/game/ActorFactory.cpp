@@ -1,5 +1,4 @@
 #include "ActorFactory.hpp"
-#include "Invader.hpp"
 #include "../engine/components/Component.hpp"
 #include "../engine/components/LifeComponent.hpp"
 #include "../engine/components/GraphicComponent.hpp"
@@ -10,13 +9,11 @@ ActorFactory::ActorFactory(IdentifierProvider* provider, EventManager* eventMana
     mEventManager = eventManager;
 }
 
-Invader* ActorFactory::createInvader() {
+Actor* ActorFactory::createInvader() {
     Actor* invader = new Actor(mIdProvider->getUID());
     invader->addComponent(new LifeComponent(10));
     invader->addComponent(new GraphicComponentWithTexture(mEventManager));
-
-
-    return new Invader(invader);
+    return invader;
 }
 
 Actor* ActorFactory::createPlayerSpaceship() {

@@ -6,8 +6,10 @@
 #include "./engine/IdentifierProvider.hpp"
 #include "./engine/RandomIdProvider.hpp"
 #include "./engine/KeyboardInputManager.hpp"
+#include "./engine/Scene.hpp"
+#include "./engine/SceneView.hpp"
 #include "./game/ActorFactory.hpp"
-#include "./game/Invader.hpp"
+
 
 
 int main(void) {
@@ -20,9 +22,18 @@ int main(void) {
 
     SetTargetFPS(60);
     EventManager* eventManager = new EventManager();
+
+    // ALL THIS CRAPOLA SHOULD BE PLACED INSIDE THE MECHANISM TO
+    // PARSE THE XML FROM THE SCENE
     IdentifierProvider *mock = new RandomIdProvider();
     ActorFactory *factory = new ActorFactory(mock, eventManager);
-    Invader* invader = factory->createInvader();
+    Actor* invader = factory->createInvader();
+    Scene* scene = new Scene(eventManager);
+    scene->addActor(invader);
+    // PARSE THE XML FROM THE SCENE END
+
+    SceneView* view = new SceneView();
+
     KeyboardInputManager inputManager = KeyboardInputManager(eventManager);
 
     while (!WindowShouldClose()) {
@@ -30,7 +41,7 @@ int main(void) {
         eventManager->update();
         BeginDrawing();
         ClearBackground(RAYWHITE);
-        invader->draw();
+        view->draw(scene);
         DrawText("Congrats Dani!", 190, 200, 20, LIGHTGRAY);
         EndDrawing();
     }

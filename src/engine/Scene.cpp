@@ -4,11 +4,11 @@ Scene::Scene(EventManager* evtManager) {
     mEvtManager = evtManager;
 }
 
-void Scene::addActor(Actor* actor){
+void Scene::addActor(Actor* actor) {
     mActors.push_back(actor);
 }
 
-std::vector<Actor*> Scene::getActors() {
+std::list<Actor*> Scene::getActors() {
     return mActors;
 }
 
