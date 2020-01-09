@@ -2,7 +2,7 @@
 
 #include <string>
 #include <map>
-#include "Component.hpp"
+#include "./components/Component.hpp"
 
 class Actor {
  private:

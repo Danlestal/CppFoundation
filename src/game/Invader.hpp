@@ -1,5 +1,5 @@
 #pragma once
-#include "Actor.hpp"
+#include "../engine/Actor.hpp"
 class Invader {
  private:
     Actor* mActor;

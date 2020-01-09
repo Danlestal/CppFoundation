@@ -1,12 +1,14 @@
 #include <iostream>
 #include "raylib.h"
 
-#include "IdentifierProvider.hpp"
-#include "ActorFactory.hpp"
-#include "Invader.hpp"
+
 #include "./engine/events/EventManager.hpp"
+#include "./engine/IdentifierProvider.hpp"
 #include "./engine/RandomIdProvider.hpp"
 #include "./engine/KeyboardInputManager.hpp"
+#include "./game/ActorFactory.hpp"
+#include "./game/Invader.hpp"
+
 
 int main(void) {
     const int screenWidth = 800;

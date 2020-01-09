@@ -1,6 +1,6 @@
 #include "ActorFactory.hpp"
-#include "Component.hpp"
 #include "Invader.hpp"
+#include "../engine/components/Component.hpp"
 #include "../engine/components/LifeComponent.hpp"
 #include "../engine/components/GraphicComponent.hpp"
 
