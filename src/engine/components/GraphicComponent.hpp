@@ -6,7 +6,7 @@
 #include "Component.hpp"
 
 class GraphicComponent : public Component {
- private:
+ protected:
     int mPosX;
     int mPosY;
  public:

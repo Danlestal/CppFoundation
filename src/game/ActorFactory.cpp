@@ -3,6 +3,7 @@
 #include "../engine/components/Component.hpp"
 #include "../engine/components/LifeComponent.hpp"
 #include "../engine/components/GraphicComponent.hpp"
+#include "../engine/components/GraphicComponentWithTexture.hpp"
 
 ActorFactory::ActorFactory(IdentifierProvider* provider, EventManager* eventManager) {
     mIdProvider = provider;
@@ -12,7 +13,7 @@ ActorFactory::ActorFactory(IdentifierProvider* provider, EventManager* eventMana
 Invader* ActorFactory::createInvader() {
     Actor* invader = new Actor(mIdProvider->getUID());
     invader->addComponent(new LifeComponent(10));
-    invader->addComponent(new GraphicComponent(mEventManager));
+    invader->addComponent(new GraphicComponentWithTexture(mEventManager));
 
 
     return new Invader(invader);

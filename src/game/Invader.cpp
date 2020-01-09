@@ -1,6 +1,7 @@
 #include "Invader.hpp"
 #include "../engine/components/LifeComponent.hpp"
 #include "../engine/components/GraphicComponent.hpp"
+#include "../engine/components/GraphicComponentWithTexture.hpp"
 
 
 
@@ -16,6 +17,6 @@ int Invader::getLife() {
 
 void Invader::draw() {
     Component* component = mActor->getComponent("GraphicComponent");
-    GraphicComponent* graphicComponent = reinterpret_cast<GraphicComponent*>(component);
+    GraphicComponentWithTexture* graphicComponent = reinterpret_cast<GraphicComponentWithTexture*>(component);
     return graphicComponent->draw();
 }

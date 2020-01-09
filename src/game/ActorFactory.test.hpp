@@ -2,7 +2,7 @@
 #include "../../test/tester.hpp"
 #include "Invader.hpp"
 #include "ActorFactory.hpp"
-#include "IdentifierProvider.hpp"
+#include "../engine/IdentifierProvider.hpp"
 
 struct ActorFactoryEmptyFixture {};
 
@@ -13,7 +13,8 @@ class MockIdentifierProvider: public IdentifierProvider {
 
 TEST_CASE(ActorFactoryEmptyFixture, checkSpaceInvaderActor) {
     IdentifierProvider *mock = new MockIdentifierProvider();
-    ActorFactory *factory = new ActorFactory(mock);
+    EventManager* evtManager = new EventManager();
+    ActorFactory *factory = new ActorFactory(mock, evtManager);
     Invader* invader = factory->createInvader();
     CHECK_EQUAL(invader->getLife(), 10);
 };

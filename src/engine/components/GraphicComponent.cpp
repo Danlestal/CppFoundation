@@ -12,7 +12,6 @@ GraphicComponent::GraphicComponent(EventManager* eventManager) {
 
 void GraphicComponent::updatePosition(IEventData* pEventData) {
     MovePlayerEventData* moveEvent = reinterpret_cast<MovePlayerEventData*>(pEventData);
-    TraceLog(LOG_INFO, "EVENTO RECIBIDO");
     mPosX += moveEvent->getIncrementX();
     mPosY += moveEvent->getIncrementY();
 }
