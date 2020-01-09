@@ -27,9 +27,9 @@ int main(void) {
     // PARSE THE XML FROM THE SCENE
     IdentifierProvider *mock = new RandomIdProvider();
     ActorFactory *factory = new ActorFactory(mock, eventManager);
-    Actor* invader = factory->createInvader();
     Scene* scene = new Scene(eventManager);
-    scene->addActor(invader);
+    scene->addActor(factory->createInvader());
+    scene->addActor(factory->createPlayerSpaceship());
     // PARSE THE XML FROM THE SCENE END
 
     SceneView* view = new SceneView();

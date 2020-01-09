@@ -12,6 +12,6 @@ class GraphicComponent : public Component {
  public:
     explicit GraphicComponent(EventManager* eventManager);
     void updatePosition(IEventData* pEventData);
-    void draw();
+    virtual void draw() = 0;
     std::string getType();
 };
