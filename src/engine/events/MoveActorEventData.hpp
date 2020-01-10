@@ -9,10 +9,14 @@ class MoveActorEventData : public BaseEventData {
     int mIncrementY;
     long mActorId;
  public:
-    explicit MoveActorEventData(long actorId, int incrementX, int incrementY) {
+    MoveActorEventData(long actorId, int incrementX, int incrementY) {
         mIncrementX = incrementX;
         mIncrementY = incrementY;
         mActorId = actorId;
+    }
+
+    long getActorId() {
+        return mActorId;
     }
 
     int getIncrementX() {

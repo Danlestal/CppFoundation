@@ -4,7 +4,8 @@
 class KeyboardInputManager {
  private:
     EventManager* mEventManager;
+    long mPlayerId;
  public:
-    explicit KeyboardInputManager(EventManager* eventManager);
+    explicit KeyboardInputManager(long playerId, EventManager* eventManager);
     void proccessInput();
 };

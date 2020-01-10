@@ -11,6 +11,7 @@ class Actor {
 
  public:
     explicit Actor(long id);
+    long getId();
     void addComponent(Component *newComponent);
     bool hasComponent(std::string componentName);
     Component* getComponent(std::string componentName);

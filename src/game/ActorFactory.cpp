@@ -5,6 +5,7 @@
 #include "../engine/components/CircleGraphicComponent.hpp"
 #include "../engine/components/SquareGraphicComponent.hpp"
 #include "../engine/components/BidimensionalComponent.hpp"
+#include "../engine/components/BehaviourComponent.hpp"
 
 ActorFactory::ActorFactory(IdentifierProvider* provider, EventManager* eventManager) {
     mIdProvider = provider;
@@ -13,22 +14,24 @@ ActorFactory::ActorFactory(IdentifierProvider* provider, EventManager* eventMana
 
 Actor* ActorFactory::createInvader() {
     Actor* invader = new Actor(mIdProvider->getUID());
-    BidimensionalComponent* biComponent = new BidimensionalComponent(0, 0);
+    BidimensionalComponent* biComponent = new BidimensionalComponent(invader->getId(), 0, 0);
     mEventManager->addListener(fastdelegate::MakeDelegate(biComponent,
                                                             &BidimensionalComponent::updatePosition),
                                                             "MoveActorEventDataType");
     invader->addComponent(biComponent);
-
     invader->addComponent(new CircleGraphicComponent(mEventManager));
+
+    invader->addComponent(new BehaviourComponent(invader->getId(),
+                                                mEventManager));
     return invader;
 }
 
 Actor* ActorFactory::createPlayerSpaceship() {
     Actor* spaceShip = new Actor(mIdProvider->getUID());
-    BidimensionalComponent* biComponent = new BidimensionalComponent(40, 40);
+    BidimensionalComponent* biComponent = new BidimensionalComponent(spaceShip->getId(), 40, 40);
     mEventManager->addListener(fastdelegate::MakeDelegate(biComponent,
                                                             &BidimensionalComponent::updatePosition),
-                                                            "MovePlayerEventDataType");
+                                                            "MoveActorEventDataType");
     spaceShip->addComponent(biComponent);
     spaceShip->addComponent(new SquareGraphicComponent(mEventManager));
     return spaceShip;

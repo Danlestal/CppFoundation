@@ -3,19 +3,20 @@
 #include <memory>
 #include <vector>
 #include "raylib.h"
-#include "./events/MovePlayerEventData.hpp"
+#include "./events/MoveActorEventData.hpp"
 
-KeyboardInputManager::KeyboardInputManager(EventManager* eventManager) {
+KeyboardInputManager::KeyboardInputManager(long playerId, EventManager* eventManager) {
+    mPlayerId = playerId;
     mEventManager = eventManager;
 }
 
 void KeyboardInputManager::proccessInput() {
-    MovePlayerEventData* movement = NULL;
+    MoveActorEventData* movement = NULL;
 
-    if (IsKeyDown(KEY_RIGHT)) movement = new MovePlayerEventData(1, 0);
-    if (IsKeyDown(KEY_LEFT)) movement = new MovePlayerEventData(-1, 0);
-    if (IsKeyDown(KEY_UP)) movement = new MovePlayerEventData(0, -1);
-    if (IsKeyDown(KEY_DOWN)) movement = new MovePlayerEventData(0, 1);
+    if (IsKeyDown(KEY_RIGHT)) movement = new MoveActorEventData(mPlayerId, 1, 0);
+    if (IsKeyDown(KEY_LEFT)) movement = new MoveActorEventData(mPlayerId, -1, 0);
+    if (IsKeyDown(KEY_UP)) movement = new MoveActorEventData(mPlayerId, 0, -1);
+    if (IsKeyDown(KEY_DOWN)) movement = new MoveActorEventData(mPlayerId, 0, 1);
 
     if (!movement) {
         return;

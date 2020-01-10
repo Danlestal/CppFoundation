@@ -2,26 +2,30 @@
 #include <string>
 #include "Component.hpp"
 #include "../events/MovePlayerEventData.hpp"
+#include "../events/MoveActorEventData.hpp"
 #include "../events/EventManager.hpp"
 
 class BidimensionalComponent : public Component {
  private:
     int mPosX;
     int mPosY;
+    long mActorId;
 
  public:
-    BidimensionalComponent(int spawnX, int spawnY) {
+    BidimensionalComponent(long actorId, int spawnX, int spawnY) {
         mPosX = spawnX;
         mPosY = spawnY;
+        mActorId = actorId;
     }
-
 
     void updatePosition(IEventData* pEventData) {
-        TraceLog(LOG_INFO, "Updating position");
-        MovePlayerEventData* moveEvent = reinterpret_cast<MovePlayerEventData*>(pEventData);
-        mPosX += moveEvent->getIncrementX();
-        mPosY += moveEvent->getIncrementY();
+        MoveActorEventData* moveEvent = reinterpret_cast<MoveActorEventData*>(pEventData);
+        if (moveEvent->getActorId() == mActorId) {
+            mPosX += moveEvent->getIncrementX();
+            mPosY += moveEvent->getIncrementY();
+        }
     }
+
 
     int getPosx() {
         return mPosX;

@@ -8,6 +8,7 @@
 #include "./engine/KeyboardInputManager.hpp"
 #include "./engine/Scene.hpp"
 #include "./engine/SceneView.hpp"
+#include "./engine/SceneLogic.hpp"
 #include "./game/ActorFactory.hpp"
 
 
@@ -29,12 +30,14 @@ int main(void) {
     ActorFactory *factory = new ActorFactory(mock, eventManager);
     Scene* scene = new Scene(eventManager);
     scene->addActor(factory->createInvader());
-    scene->addActor(factory->createPlayerSpaceship());
+    Actor* spaceShip = factory->createPlayerSpaceship();
+    scene->addActor(spaceShip);
     // PARSE THE XML FROM THE SCENE END
 
     SceneView* view = new SceneView();
+    SceneLogic* logic = new SceneLogic();
 
-    KeyboardInputManager inputManager = KeyboardInputManager(eventManager);
+    KeyboardInputManager inputManager = KeyboardInputManager(spaceShip->getId(),eventManager);
 
     while (!WindowShouldClose()) {
         inputManager.proccessInput();
@@ -42,6 +45,7 @@ int main(void) {
         BeginDrawing();
         ClearBackground(RAYWHITE);
         view->draw(scene);
+        logic->updateLogic(scene);
         DrawText("Congrats Dani!", 190, 200, 20, LIGHTGRAY);
         EndDrawing();
     }

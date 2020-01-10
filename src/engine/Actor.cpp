@@ -4,6 +4,10 @@ Actor::Actor(long id) {
     mId = id;
 }
 
+long Actor::getId() {
+    return mId;
+}
+
 Actor::~Actor() {}
 
 void Actor::addComponent(Component *newComponent) {
