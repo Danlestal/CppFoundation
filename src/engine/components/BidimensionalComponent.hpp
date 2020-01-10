@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 #include "Component.hpp"
-#include "../events/MovePlayerEventData.hpp"
 #include "../events/MoveActorEventData.hpp"
 #include "../events/EventManager.hpp"
 
