@@ -3,5 +3,5 @@
 class CircleGraphicComponent : public GraphicComponent {
  public:
     explicit CircleGraphicComponent(EventManager* eventManager): GraphicComponent(eventManager) {}
-    void draw();
+    void draw(int posX, int posY);
 };

@@ -10,8 +10,9 @@ class Actor {
     std::map<std::string, Component*> mComponents;
 
  public:
-    Actor(long id);
+    explicit Actor(long id);
     void addComponent(Component *newComponent);
+    bool hasComponent(std::string componentName);
     Component* getComponent(std::string componentName);
     ~Actor();
 };

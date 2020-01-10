@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 #include "Component.hpp"
+#include "../events/MovePlayerEventData.hpp"
+#include "../events/EventManager.hpp"
 
 class BidimensionalComponent : public Component {
  private:
@@ -11,6 +13,14 @@ class BidimensionalComponent : public Component {
     BidimensionalComponent(int spawnX, int spawnY) {
         mPosX = spawnX;
         mPosY = spawnY;
+    }
+
+
+    void updatePosition(IEventData* pEventData) {
+        TraceLog(LOG_INFO, "Updating position");
+        MovePlayerEventData* moveEvent = reinterpret_cast<MovePlayerEventData*>(pEventData);
+        mPosX += moveEvent->getIncrementX();
+        mPosY += moveEvent->getIncrementY();
     }
 
     int getPosx() {

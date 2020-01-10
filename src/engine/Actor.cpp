@@ -12,6 +12,10 @@ void Actor::addComponent(Component *newComponent) {
     mComponents[newComponent->getType()] = newComponent;
 }
 
+bool Actor::hasComponent(std::string componentName) {
+    return (mComponents.count(componentName) == 1);
+}
+
 Component* Actor::getComponent(std::string componentType) {
     // TODO(danlestal): Throw a proper exception if
     // the component does not exists

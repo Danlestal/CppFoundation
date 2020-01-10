@@ -77,14 +77,6 @@ bool EventManager::update() {
                 listener(pEvent);
             }
         }
-
-        // check to see if time ran out
-        // currMs = GetTickCount();
-        // if (maxMillis != IEventManager::kINFINITE && currMs >= maxMs)
-        // {
-        //     GCC_LOG("EventLoop", "Aborting event processing; time ran out");
-        // 	break;
-        // }
     }
 
     bool queueFlushed = (mQueues[queueToProcess].empty());

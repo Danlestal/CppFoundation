@@ -17,8 +17,10 @@ void KeyboardInputManager::proccessInput() {
     if (IsKeyDown(KEY_UP)) movement = new MovePlayerEventData(0, -1);
     if (IsKeyDown(KEY_DOWN)) movement = new MovePlayerEventData(0, 1);
 
-    if (!movement)
+    if (!movement) {
         return;
-    else
-        mEventManager->queueEvent(movement);
+    }
+    else {
+         mEventManager->queueEvent(movement);
+    }
 }

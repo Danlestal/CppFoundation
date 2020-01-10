@@ -3,5 +3,5 @@
 class SquareGraphicComponent : public GraphicComponent {
  public:
     explicit SquareGraphicComponent(EventManager* eventManager): GraphicComponent(eventManager) {}
-    void draw();
+    void draw(int posX, int posY);
 };

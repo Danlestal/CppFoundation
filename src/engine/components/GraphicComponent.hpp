@@ -6,12 +6,9 @@
 #include "Component.hpp"
 
 class GraphicComponent : public Component {
- protected:
-    int mPosX;
-    int mPosY;
  public:
     explicit GraphicComponent(EventManager* eventManager);
     void updatePosition(IEventData* pEventData);
-    virtual void draw() = 0;
+    virtual void draw(int posX, int posY) = 0;
     std::string getType();
 };

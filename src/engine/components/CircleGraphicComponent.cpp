@@ -1,5 +1,5 @@
 #include "CircleGraphicComponent.hpp"
 
-void CircleGraphicComponent::draw() {
-    DrawCircle(mPosX, mPosY, 30, BLACK);
+void CircleGraphicComponent::draw(int posX, int posY) {
+    DrawCircle(posX, posY, 30, BLACK);
 }

@@ -21,7 +21,9 @@ class EventManager {
     int mActiveQueue;
 
  public:
-    EventManager() {}
+    EventManager() {
+        mActiveQueue = 0;
+    }
     ~EventManager(void) {}
     virtual bool addListener(const EventListenerDelegate& eventDelegate, const std::string type);
     virtual bool removeListener(const EventListenerDelegate& eventDelegate, const std::string type);

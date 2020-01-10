@@ -1,5 +1,5 @@
 #include "SquareGraphicComponent.hpp"
 
-void SquareGraphicComponent::draw() {
-    DrawRectangle(mPosX, mPosY, 10, 10, RED);
+void SquareGraphicComponent::draw(int posX, int posY) {
+    DrawRectangle(posX, posY, 10, 10, RED);
 }

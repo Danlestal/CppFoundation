@@ -4,6 +4,7 @@
 #include "../engine/components/GraphicComponent.hpp"
 #include "../engine/components/CircleGraphicComponent.hpp"
 #include "../engine/components/SquareGraphicComponent.hpp"
+#include "../engine/components/BidimensionalComponent.hpp"
 
 ActorFactory::ActorFactory(IdentifierProvider* provider, EventManager* eventManager) {
     mIdProvider = provider;
@@ -12,13 +13,23 @@ ActorFactory::ActorFactory(IdentifierProvider* provider, EventManager* eventMana
 
 Actor* ActorFactory::createInvader() {
     Actor* invader = new Actor(mIdProvider->getUID());
-    invader->addComponent(new LifeComponent(10));
+    BidimensionalComponent* biComponent = new BidimensionalComponent(0, 0);
+    mEventManager->addListener(fastdelegate::MakeDelegate(biComponent,
+                                                            &BidimensionalComponent::updatePosition),
+                                                            "MoveActorEventDataType");
+    invader->addComponent(biComponent);
+
     invader->addComponent(new CircleGraphicComponent(mEventManager));
     return invader;
 }
 
 Actor* ActorFactory::createPlayerSpaceship() {
     Actor* spaceShip = new Actor(mIdProvider->getUID());
+    BidimensionalComponent* biComponent = new BidimensionalComponent(40, 40);
+    mEventManager->addListener(fastdelegate::MakeDelegate(biComponent,
+                                                            &BidimensionalComponent::updatePosition),
+                                                            "MovePlayerEventDataType");
+    spaceShip->addComponent(biComponent);
     spaceShip->addComponent(new SquareGraphicComponent(mEventManager));
     return spaceShip;
 }
