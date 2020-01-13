@@ -1,7 +1,7 @@
 #include "LogicSystem.hpp"
 #include <list>
-#include "./components/BehaviourComponent.hpp"
-#include "./components/BidimensionalComponent.hpp"
+#include "../components/BehaviourComponent.hpp"
+#include "../components/BidimensionalComponent.hpp"
 
 void LogicSystem::updateLogic(Scene* scene) {
     std::list<Actor*> actors = scene->getActors();

@@ -7,8 +7,8 @@
 #include "./engine/RandomIdProvider.hpp"
 #include "./engine/KeyboardInputManager.hpp"
 #include "./engine/Scene.hpp"
-#include "./engine/LogicSystem.hpp"
-#include "./engine/RenderSystem.hpp"
+#include "./engine/systems/LogicSystem.hpp"
+#include "./engine/systems/RenderSystem.hpp"
 #include "./game/ActorFactory.hpp"
 
 

@@ -1,7 +1,7 @@
 #include "RenderSystem.hpp"
 #include <list>
-#include "./components/GraphicComponent.hpp"
-#include "./components/BidimensionalComponent.hpp"
+#include "../components/GraphicComponent.hpp"
+#include "../components/BidimensionalComponent.hpp"
 
 void RenderSystem::draw(Scene* scene) {
     std::list<Actor*> actors = scene->getActors();

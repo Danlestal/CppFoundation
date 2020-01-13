@@ -10,6 +10,7 @@ LIBRARIES	:=
 EXECUTABLE	:= main
 COMPONENTS := $(SRC)/engine/components/*.cpp
 EVENTS := $(SRC)/engine/events/*.cpp
+SYTEMS := $(SRC)/engine/systems/*.cpp
 ENGINE := $(SRC)/engine/*.cpp
 GAME := $(SRC)/game/*.cpp
 
@@ -18,7 +19,7 @@ all: $(BIN)/$(EXECUTABLE)
 run: clean all
 	./$(BIN)/$(EXECUTABLE)
 
-$(BIN)/$(EXECUTABLE): $(EVENTS) $(COMPONENTS) $(ENGINE) $(GAME) $(SRC)/main.cpp
+$(BIN)/$(EXECUTABLE): $(EVENTS) $(COMPONENTS) $(SYTEMS) $(ENGINE) $(GAME) $(SRC)/main.cpp
 	$(CXX) $(CXX_FLAGS) $(RAYLIB_FLAGS) -I$(INCLUDE) -I"/Users/eudvazquez/personal/raylib/raylib/src" -L$(LIB) $^ -o $@ $(LIBRARIES)
 
 clean:
@@ -26,5 +27,5 @@ clean:
 
 # Tests
 tester:
-	$(CXX) $(CXX_FLAGS) $(RAYLIB_FLAGS) $(EVENTS) $(COMPONENTS) $(ENGINE) $(GAME) test/tester.cpp -I$(INCLUDE) -I"/Users/eudvazquez/personal/raylib/raylib/src" -L$(LIB) $^ -o bin/tester
+	$(CXX) $(CXX_FLAGS) $(RAYLIB_FLAGS) $(EVENTS) $(COMPONENTS) $(SYTEMS) $(ENGINE) $(GAME) test/tester.cpp -I$(INCLUDE) -I"/Users/eudvazquez/personal/raylib/raylib/src" -L$(LIB) $^ -o bin/tester
 	./$(BIN)/tester
