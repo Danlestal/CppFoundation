@@ -7,8 +7,8 @@
 #include "./engine/RandomIdProvider.hpp"
 #include "./engine/KeyboardInputManager.hpp"
 #include "./engine/Scene.hpp"
-#include "./engine/SceneView.hpp"
-#include "./engine/SceneLogic.hpp"
+#include "./engine/LogicSystem.hpp"
+#include "./engine/RenderSystem.hpp"
 #include "./game/ActorFactory.hpp"
 
 
@@ -34,8 +34,8 @@ int main(void) {
     scene->addActor(spaceShip);
     // PARSE THE XML FROM THE SCENE END
 
-    SceneView* view = new SceneView();
-    SceneLogic* logic = new SceneLogic();
+    RenderSystem* view = new RenderSystem();
+    LogicSystem* logic = new LogicSystem();
 
     KeyboardInputManager inputManager = KeyboardInputManager(spaceShip->getId(),eventManager);
 

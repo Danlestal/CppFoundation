@@ -1,6 +1,6 @@
 #pragma once
 #include "Scene.hpp"
-class SceneView {
+class RenderSystem {
  public:
     void draw(Scene* sceneToDraw);
 };

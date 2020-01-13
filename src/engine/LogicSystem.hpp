@@ -1,6 +1,6 @@
 #pragma once
 #include "Scene.hpp"
-class SceneLogic {
+class LogicSystem {
  public:
     void updateLogic(Scene* sceneToDraw);
 };

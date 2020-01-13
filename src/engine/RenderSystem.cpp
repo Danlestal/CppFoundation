@@ -1,9 +1,9 @@
-#include "SceneView.hpp"
+#include "RenderSystem.hpp"
 #include <list>
 #include "./components/GraphicComponent.hpp"
 #include "./components/BidimensionalComponent.hpp"
 
-void SceneView::draw(Scene* scene) {
+void RenderSystem::draw(Scene* scene) {
     std::list<Actor*> actors = scene->getActors();
     for (auto it = actors.begin(); it != actors.end(); ++it) {
         Actor* actor = (*it);

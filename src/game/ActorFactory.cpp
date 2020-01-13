@@ -6,6 +6,7 @@
 #include "../engine/components/SquareGraphicComponent.hpp"
 #include "../engine/components/BidimensionalComponent.hpp"
 #include "../engine/components/BehaviourComponent.hpp"
+#include "../engine/components/BoundingSquareComponent.hpp"
 
 ActorFactory::ActorFactory(IdentifierProvider* provider, EventManager* eventManager) {
     mIdProvider = provider;
@@ -23,6 +24,7 @@ Actor* ActorFactory::createInvader() {
 
     invader->addComponent(new BehaviourComponent(invader->getId(),
                                                 mEventManager));
+    invader->addComponent(new BoundingSquareComponent(10, 10));
     return invader;
 }
 
@@ -34,5 +36,6 @@ Actor* ActorFactory::createPlayerSpaceship() {
                                                             "MoveActorEventDataType");
     spaceShip->addComponent(biComponent);
     spaceShip->addComponent(new SquareGraphicComponent(mEventManager));
+    spaceShip->addComponent(new BoundingSquareComponent(10, 10));
     return spaceShip;
 }
