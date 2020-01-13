@@ -3,43 +3,33 @@
 #include "Component.hpp"
 #include "../events/MoveActorEventData.hpp"
 #include "../events/EventManager.hpp"
+#include "../Vector2d.hpp"
 
 class BidimensionalComponent : public Component {
  private:
-    int mPosX;
-    int mPosY;
+    Vector2D mPosition;
     long mActorId;
 
  public:
-    BidimensionalComponent(long actorId, int spawnX, int spawnY) {
-        mPosX = spawnX;
-        mPosY = spawnY;
+    BidimensionalComponent(long actorId, Vector2D position) {
+        mPosition = position;
         mActorId = actorId;
     }
 
     void updatePosition(IEventData* pEventData) {
         MoveActorEventData* moveEvent = reinterpret_cast<MoveActorEventData*>(pEventData);
         if (moveEvent->getActorId() == mActorId) {
-            mPosX += moveEvent->getIncrementX();
-            mPosY += moveEvent->getIncrementY();
+            mPosition += moveEvent->getDelta();
         }
     }
 
 
-    int getPosx() {
-        return mPosX;
+    Vector2D getPos() {
+        return mPosition;
     }
 
-    int setPosx(int posX) {
-        mPosX = posX;
-    }
-
-    int getPosY() {
-        return mPosY;
-    }
-
-    void setPosY(int posY) {
-        mPosY = posY;
+    void setPosx(Vector2D position) {
+        mPosition = position;
     }
 
     std::string getType() {

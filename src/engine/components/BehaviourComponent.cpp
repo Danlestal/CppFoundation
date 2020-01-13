@@ -3,16 +3,18 @@
 
 BehaviourComponent::BehaviourComponent(long actorId, EventManager* evtManager) {
     mEventManager = evtManager;
-    mHorizontalDirection = 1;
+    mSpeedVector = Vector2D(5, 0);
     mActorId = actorId;
-    mSpeed = 5;
 }
 
-void BehaviourComponent::update(int posX, int posY) {
-    if ((posX > 400) || (posX< 0)) {
-        mHorizontalDirection *= (-1);
-        mEventManager->triggerEvent(new MoveActorEventData(mActorId, mHorizontalDirection * mSpeed, mSpeed));
+void BehaviourComponent::update(Vector2D position) {
+    if ((position.x > 400) || (position.x < 0)) {
+        mSpeedVector *= (-1);
+        mEventManager->triggerEvent(
+            new MoveActorEventData(
+                mActorId,
+                mSpeedVector + Vector2D(0, 5)));
     }
 
-    mEventManager->triggerEvent(new MoveActorEventData(mActorId, mHorizontalDirection * mSpeed, 0));
+    mEventManager->triggerEvent(new MoveActorEventData(mActorId, mSpeedVector));
 }

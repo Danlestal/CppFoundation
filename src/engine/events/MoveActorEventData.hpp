@@ -2,16 +2,15 @@
 #include <vector>
 #include <string>
 #include "BaseEventData.hpp"
+#include "../Vector2d.hpp"
 
 class MoveActorEventData : public BaseEventData {
  private:
-    int mIncrementX;
-    int mIncrementY;
+    Vector2D mDelta;
     long mActorId;
  public:
-    MoveActorEventData(long actorId, int incrementX, int incrementY) {
-        mIncrementX = incrementX;
-        mIncrementY = incrementY;
+    MoveActorEventData(long actorId, Vector2D delta) {
+        mDelta = delta;
         mActorId = actorId;
     }
 
@@ -19,12 +18,8 @@ class MoveActorEventData : public BaseEventData {
         return mActorId;
     }
 
-    int getIncrementX() {
-        return mIncrementX;
-    }
-
-    int getIncrementY() {
-        return mIncrementY;
+    Vector2D getDelta() {
+        return mDelta;
     }
 
     std::string getEventType(void) const {

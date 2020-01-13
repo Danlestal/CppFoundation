@@ -10,8 +10,8 @@ void RenderSystem::draw(Scene* scene) {
         if (actor->hasComponent("BidimensionalComponent") && actor->hasComponent("GraphicComponent")) {
             BidimensionalComponent* positionComponent =reinterpret_cast<BidimensionalComponent*> (actor->getComponent("BidimensionalComponent"));
             GraphicComponent* component = reinterpret_cast<GraphicComponent*> (actor->getComponent("GraphicComponent"));
-            component->draw(positionComponent->getPosx(),
-                            positionComponent->getPosY());
+            Vector2D position = positionComponent->getPos();
+            component->draw(position);
         }
     }
 }
