@@ -32,6 +32,11 @@ int main(void) {
     scene->addActor(factory->createInvader());
     Actor* spaceShip = factory->createPlayerSpaceship();
     scene->addActor(spaceShip);
+    std::vector<Actor*> boundaries = factory->createBoundaries(400, 600);
+    for (auto it = boundaries.begin(); it != boundaries.end(); ++it) {
+        Actor* actor = (*it);
+        scene->addActor(actor);
+    }
     // PARSE THE XML FROM THE SCENE END
 
     RenderSystem* view = new RenderSystem();
