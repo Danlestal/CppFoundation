@@ -1,15 +1,14 @@
 #pragma once
 #include <string>
 #include "Component.hpp"
+#include "../Vector2d.hpp"
 
 class BoundingSquareComponent : public Component {
  private:
-  int mWidth;
-  int mHeight;
+  Vector2D mDimensions;
  public:
-    BoundingSquareComponent(int width, int height) {
-        mWidth = width;
-        mHeight = height;
+    explicit BoundingSquareComponent(Vector2D dimensions) {
+        mDimensions = dimensions;
     }
     std::string getType() {
             return "BoundingSquareComponent";

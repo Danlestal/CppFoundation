@@ -25,7 +25,7 @@ Actor* ActorFactory::createInvader() {
 
     invader->addComponent(new BehaviourComponent(invader->getId(),
                                                 mEventManager));
-    invader->addComponent(new BoundingSquareComponent(10, 10));
+    invader->addComponent(new BoundingSquareComponent(Vector2D(10, 10)));
     return invader;
 }
 
@@ -40,7 +40,7 @@ Actor* ActorFactory::createPlayerSpaceship() {
                                                             "MoveActorEventDataType");
     spaceShip->addComponent(biComponent);
     spaceShip->addComponent(new SquareGraphicComponent(10, 10, mEventManager));
-    spaceShip->addComponent(new BoundingSquareComponent(10, 10));
+    spaceShip->addComponent(new BoundingSquareComponent(Vector2D(10, 10)));
     return spaceShip;
 }
 
@@ -48,17 +48,17 @@ Actor* ActorFactory::createPlayerSpaceship() {
 std::vector<Actor*> ActorFactory::createBoundaries(int boardWith, int boardHeight) {
     Actor* leftBoundary = new Actor(mIdProvider->getUID());
     leftBoundary->addComponent(new BidimensionalComponent(leftBoundary->getId(), Vector2D()));
-    leftBoundary->addComponent(new BoundingSquareComponent(2, 600));
+    leftBoundary->addComponent(new BoundingSquareComponent(Vector2D(2, 600)));
     leftBoundary->addComponent(new SquareGraphicComponent(2, 600, mEventManager));
 
     Actor* rightBoundary = new Actor(mIdProvider->getUID());
     rightBoundary->addComponent(new BidimensionalComponent(rightBoundary->getId(), Vector2D(boardWith, 0)));
-    rightBoundary->addComponent(new BoundingSquareComponent(2, 600));
+    rightBoundary->addComponent(new BoundingSquareComponent(Vector2D(2, 600)));
     rightBoundary->addComponent(new SquareGraphicComponent(2, 600, mEventManager));
 
     Actor* bottomBoundary = new Actor(mIdProvider->getUID());
     bottomBoundary->addComponent(new BidimensionalComponent(bottomBoundary->getId(), Vector2D(0, boardHeight)));
-    bottomBoundary->addComponent(new BoundingSquareComponent(boardWith, 2));
+    bottomBoundary->addComponent(new BoundingSquareComponent(Vector2D(boardWith, 2)));
     bottomBoundary->addComponent(new SquareGraphicComponent(boardWith, 2, mEventManager));
 
     return std::vector<Actor*>{ leftBoundary, rightBoundary, bottomBoundary};
