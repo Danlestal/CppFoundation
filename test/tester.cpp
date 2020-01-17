@@ -1,6 +1,7 @@
 #define GENERATE_UNIT_TEST_MAIN
 #include "tester.hpp"
 #include "../src/engine/components/LifeComponent.test.hpp"
+#include "../src/engine/systems/PhysicsSystem.test.hpp"
 
 
 struct MyFixture {
