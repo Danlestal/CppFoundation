@@ -28,7 +28,7 @@ class BidimensionalComponent : public Component {
         return mPosition;
     }
 
-    void setPosx(Vector2D position) {
+    void setPos(Vector2D position) {
         mPosition = position;
     }
 

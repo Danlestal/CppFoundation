@@ -10,6 +10,11 @@ class BoundingSquareComponent : public Component {
     explicit BoundingSquareComponent(Vector2D dimensions) {
         mDimensions = dimensions;
     }
+
+    Vector2D getDimensions() {
+        return mDimensions;
+    }
+
     std::string getType() {
             return "BoundingSquareComponent";
     }
