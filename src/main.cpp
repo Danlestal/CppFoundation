@@ -54,7 +54,6 @@ int main(void) {
         ClearBackground(RAYWHITE);
         view->draw(scene);
         logic->updateLogic(scene);
-        phys->update();
         DrawText("Congrats Dani!", 190, 200, 20, LIGHTGRAY);
         EndDrawing();
     }

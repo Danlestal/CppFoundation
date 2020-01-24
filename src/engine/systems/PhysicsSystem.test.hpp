@@ -51,3 +51,17 @@ TEST_CASE(PhysSystemEmptyFixture, checkDoNotCollidesOnBoundary) {
 
     CHECK_EQUAL(system->collides(redBox, blueBox), false);
 };
+
+
+TEST_CASE(PhysSystemEmptyFixture, checkAABBOIncrementOperator) {
+    AABB redBox = AABB();
+    redBox.min = Vector2D(0, 0);
+    redBox.max = Vector2D(10, 10);
+
+    redBox += Vector2D(10, 15);
+
+    CHECK_EQUAL(redBox.min.x, 10);
+    CHECK_EQUAL(redBox.min.y, 15);
+    CHECK_EQUAL(redBox.max.x, 20);
+    CHECK_EQUAL(redBox.max.y, 25);
+};
