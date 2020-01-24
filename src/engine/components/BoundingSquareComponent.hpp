@@ -19,4 +19,3 @@ class BoundingSquareComponent : public Component {
             return "BoundingSquareComponent";
     }
 };
-

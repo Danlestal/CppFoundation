@@ -18,7 +18,7 @@ struct AABB {
 
 struct ActorPhysics{
     long actorId;
-    Actor* actor;
+    Vector2D lastMovement;
     AABB box;
 };
 

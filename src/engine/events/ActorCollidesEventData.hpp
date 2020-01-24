@@ -7,12 +7,15 @@ class ActorCollidesEventData : public BaseEventData {
  private:
     long mActorId;
     long mCollidesWithId;
+    Vector2D mCollisionVector;
 
  public:
-    ActorCollidesEventData( long actorId,
-                            long collidesWithId) {
+    explicit ActorCollidesEventData( long actorId,
+                            long collidesWithId,
+                            Vector2D collisionVector) {
         mActorId = actorId;
         mCollidesWithId = collidesWithId;
+        mCollisionVector = collisionVector;
     }
 
     long getActorId() {
@@ -23,7 +26,11 @@ class ActorCollidesEventData : public BaseEventData {
         return mCollidesWithId;
     }
 
+    Vector2D getCollisionVector() {
+        return mCollisionVector;
+    }
+
     std::string getEventType(void) const {
-        return "ActorCollidesEventData";
+        return "ActorCollidesEventDataType";
     }
 };

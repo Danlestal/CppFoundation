@@ -38,6 +38,11 @@ Actor* ActorFactory::createPlayerSpaceship() {
     mEventManager->addListener(fastdelegate::MakeDelegate(biComponent,
                                                             &BidimensionalComponent::updatePosition),
                                                             "MoveActorEventDataType");
+
+    mEventManager->addListener(fastdelegate::MakeDelegate(biComponent,
+                                                            &BidimensionalComponent::receiveCollision),
+                                                            "ActorCollidesEventDataType");
+
     spaceShip->addComponent(biComponent);
     spaceShip->addComponent(new SquareGraphicComponent(10, 10, mEventManager));
     spaceShip->addComponent(new BoundingSquareComponent(Vector2D(10, 10)));

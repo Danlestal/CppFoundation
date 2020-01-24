@@ -9,6 +9,7 @@
 #include "./engine/Scene.hpp"
 #include "./engine/systems/LogicSystem.hpp"
 #include "./engine/systems/RenderSystem.hpp"
+#include "./engine/systems/PhysicsSystem.hpp"
 #include "./game/ActorFactory.hpp"
 
 
@@ -29,7 +30,7 @@ int main(void) {
     IdentifierProvider *mock = new RandomIdProvider();
     ActorFactory *factory = new ActorFactory(mock, eventManager);
     Scene* scene = new Scene(eventManager);
-    scene->addActor(factory->createInvader());
+    // scene->addActor(factory->createInvader());
     Actor* spaceShip = factory->createPlayerSpaceship();
     scene->addActor(spaceShip);
     std::vector<Actor*> boundaries = factory->createBoundaries(400, 420);
@@ -41,8 +42,10 @@ int main(void) {
 
     RenderSystem* view = new RenderSystem();
     LogicSystem* logic = new LogicSystem();
+    PhysicsSystem* phys = new PhysicsSystem(eventManager);
+    phys->init(scene);
 
-    KeyboardInputManager inputManager = KeyboardInputManager(spaceShip->getId(),eventManager);
+    KeyboardInputManager inputManager = KeyboardInputManager(spaceShip->getId(), eventManager);
 
     while (!WindowShouldClose()) {
         inputManager.proccessInput();
@@ -51,6 +54,7 @@ int main(void) {
         ClearBackground(RAYWHITE);
         view->draw(scene);
         logic->updateLogic(scene);
+        phys->update();
         DrawText("Congrats Dani!", 190, 200, 20, LIGHTGRAY);
         EndDrawing();
     }

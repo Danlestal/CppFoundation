@@ -6,7 +6,7 @@
 struct PhysSystemEmptyFixture {};
 
 TEST_CASE(PhysSystemEmptyFixture, checkDoNoCollides) {
-    PhysicsSystem *system = new PhysicsSystem();
+    PhysicsSystem *system = new PhysicsSystem(new EventManager());
     AABB redBox = AABB();
     redBox.min = Vector2D(0, 0);
     redBox.max = Vector2D(10, 10);  // Basically a square of 10,10 with its begginning at 0,0
@@ -20,7 +20,7 @@ TEST_CASE(PhysSystemEmptyFixture, checkDoNoCollides) {
 
 
 TEST_CASE(PhysSystemEmptyFixture, checkCollides) {
-    PhysicsSystem *system = new PhysicsSystem();
+    PhysicsSystem *system = new PhysicsSystem(new EventManager());
     AABB redBox = AABB();
     redBox.min = Vector2D(0, 0);
     redBox.max = Vector2D(10, 10);  // Basically a square of 10,10 with its begginning at 0,0
@@ -40,7 +40,7 @@ TEST_CASE(PhysSystemEmptyFixture, checkCollides) {
 
 
 TEST_CASE(PhysSystemEmptyFixture, checkDoNotCollidesOnBoundary) {
-    PhysicsSystem *system = new PhysicsSystem();
+    PhysicsSystem *system = new PhysicsSystem(new EventManager());
     AABB redBox = AABB();
     redBox.min = Vector2D(0, 0);
     redBox.max = Vector2D(10, 10);  // Basically a square of 10,10 with its begginning at 0,0

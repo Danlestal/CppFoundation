@@ -12,7 +12,11 @@ struct Vector2D {
     }
 
     Vector2D operator+(const Vector2D& a) const {
-        return Vector2D(a.x+x, a.y+y);
+        return Vector2D(x + a.x, y + a.y);
+    }
+
+    Vector2D operator-(const Vector2D& a) const {
+        return Vector2D(x - a.x, y - a.y);
     }
 
     Vector2D operator+=(const Vector2D& a) {
@@ -21,8 +25,14 @@ struct Vector2D {
         return *this;
     }
 
+    Vector2D operator-=(const Vector2D& a) {
+        x -= a.x;
+        y -= a.y;
+        return *this;
+    }
+
     Vector2D operator*(const int a) const {
-        return Vector2D(x*a, y*a);
+        return Vector2D(x * a, y * a);
     }
 
     Vector2D operator*=(const int a) {

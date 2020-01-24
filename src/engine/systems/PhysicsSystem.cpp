@@ -16,9 +16,9 @@ void PhysicsSystem::update() {
         ActorPhysics* first = mAxisList.at(i-1);
         ActorPhysics* second = mAxisList.at(i);
         if (collides(first->box, second->box)) {
-            mEventManager->triggerEvent(new ActorCollidesEventData( first->actorId,
-                                                                    second->actorId));
-
+            mEventManager->queueEvent(new ActorCollidesEventData( first->actorId,
+                                                                    second->actorId,
+                                                                    first->lastMovement + second->lastMovement));
         }
     }
 }
@@ -49,16 +49,19 @@ ActorPhysics* PhysicsSystem::createActorPhysics(Actor* actor) {
                 (actor->getComponent("BidimensionalComponent"));
     AABB box = AABB();
     box.min = positionComponent->getPos();
-    box.max = squareComponent->getDimensions();
-    ActorPhysics phys = ActorPhysics();
-    phys.actor = actor;
-    phys.box = box;
-    phys.actorId = actor->getId();
-    return &phys;
+    box.max = box.min + squareComponent->getDimensions();
+    ActorPhysics *phys = new ActorPhysics();
+    phys->box = box;
+    phys->actorId = actor->getId();
+    phys->lastMovement = Vector2D();
+    return phys;
 }
 
 void PhysicsSystem::init(Scene* scene) {
     initAxisList(scene->getActors());
+    mEventManager->addListener(fastdelegate::MakeDelegate(this,
+                                &PhysicsSystem::updatePosition),
+                                "MoveActorEventDataType");
 }
 
 bool PhysicsSystem::collides(AABB firstBox, AABB secondBox) {
@@ -83,5 +86,7 @@ void PhysicsSystem::updatePosition(IEventData* pEventData) {
     MoveActorEventData* moveEvent = reinterpret_cast<MoveActorEventData*>(pEventData);
     // Should look for the actor inside the mAxisList and update it.
     ActorPhysics* physics = findActor(moveEvent->getActorId());
-    physics->box += moveEvent->getDelta();
+    Vector2D lastMovement = moveEvent->getDelta();
+    physics->lastMovement = lastMovement;
+    physics->box += lastMovement;
 }
