@@ -11,6 +11,7 @@
 #include "./engine/systems/RenderSystem.hpp"
 #include "./engine/systems/PhysicsSystem.hpp"
 #include "./game/ActorFactory.hpp"
+#include "./engine/DebugProbe.hpp"
 
 
 
@@ -46,6 +47,7 @@ int main(void) {
     phys->init(scene);
 
     KeyboardInputManager inputManager = KeyboardInputManager(spaceShip->getId(), eventManager);
+    DebugProbe probe = DebugProbe(spaceShip);
 
     while (!WindowShouldClose()) {
         inputManager.proccessInput();
@@ -54,7 +56,7 @@ int main(void) {
         ClearBackground(RAYWHITE);
         view->draw(scene);
         logic->updateLogic(scene);
-        DrawText("Congrats Dani!", 190, 200, 20, LIGHTGRAY);
+        probe.display();
         EndDrawing();
     }
     CloseWindow();

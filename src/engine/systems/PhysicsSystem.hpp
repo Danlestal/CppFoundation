@@ -34,7 +34,6 @@ class PhysicsSystem {
     ActorPhysics* createActorPhysics(Actor* actor);
     ActorPhysics* findActor(long id);
     void updatePosition(IEventData* pEventData);
-    
 
  public:
     explicit PhysicsSystem(EventManager* eventManager);

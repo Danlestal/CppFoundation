@@ -89,4 +89,5 @@ void PhysicsSystem::updatePosition(IEventData* pEventData) {
     Vector2D lastMovement = moveEvent->getDelta();
     physics->lastMovement = lastMovement;
     physics->box += lastMovement;
+    update();
 }
