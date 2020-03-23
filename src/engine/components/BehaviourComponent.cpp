@@ -1,5 +1,5 @@
 #include "BehaviourComponent.hpp"
-#include "../events/MoveActorEventData.hpp"
+#include "../events/OrderActorToMoveEventData.hpp"
 
 BehaviourComponent::BehaviourComponent(long actorId, EventManager* evtManager) {
     mEventManager = evtManager;
@@ -11,10 +11,10 @@ void BehaviourComponent::update(Vector2D position) {
     if ((position.x > 400) || (position.x < 0)) {
         mSpeedVector *= (-1);
         mEventManager->triggerEvent(
-            new MoveActorEventData(
+            new OrderActorToMoveEventData(
                 mActorId,
                 mSpeedVector + Vector2D(0, 5)));
     }
 
-    mEventManager->triggerEvent(new MoveActorEventData(mActorId, mSpeedVector));
+    mEventManager->triggerEvent(new OrderActorToMoveEventData(mActorId, mSpeedVector));
 }

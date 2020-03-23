@@ -4,12 +4,12 @@
 #include "BaseEventData.hpp"
 #include "../Vector2d.hpp"
 
-class MoveActorEventData : public BaseEventData {
+class OrderActorToMoveEventData : public BaseEventData {
  private:
     Vector2D mDelta;
     long mActorId;
  public:
-    MoveActorEventData(long actorId, Vector2D delta) {
+    OrderActorToMoveEventData(long actorId, Vector2D delta) {
         mDelta = delta;
         mActorId = actorId;
     }
@@ -23,6 +23,6 @@ class MoveActorEventData : public BaseEventData {
     }
 
     std::string getEventType(void) const {
-        return "MoveActorEventDataType";
+        return "OrderActorToMoveEventDataType";
     }
 };

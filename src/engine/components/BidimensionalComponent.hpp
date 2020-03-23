@@ -2,7 +2,7 @@
 #include <string>
 #include "raylib.h"
 #include "Component.hpp"
-#include "../events/MoveActorEventData.hpp"
+#include "../events/OrderActorToMoveEventData.hpp"
 #include "../events/UpdateActorPositionEventData.hpp"
 #include "../events/ActorCollidesEventData.hpp"
 #include "../events/EventManager.hpp"
@@ -24,7 +24,7 @@ class BidimensionalComponent : public Component {
     }
 
     void updatePosition(IEventData* pEventData) {
-        MoveActorEventData* moveEvent = reinterpret_cast<MoveActorEventData*>(pEventData);
+        OrderActorToMoveEventData* moveEvent = reinterpret_cast<OrderActorToMoveEventData*>(pEventData);
         if (moveEvent->getActorId() == mActorId) {
             Vector2D realDelta = moveEvent->getDelta() - mForbiddenDirection;
             if (realDelta.x != 0 || realDelta.y != 0) {

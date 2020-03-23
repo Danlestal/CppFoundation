@@ -19,7 +19,7 @@ Actor* ActorFactory::createInvader() {
     BidimensionalComponent* biComponent = new BidimensionalComponent(invader->getId(), Vector2D(), mEventManager);
     mEventManager->addListener(fastdelegate::MakeDelegate(biComponent,
                                                             &BidimensionalComponent::updatePosition),
-                                                            "MoveActorEventDataType");
+                                                            "OrderActorToMoveEventDataType");
     invader->addComponent(biComponent);
     invader->addComponent(new CircleGraphicComponent(mEventManager));
 
@@ -37,7 +37,7 @@ Actor* ActorFactory::createPlayerSpaceship() {
 
     mEventManager->addListener(fastdelegate::MakeDelegate(biComponent,
                                                             &BidimensionalComponent::updatePosition),
-                                                            "MoveActorEventDataType");
+                                                            "OrderActorToMoveEventDataType");
 
     mEventManager->addListener(fastdelegate::MakeDelegate(biComponent,
                                                             &BidimensionalComponent::receiveCollision),

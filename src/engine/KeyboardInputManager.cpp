@@ -2,7 +2,7 @@
 
 #include "raylib.h"
 #include "Vector2d.hpp"
-#include "./events/MoveActorEventData.hpp"
+#include "./events/OrderActorToMoveEventData.hpp"
 
 KeyboardInputManager::KeyboardInputManager(long playerId, EventManager* eventManager) {
     mPlayerId = playerId;
@@ -10,12 +10,12 @@ KeyboardInputManager::KeyboardInputManager(long playerId, EventManager* eventMan
 }
 
 void KeyboardInputManager::proccessInput() {
-    MoveActorEventData* movement = NULL;
+    OrderActorToMoveEventData* movement = NULL;
 
-    if (IsKeyDown(KEY_RIGHT)) movement = new MoveActorEventData(mPlayerId, Vector2D(1, 0));
-    if (IsKeyDown(KEY_LEFT)) movement = new MoveActorEventData(mPlayerId, Vector2D(-1, 0));
-    if (IsKeyDown(KEY_UP)) movement = new MoveActorEventData(mPlayerId, Vector2D(0, -1));
-    if (IsKeyDown(KEY_DOWN)) movement = new MoveActorEventData(mPlayerId, Vector2D(0, 1));
+    if (IsKeyDown(KEY_RIGHT)) movement = new OrderActorToMoveEventData(mPlayerId, Vector2D(1, 0));
+    if (IsKeyDown(KEY_LEFT)) movement = new OrderActorToMoveEventData(mPlayerId, Vector2D(-1, 0));
+    if (IsKeyDown(KEY_UP)) movement = new OrderActorToMoveEventData(mPlayerId, Vector2D(0, -1));
+    if (IsKeyDown(KEY_DOWN)) movement = new OrderActorToMoveEventData(mPlayerId, Vector2D(0, 1));
 
     if (movement) {
         mEventManager->queueEvent(movement);
