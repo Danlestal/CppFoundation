@@ -6,7 +6,7 @@ class SquareGraphicComponent : public GraphicComponent {
     int mHeight;
     int mWidth;
  public:
-    explicit SquareGraphicComponent(int height, int width, EventManager* eventManager): GraphicComponent(eventManager) {
+    explicit SquareGraphicComponent(int height, int width): GraphicComponent() {
         mHeight = height;
         mWidth = width;
     }

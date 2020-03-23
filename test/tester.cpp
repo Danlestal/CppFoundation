@@ -2,8 +2,6 @@
 #include "tester.hpp"
 #include "../src/engine/components/LifeComponent.test.hpp"
 #include "../src/engine/systems/PhysicsSystem.test.hpp"
-#include "../src/engine/events/EventManager.test.hpp"
-
 
 struct MyFixture {
     const int CommonData = 10;

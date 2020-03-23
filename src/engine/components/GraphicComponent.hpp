@@ -8,8 +8,7 @@
 
 class GraphicComponent : public Component {
  public:
-    explicit GraphicComponent(EventManager* eventManager);
-    void updatePosition(IEventData* pEventData);
+    explicit GraphicComponent();
     virtual void draw(Vector2D) = 0;
     std::string getType();
 };

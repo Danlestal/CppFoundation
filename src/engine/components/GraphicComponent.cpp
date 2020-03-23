@@ -1,6 +1,6 @@
 #include "GraphicComponent.hpp"
 
-GraphicComponent::GraphicComponent(EventManager* eventManager) {}
+GraphicComponent::GraphicComponent() {}
 
 std::string GraphicComponent::getType() {
     return "GraphicComponent";
