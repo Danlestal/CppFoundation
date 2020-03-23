@@ -9,6 +9,6 @@ class DebugProbe {
     BidimensionalComponent* mMainActorPosition;
     EventManager* mManager;
  public:
-    explicit DebugProbe(Actor* mainActor, EventManager* manager);
+    explicit DebugProbe(Actor* mainActor);
     void display();
 };
