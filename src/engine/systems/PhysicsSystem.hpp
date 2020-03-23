@@ -39,5 +39,5 @@ class PhysicsSystem {
     explicit PhysicsSystem(EventManager* eventManager);
     void init(Scene* scene);
     bool collides(AABB firstBox, AABB secondBox);
-    void update();
+    void checkActorPhysics(ActorPhysics* toCheck);
 };

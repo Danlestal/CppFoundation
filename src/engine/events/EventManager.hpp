@@ -29,5 +29,6 @@ class EventManager {
     virtual bool removeListener(const EventListenerDelegate& eventDelegate, const std::string type);
     virtual bool triggerEvent(IEventData* pEvent) const;
     virtual bool queueEvent(IEventData* pEvent);
+    virtual int getNumberOfEvents();
     virtual bool update();
 };

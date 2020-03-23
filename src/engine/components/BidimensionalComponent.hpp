@@ -3,20 +3,24 @@
 #include "raylib.h"
 #include "Component.hpp"
 #include "../events/MoveActorEventData.hpp"
+#include "../events/UpdateActorPositionEventData.hpp"
 #include "../events/ActorCollidesEventData.hpp"
 #include "../events/EventManager.hpp"
 #include "../Vector2d.hpp"
 
 class BidimensionalComponent : public Component {
  private:
+    EventManager* mEvtManager;
     Vector2D mPosition;
     Vector2D mForbiddenDirection;
     long mActorId;
 
  public:
-    BidimensionalComponent(long actorId, Vector2D position) {
+    BidimensionalComponent(long actorId, Vector2D position, EventManager* evtManager) {
         mPosition = position;
         mActorId = actorId;
+        mForbiddenDirection = Vector2D();
+        mEvtManager = evtManager;
     }
 
     void updatePosition(IEventData* pEventData) {
@@ -26,6 +30,7 @@ class BidimensionalComponent : public Component {
             if (realDelta.x != 0 || realDelta.y != 0) {
                 mPosition += realDelta;
                 mForbiddenDirection = Vector2D();
+                mEvtManager->queueEvent(new UpdateActorPositionEventData(mActorId, realDelta));
             }
         }
     }

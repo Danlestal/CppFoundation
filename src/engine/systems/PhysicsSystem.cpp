@@ -4,24 +4,28 @@
 #include "../components/BoundingSquareComponent.hpp"
 #include "../components/BidimensionalComponent.hpp"
 #include "../events/ActorCollidesEventData.hpp"
+#include "../events/UpdateActorPositionEventData.hpp"
+
+
 
 
 PhysicsSystem::PhysicsSystem(EventManager* eventManager) {
     mEventManager = eventManager;
 }
 
-void PhysicsSystem::update() {
-    std::sort(mAxisList.begin(), mAxisList.end(), compareYAxis);
-    for ( int i = 1; i< mAxisList.size(); ++i ) {
-        ActorPhysics* first = mAxisList.at(i-1);
-        ActorPhysics* second = mAxisList.at(i);
-        if (collides(first->box, second->box)) {
-            mEventManager->queueEvent(new ActorCollidesEventData( first->actorId,
-                                                                    second->actorId,
-                                                                    first->lastMovement + second->lastMovement));
+void PhysicsSystem::checkActorPhysics(ActorPhysics* toCheck) {
+    for ( int i = 0; i< mAxisList.size(); ++i ) {
+        ActorPhysics* other = mAxisList.at(i);
+        if (other == toCheck)
+            continue;
+        if (collides(toCheck->box, other->box)) {
+            mEventManager->queueEvent(new ActorCollidesEventData( toCheck->actorId,
+                                                                    other->actorId,
+                                                                    toCheck->lastMovement));
         }
     }
 }
+
 
 static bool compareXAxis(const ActorPhysics* first, const ActorPhysics* second) {
     return (first->box.min.x < second->box.min.x);
@@ -61,7 +65,7 @@ void PhysicsSystem::init(Scene* scene) {
     initAxisList(scene->getActors());
     mEventManager->addListener(fastdelegate::MakeDelegate(this,
                                 &PhysicsSystem::updatePosition),
-                                "MoveActorEventDataType");
+                                "UpdateActorPositionEventDataType");
 }
 
 bool PhysicsSystem::collides(AABB firstBox, AABB secondBox) {
@@ -83,11 +87,10 @@ ActorPhysics* PhysicsSystem::findActor(long id) {
 }
 
 void PhysicsSystem::updatePosition(IEventData* pEventData) {
-    MoveActorEventData* moveEvent = reinterpret_cast<MoveActorEventData*>(pEventData);
-    // Should look for the actor inside the mAxisList and update it.
+    UpdateActorPositionEventData* moveEvent = reinterpret_cast<UpdateActorPositionEventData*>(pEventData);
     ActorPhysics* physics = findActor(moveEvent->getActorId());
     Vector2D lastMovement = moveEvent->getDelta();
     physics->lastMovement = lastMovement;
     physics->box += lastMovement;
-    update();
+    checkActorPhysics(physics);
 }

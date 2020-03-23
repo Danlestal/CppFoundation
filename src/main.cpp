@@ -47,7 +47,7 @@ int main(void) {
     phys->init(scene);
 
     KeyboardInputManager inputManager = KeyboardInputManager(spaceShip->getId(), eventManager);
-    DebugProbe probe = DebugProbe(spaceShip);
+    DebugProbe probe = DebugProbe(spaceShip, eventManager);
 
     while (!WindowShouldClose()) {
         inputManager.proccessInput();

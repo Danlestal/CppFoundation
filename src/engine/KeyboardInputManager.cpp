@@ -17,10 +17,7 @@ void KeyboardInputManager::proccessInput() {
     if (IsKeyDown(KEY_UP)) movement = new MoveActorEventData(mPlayerId, Vector2D(0, -1));
     if (IsKeyDown(KEY_DOWN)) movement = new MoveActorEventData(mPlayerId, Vector2D(0, 1));
 
-    if (!movement) {
-        return;
-    }
-    else {
-         mEventManager->queueEvent(movement);
+    if (movement) {
+        mEventManager->queueEvent(movement);
     }
 }
