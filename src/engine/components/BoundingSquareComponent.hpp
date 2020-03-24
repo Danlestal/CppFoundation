@@ -7,15 +7,9 @@ class BoundingSquareComponent : public Component {
  private:
   Vector2D mDimensions;
  public:
-    explicit BoundingSquareComponent(Vector2D dimensions) {
-        mDimensions = dimensions;
-    }
+    explicit BoundingSquareComponent(Vector2D dimensions);
 
-    Vector2D getDimensions() {
-        return mDimensions;
-    }
+    Vector2D getDimensions();
 
-    std::string getType() {
-            return "BoundingSquareComponent";
-    }
+    std::string getType();
 };

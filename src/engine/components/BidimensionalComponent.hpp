@@ -16,42 +16,15 @@ class BidimensionalComponent : public Component {
     long mActorId;
 
  public:
-    BidimensionalComponent(long actorId, Vector2D position, EventManager* evtManager) {
-        mPosition = position;
-        mActorId = actorId;
-        mForbiddenDirection = Vector2D();
-        mEvtManager = evtManager;
-    }
+    BidimensionalComponent(long actorId, Vector2D position, EventManager* evtManager);
 
-    void updatePosition(IEventData* pEventData) {
-        OrderActorToMoveEventData* moveEvent = reinterpret_cast<OrderActorToMoveEventData*>(pEventData);
-        if (moveEvent->getActorId() == mActorId) {
-            Vector2D realDelta = moveEvent->getDelta() - mForbiddenDirection;
-            if (realDelta.x != 0 || realDelta.y != 0) {
-                mPosition += realDelta;
-                mForbiddenDirection = Vector2D();
-                mEvtManager->queueEvent(new UpdateActorPositionEventData(mActorId, realDelta));
-            }
-        }
-    }
+    void updatePosition(IEventData* pEventData);
 
-    void receiveCollision(IEventData* pEventData) {
-        ActorCollidesEventData* collisionEvent = reinterpret_cast<ActorCollidesEventData*>(pEventData);
-        if ((collisionEvent->getActorId() == mActorId) || (collisionEvent->getCollidesWithId() == mActorId)) {
-            mForbiddenDirection = collisionEvent->getCollisionVector();
-        }
-    }
+    void receiveCollision(IEventData* pEventData);
 
+    Vector2D getPos();
 
-    Vector2D getPos() {
-        return mPosition;
-    }
+    void setPos(Vector2D position);
 
-    void setPos(Vector2D position) {
-        mPosition = position;
-    }
-
-    std::string getType() {
-        return "BidimensionalComponent";
-    }
+    std::string getType();
 };
