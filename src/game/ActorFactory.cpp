@@ -8,6 +8,7 @@
 #include "../engine/components/BidimensionalComponent.hpp"
 #include "../engine/components/BehaviourComponent.hpp"
 #include "../engine/components/BoundingSquareComponent.hpp"
+#include "../engine/components/TextureComponent.hpp"
 
 ActorFactory::ActorFactory(IdentifierProvider* provider, EventManager* eventManager) {
     mIdProvider = provider;
@@ -32,9 +33,7 @@ Actor* ActorFactory::createInvader() {
 Actor* ActorFactory::createPlayerSpaceship() {
     Actor* spaceShip = new Actor(mIdProvider->getUID());
     BidimensionalComponent* biComponent =
-    new BidimensionalComponent(
-        spaceShip->getId(), Vector2D(200, 395), mEventManager);
-
+    new BidimensionalComponent(spaceShip->getId(), Vector2D(200, 395), mEventManager);
     mEventManager->addListener(fastdelegate::MakeDelegate(biComponent,
                                                             &BidimensionalComponent::updatePosition),
                                                             "OrderActorToMoveEventDataType");
@@ -45,6 +44,8 @@ Actor* ActorFactory::createPlayerSpaceship() {
 
     spaceShip->addComponent(biComponent);
     spaceShip->addComponent(new SquareGraphicComponent(10, 10));
+    Texture2D scarfy = LoadTexture("./resources/xenon2.png");
+    spaceShip->addComponent(new TextureComponent(10, 10, scarfy));
     spaceShip->addComponent(new BoundingSquareComponent(Vector2D(10, 10)));
     return spaceShip;
 }

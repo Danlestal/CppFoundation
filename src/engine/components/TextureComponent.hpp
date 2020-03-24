@@ -5,7 +5,9 @@ class TextureComponent : public GraphicComponent {
  private:
     int mHeight;
     int mWidth;
+    Texture2D mTexture;
+    Rectangle mFrameRec;
  public:
-    explicit TextureComponent(int height, int width);
-    void draw(Vector2D pos);
+     TextureComponent(int height, int width, Texture2D texture);
+     void draw(Vector2D pos);
 };

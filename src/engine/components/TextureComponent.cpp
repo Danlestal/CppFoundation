@@ -1,10 +1,11 @@
 #include "TextureComponent.hpp"
 
-TextureComponent::TextureComponent(int height, int width): GraphicComponent() {
+TextureComponent::TextureComponent(int height, int width, Texture2D texture): GraphicComponent() {
     mHeight = height;
     mWidth = width;
+    mTexture = texture;
 }
 
 void TextureComponent::draw(Vector2D pos) {
-    DrawRectangle(pos.x, pos.y, mHeight, mWidth, RED);
+    DrawTexture(mTexture, pos.x, pos.y, WHITE);
 }
