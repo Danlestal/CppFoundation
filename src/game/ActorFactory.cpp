@@ -44,7 +44,7 @@ Actor* ActorFactory::createPlayerSpaceship() {
 
     spaceShip->addComponent(biComponent);
     spaceShip->addComponent(new SquareGraphicComponent(10, 10));
-    Texture2D scarfy = LoadTexture("./resources/xenon2.png");
+    Texture2D scarfy = LoadTexture("./resources/xenon2_sprites.png");
     spaceShip->addComponent(new TextureComponent(10, 10, scarfy));
     spaceShip->addComponent(new BoundingSquareComponent(Vector2D(10, 10)));
     return spaceShip;
