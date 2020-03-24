@@ -2,6 +2,6 @@
 #include "GraphicComponent.hpp"
 class CircleGraphicComponent : public GraphicComponent {
  public:
-    explicit CircleGraphicComponent(): GraphicComponent() {}
+    CircleGraphicComponent();
     void draw(Vector2D position);
 };
