@@ -2,12 +2,13 @@
 #include "GraphicComponent.hpp"
 #include "../XenonTextureMap.hpp"
 #include "../Vector2d.hpp"
+#include "../events/OrderActorToMoveEventData.hpp"
+
 class TextureComponent : public GraphicComponent {
  private:
-    int mHeight;
-    int mWidth;
     XenonTextureMap mTextureMap;
  public:
-     TextureComponent(int height, int width, XenonTextureMap textureMap);
+     explicit TextureComponent(long actorId, XenonTextureMap textureMap);
      void draw(Vector2D pos);
+     void receiveOrder(IEventData* pEventData);
 };

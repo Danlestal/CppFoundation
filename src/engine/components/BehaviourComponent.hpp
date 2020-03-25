@@ -5,7 +5,6 @@
 #include "Component.hpp"
 class BehaviourComponent : public Component {
  private:
-    long mActorId;
     Vector2D mSpeedVector;
     EventManager* mEventManager;
  public:

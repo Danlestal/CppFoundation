@@ -13,7 +13,6 @@ class BidimensionalComponent : public Component {
     EventManager* mEvtManager;
     Vector2D mPosition;
     Vector2D mForbiddenDirection;
-    long mActorId;
 
  public:
     BidimensionalComponent(long actorId, Vector2D position, EventManager* evtManager);

@@ -46,7 +46,7 @@ Actor* ActorFactory::createPlayerSpaceship() {
     spaceShip->addComponent(new SquareGraphicComponent(10, 10));
     Texture2D xenonTexture = LoadTexture("./resources/xenon2_sprites.png");
     XenonTextureMap textureMap = XenonTextureMap(xenonTexture);
-    spaceShip->addComponent(new TextureComponent(10, 10, textureMap));
+    spaceShip->addComponent(new TextureComponent(spaceShip->getId(), textureMap));
     spaceShip->addComponent(new BoundingSquareComponent(Vector2D(10, 10)));
     return spaceShip;
 }
