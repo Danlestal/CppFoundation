@@ -4,7 +4,7 @@
 #include "../Vector2d.hpp"
 #include "../events/OrderActorToMoveEventData.hpp"
 
-class TextureComponent : public GraphicComponent {
+class AnimatedTextureComponent : public GraphicComponent {
  private:
     XenonTextureMap mTextureMap;
     int mHorizontalIndex;
@@ -13,7 +13,7 @@ class TextureComponent : public GraphicComponent {
     XenonTextureMap::XenonSprite getFrame();
 
  public:
-     explicit TextureComponent(long actorId, XenonTextureMap textureMap);
+     explicit AnimatedTextureComponent(long actorId, XenonTextureMap textureMap);
      void draw(Vector2D pos);
      void receiveOrder(IEventData* pEventData);
      void receiveTick(IEventData* pEventData);

@@ -1,13 +1,13 @@
-#include "TextureComponent.hpp"
+#include "AnimatedTextureComponent.hpp"
 
-TextureComponent::TextureComponent(long actorId, XenonTextureMap textureMap): GraphicComponent() {
+AnimatedTextureComponent::AnimatedTextureComponent(long actorId, XenonTextureMap textureMap): GraphicComponent() {
     mTextureMap = textureMap;
     mActorId = actorId;
     mVerticalIndex = 0;
     mHorizontalIndex = 0;
 }
 
-XenonTextureMap::XenonSprite TextureComponent::getFrame() {
+XenonTextureMap::XenonSprite AnimatedTextureComponent::getFrame() {
     if (mHorizontalIndex < -7) {
         return XenonTextureMap::SPACESHIP_EXTREME_LEFT;
     }
@@ -29,14 +29,14 @@ XenonTextureMap::XenonSprite TextureComponent::getFrame() {
     }
 }
 
-void TextureComponent::draw(Vector2D pos) {
+void AnimatedTextureComponent::draw(Vector2D pos) {
     DrawTextureRec(mTextureMap.getTexture(),
                     mTextureMap.getRectangle(getFrame()),
                     {pos.x, pos.y},
                     WHITE);
 }
 
-void TextureComponent::receiveTick(IEventData* pEventData) {
+void AnimatedTextureComponent::receiveTick(IEventData* pEventData) {
     if (mVerticalIndex > 0) {
         mVerticalIndex--;
     }
@@ -54,7 +54,7 @@ void TextureComponent::receiveTick(IEventData* pEventData) {
     }
 }
 
-void TextureComponent::receiveOrder(IEventData* pEventData) {
+void AnimatedTextureComponent::receiveOrder(IEventData* pEventData) {
     OrderActorToMoveEventData* moveEvent = reinterpret_cast<OrderActorToMoveEventData*>(pEventData);
     if (moveEvent->getActorId() == mActorId) {
         Vector2D newVector = moveEvent->getDelta();

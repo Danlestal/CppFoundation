@@ -8,7 +8,7 @@
 #include "../engine/components/BidimensionalComponent.hpp"
 #include "../engine/components/BehaviourComponent.hpp"
 #include "../engine/components/BoundingSquareComponent.hpp"
-#include "../engine/components/TextureComponent.hpp"
+#include "../engine/components/AnimatedTextureComponent.hpp"
 
 ActorFactory::ActorFactory(IdentifierProvider* provider, EventManager* eventManager) {
     mIdProvider = provider;
@@ -47,12 +47,12 @@ Actor* ActorFactory::createPlayerSpaceship() {
 
     Texture2D xenonTexture = LoadTexture("./resources/xenon2_sprites.png");
     XenonTextureMap textureMap = XenonTextureMap(xenonTexture);
-    TextureComponent* textureComponent = new TextureComponent(spaceShip->getId(), textureMap);
+    AnimatedTextureComponent* textureComponent = new AnimatedTextureComponent(spaceShip->getId(), textureMap);
     mEventManager->addListener(fastdelegate::MakeDelegate(textureComponent,
-                                                            &TextureComponent::receiveTick),
+                                                            &AnimatedTextureComponent::receiveTick),
                                                             "TickEventDataType");
     mEventManager->addListener(fastdelegate::MakeDelegate(textureComponent,
-                                                            &TextureComponent::receiveOrder),
+                                                            &AnimatedTextureComponent::receiveOrder),
                                                             "OrderActorToMoveEventDataType");
 
 
