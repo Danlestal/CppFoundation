@@ -7,8 +7,14 @@
 class TextureComponent : public GraphicComponent {
  private:
     XenonTextureMap mTextureMap;
+    int mHorizontalIndex;
+    int mVerticalIndex;
+
+    XenonTextureMap::XenonSprite getFrame();
+
  public:
      explicit TextureComponent(long actorId, XenonTextureMap textureMap);
      void draw(Vector2D pos);
      void receiveOrder(IEventData* pEventData);
+     void receiveTick(IEventData* pEventData);
 };

@@ -44,9 +44,19 @@ Actor* ActorFactory::createPlayerSpaceship() {
 
     spaceShip->addComponent(biComponent);
     spaceShip->addComponent(new SquareGraphicComponent(10, 10));
+
     Texture2D xenonTexture = LoadTexture("./resources/xenon2_sprites.png");
     XenonTextureMap textureMap = XenonTextureMap(xenonTexture);
-    spaceShip->addComponent(new TextureComponent(spaceShip->getId(), textureMap));
+    TextureComponent* textureComponent = new TextureComponent(spaceShip->getId(), textureMap);
+    mEventManager->addListener(fastdelegate::MakeDelegate(textureComponent,
+                                                            &TextureComponent::receiveTick),
+                                                            "TickEventDataType");
+    mEventManager->addListener(fastdelegate::MakeDelegate(textureComponent,
+                                                            &TextureComponent::receiveOrder),
+                                                            "OrderActorToMoveEventDataType");
+
+
+    spaceShip->addComponent(textureComponent);
     spaceShip->addComponent(new BoundingSquareComponent(Vector2D(10, 10)));
     return spaceShip;
 }

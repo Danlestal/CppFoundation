@@ -3,6 +3,7 @@
 
 
 #include "./engine/events/EventManager.hpp"
+#include "./engine/events/TickEventData.hpp"
 #include "./engine/IdentifierProvider.hpp"
 #include "./engine/RandomIdProvider.hpp"
 #include "./engine/KeyboardInputManager.hpp"
@@ -49,6 +50,7 @@ int main(void) {
     KeyboardInputManager inputManager = KeyboardInputManager(spaceShip->getId(), eventManager);
     DebugProbe probe = DebugProbe(spaceShip);
 
+    TickEventData* tick = new TickEventData();
     while (!WindowShouldClose()) {
         inputManager.proccessInput();
         eventManager->update();
@@ -58,6 +60,7 @@ int main(void) {
         logic->updateLogic(scene);
         probe.display();
         EndDrawing();
+        eventManager->queueEvent(tick);
     }
     CloseWindow();
 
