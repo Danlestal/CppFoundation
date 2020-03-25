@@ -7,7 +7,6 @@ class DebugProbe {
  private:
     Actor* mMainActor;
     BidimensionalComponent* mMainActorPosition;
-    EventManager* mManager;
  public:
     explicit DebugProbe(Actor* mainActor);
     void display();

@@ -1,13 +1,13 @@
 #pragma once
 #include "GraphicComponent.hpp"
+#include "../XenonTextureMap.hpp"
 #include "../Vector2d.hpp"
 class TextureComponent : public GraphicComponent {
  private:
     int mHeight;
     int mWidth;
-    Texture2D mTexture;
-    Rectangle mCurrentFrame;
+    XenonTextureMap mTextureMap;
  public:
-     TextureComponent(int height, int width, Texture2D texture);
+     TextureComponent(int height, int width, XenonTextureMap textureMap);
      void draw(Vector2D pos);
 };
