@@ -1,7 +1,6 @@
 #include "AnimatedTextureComponent.hpp"
 
-AnimatedTextureComponent::AnimatedTextureComponent(
-                                                    long actorId,
+AnimatedTextureComponent::AnimatedTextureComponent(long actorId,
                                                     TextureMap* textureMap): GraphicComponent() {
     mTextureMap = textureMap;
     mActorId = actorId;

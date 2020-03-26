@@ -32,8 +32,9 @@ Actor* ActorFactory::createInvader() {
 
 Actor* ActorFactory::createPlayerSpaceship() {
     Actor* spaceShip = new Actor(mIdProvider->getUID());
+
     BidimensionalComponent* biComponent =
-    new BidimensionalComponent(spaceShip->getId(), Vector2D(200, 395), mEventManager);
+    new BidimensionalComponent(spaceShip->getId(), Vector2D(200, 350), mEventManager);
     mEventManager->addListener(fastdelegate::MakeDelegate(biComponent,
                                                             &BidimensionalComponent::updatePosition),
                                                             "OrderActorToMoveEventDataType");
@@ -41,9 +42,8 @@ Actor* ActorFactory::createPlayerSpaceship() {
     mEventManager->addListener(fastdelegate::MakeDelegate(biComponent,
                                                             &BidimensionalComponent::receiveCollision),
                                                             "ActorCollidesEventDataType");
-
     spaceShip->addComponent(biComponent);
-    spaceShip->addComponent(new SquareGraphicComponent(10, 10));
+
 
     Texture2D xenonTexture = LoadTexture("./resources/xenon2_sprites.png");
     TextureMap* textureMap = new XenonTextureMap(xenonTexture);
@@ -57,7 +57,7 @@ Actor* ActorFactory::createPlayerSpaceship() {
 
 
     spaceShip->addComponent(textureComponent);
-    spaceShip->addComponent(new BoundingSquareComponent(Vector2D(10, 10)));
+    spaceShip->addComponent(new BoundingSquareComponent(Vector2D(30, 30)));
     return spaceShip;
 }
 
