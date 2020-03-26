@@ -11,13 +11,14 @@ KeyboardInputManager::KeyboardInputManager(long playerId, EventManager* eventMan
 
 void KeyboardInputManager::proccessInput() {
     OrderActorToMoveEventData* movement = NULL;
+    Vector2D vector = Vector2D(0, 0);
 
-    if (IsKeyDown(KEY_RIGHT)) movement = new OrderActorToMoveEventData(mPlayerId, Vector2D(1, 0));
-    if (IsKeyDown(KEY_LEFT)) movement = new OrderActorToMoveEventData(mPlayerId, Vector2D(-1, 0));
-    if (IsKeyDown(KEY_UP)) movement = new OrderActorToMoveEventData(mPlayerId, Vector2D(0, -1));
-    if (IsKeyDown(KEY_DOWN)) movement = new OrderActorToMoveEventData(mPlayerId, Vector2D(0, 1));
+    if (IsKeyDown(KEY_RIGHT)) vector += Vector2D(1, 0);
+    if (IsKeyDown(KEY_LEFT)) vector += Vector2D(-1, 0);
+    if (IsKeyDown(KEY_UP)) vector += Vector2D(0, -1);
+    if (IsKeyDown(KEY_DOWN)) vector += Vector2D(0, 1);
 
-    if (movement) {
-        mEventManager->queueEvent(movement);
+    if (vector.x != 0 || vector.y != 0) {
+        mEventManager->queueEvent(new OrderActorToMoveEventData(mPlayerId, vector));
     }
 }
