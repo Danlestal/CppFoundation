@@ -46,7 +46,7 @@ Actor* ActorFactory::createPlayerSpaceship() {
     spaceShip->addComponent(new SquareGraphicComponent(10, 10));
 
     Texture2D xenonTexture = LoadTexture("./resources/xenon2_sprites.png");
-    XenonTextureMap textureMap = XenonTextureMap(xenonTexture);
+    TextureMap* textureMap = new XenonTextureMap(xenonTexture);
     AnimatedTextureComponent* textureComponent = new AnimatedTextureComponent(spaceShip->getId(), textureMap);
     mEventManager->addListener(fastdelegate::MakeDelegate(textureComponent,
                                                             &AnimatedTextureComponent::receiveTick),

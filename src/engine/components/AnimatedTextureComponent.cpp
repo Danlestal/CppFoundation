@@ -1,6 +1,8 @@
 #include "AnimatedTextureComponent.hpp"
 
-AnimatedTextureComponent::AnimatedTextureComponent(long actorId, XenonTextureMap textureMap): GraphicComponent() {
+AnimatedTextureComponent::AnimatedTextureComponent(
+                                                    long actorId,
+                                                    TextureMap* textureMap): GraphicComponent() {
     mTextureMap = textureMap;
     mActorId = actorId;
     mVerticalIndex = 0;
@@ -30,8 +32,8 @@ XenonTextureMap::XenonSprite AnimatedTextureComponent::getFrame() {
 }
 
 void AnimatedTextureComponent::draw(Vector2D pos) {
-    DrawTextureRec(mTextureMap.getTexture(),
-                    mTextureMap.getRectangle(getFrame()),
+    DrawTextureRec(mTextureMap->getTexture(),
+                    mTextureMap->getRectangle(getFrame()),
                     {pos.x, pos.y},
                     WHITE);
 }
