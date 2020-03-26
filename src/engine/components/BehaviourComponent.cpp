@@ -16,5 +16,5 @@ void BehaviourComponent::update(Vector2D position) {
                 mSpeedVector + Vector2D(0, 5)));
     }
 
-    mEventManager->triggerEvent(new OrderActorToMoveEventData(mActorId, mSpeedVector));
+    mEventManager->queueEvent(new OrderActorToMoveEventData(mActorId, mSpeedVector));
 }
