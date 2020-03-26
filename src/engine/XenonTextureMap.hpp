@@ -3,8 +3,10 @@
 #include <map>
 #include "raylib.h"
 
+#include "TextureMap.hpp"
 
-class XenonTextureMap {
+
+class XenonTextureMap : public TextureMap {
  public:
   enum XenonSprite {
         SPACESHIP,
@@ -15,12 +17,10 @@ class XenonTextureMap {
       };
 
  private:
-    Texture2D mTexture;
     std::map<XenonSprite, Rectangle> mTextureMap;
 
  public:
      XenonTextureMap();
      explicit XenonTextureMap(Texture2D texture);
      Rectangle getRectangle(int index);
-     Texture2D getTexture();
 };

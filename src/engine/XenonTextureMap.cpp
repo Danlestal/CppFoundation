@@ -16,9 +16,6 @@ XenonTextureMap::XenonTextureMap(Texture2D texture) {
     };
 }
 
-Texture2D XenonTextureMap::getTexture() {
-    return mTexture;
-}
 
 Rectangle XenonTextureMap::getRectangle(int index) {
     return mTextureMap[(XenonSprite)index];
