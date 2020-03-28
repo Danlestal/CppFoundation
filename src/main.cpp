@@ -26,13 +26,13 @@ int main(void) {
 
     SetTargetFPS(60);
     EventManager* eventManager = new EventManager();
+    Scene* scene = new Scene(eventManager);
 
     // ALL THIS CRAPOLA SHOULD BE PLACED INSIDE THE MECHANISM TO
     // PARSE THE XML FROM THE SCENE
-    IdentifierProvider *mock = new RandomIdProvider();
-    ActorFactory *factory = new ActorFactory(mock, eventManager);
-    Scene* scene = new Scene(eventManager);
-    // scene->addActor(factory->createInvader());
+    IdentifierProvider *idProvider = new RandomIdProvider();
+    ActorFactory *factory = new ActorFactory(idProvider, scene);
+
     Actor* spaceShip = factory->createPlayerSpaceship();
     scene->addActor(spaceShip);
     std::vector<Actor*> boundaries = factory->createBoundaries(400, 420);

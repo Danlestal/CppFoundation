@@ -3,6 +3,7 @@
 #include "raylib.h"
 #include "Vector2d.hpp"
 #include "./events/OrderActorToMoveEventData.hpp"
+#include "./events/OrderActorToShotEventData.hpp"
 
 KeyboardInputManager::KeyboardInputManager(long playerId, EventManager* eventManager) {
     mPlayerId = playerId;
@@ -20,5 +21,10 @@ void KeyboardInputManager::proccessInput() {
 
     if (vector.x != 0 || vector.y != 0) {
         mEventManager->queueEvent(new OrderActorToMoveEventData(mPlayerId, vector));
+    }
+
+
+    if (IsKeyDown(KEY_BACKSPACE)) {
+        mEventManager->queueEvent(new OrderActorToShotEventData(mPlayerId));
     }
 }

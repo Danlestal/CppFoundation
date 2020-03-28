@@ -9,10 +9,12 @@
 #include "../engine/components/BehaviourComponent.hpp"
 #include "../engine/components/BoundingSquareComponent.hpp"
 #include "../engine/components/AnimatedTextureComponent.hpp"
+#include "../engine/components/GunComponent.hpp"
 
-ActorFactory::ActorFactory(IdentifierProvider* provider, EventManager* eventManager) {
+ActorFactory::ActorFactory(IdentifierProvider* provider, Scene* scene) {
     mIdProvider = provider;
-    mEventManager = eventManager;
+    mScene = scene;
+    mEventManager = scene->getEventManager();
 }
 
 Actor* ActorFactory::createInvader() {
@@ -33,8 +35,9 @@ Actor* ActorFactory::createInvader() {
 Actor* ActorFactory::createPlayerSpaceship() {
     Actor* spaceShip = new Actor(mIdProvider->getUID());
 
+    Vector2D initialVector = Vector2D(200, 350);
     BidimensionalComponent* biComponent =
-    new BidimensionalComponent(spaceShip->getId(), Vector2D(200, 350), mEventManager);
+    new BidimensionalComponent(spaceShip->getId(), initialVector, mEventManager);
     mEventManager->addListener(fastdelegate::MakeDelegate(biComponent,
                                                             &BidimensionalComponent::updatePosition),
                                                             "OrderActorToMoveEventDataType");
@@ -58,7 +61,30 @@ Actor* ActorFactory::createPlayerSpaceship() {
 
     spaceShip->addComponent(textureComponent);
     spaceShip->addComponent(new BoundingSquareComponent(Vector2D(30, 30)));
+
+    GunComponent* gunComponent = new GunComponent(initialVector);
+    mEventManager->addListener(fastdelegate::MakeDelegate(gunComponent,
+                                                            &GunComponent::updatePosition),
+                                                            "UpdateActorPositionEventDataType");
+    mEventManager->addListener(fastdelegate::MakeDelegate(gunComponent,
+                                                        &GunComponent::receiveShotOrder),
+                                                        "OrderActorToShotEventDataType");
+    spaceShip->addComponent(gunComponent);
+
+
+
     return spaceShip;
+}
+
+Actor* ActorFactory::createBullet(Vector2D initialPosition) {
+    Actor* bullet = new Actor(mIdProvider->getUID());
+    BidimensionalComponent* biComponent =
+    new BidimensionalComponent(bullet->getId(), initialPosition, mEventManager);
+    mEventManager->addListener(fastdelegate::MakeDelegate(biComponent,
+                                                            &BidimensionalComponent::receiveCollision),
+                                                            "ActorCollidesEventDataType");
+
+    return bullet;
 }
 
 

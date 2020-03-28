@@ -12,3 +12,7 @@ std::list<Actor*> Scene::getActors() {
     return mActors;
 }
 
+EventManager* Scene::getEventManager(){
+    return mEvtManager;
+}
+

@@ -13,4 +13,5 @@ class Scene {
     explicit Scene(EventManager* evtManager);
     void addActor(Actor* newActor);
     std::list<Actor*>  getActors();
+    EventManager* getEventManager();
 };

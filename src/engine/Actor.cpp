@@ -11,8 +11,6 @@ long Actor::getId() {
 Actor::~Actor() {}
 
 void Actor::addComponent(Component *newComponent) {
-    // TODO(danlestal): Throw a proper exception if
-    // the component does not exists
     mComponents[newComponent->getType()] = newComponent;
 }
 
@@ -21,8 +19,6 @@ bool Actor::hasComponent(std::string componentName) {
 }
 
 Component* Actor::getComponent(std::string componentType) {
-    // TODO(danlestal): Throw a proper exception if
-    // the component does not exists
     return mComponents[componentType];
 }
 
