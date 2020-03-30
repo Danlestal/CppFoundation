@@ -1,18 +1,27 @@
 #include "Scene.hpp"
 
-Scene::Scene(EventManager* evtManager) {
-    mEvtManager = evtManager;
-}
-
 void Scene::addActor(Actor* actor) {
     mActors.push_back(actor);
 }
 
-std::list<Actor*> Scene::getActors() {
-    return mActors;
+void Scene::removeActor(long mActorId) {
+    Actor* actorToRemove = getActor(mActorId);
+    mActors.remove(actorToRemove);
+    delete actorToRemove;
 }
 
-EventManager* Scene::getEventManager(){
-    return mEvtManager;
+Actor* Scene::getActor(long actorId) {
+    for (auto it = mActors.begin(); it != mActors.end(); ++it) {
+        Actor* actor = (*it);
+        if (actor->getId() == actorId) {
+            return actor;
+        }
+    }
+
+    return nullptr;
+}
+
+std::list<Actor*> Scene::getActors() {
+    return mActors;
 }
 

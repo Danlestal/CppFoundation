@@ -26,12 +26,12 @@ int main(void) {
 
     SetTargetFPS(60);
     EventManager* eventManager = new EventManager();
-    Scene* scene = new Scene(eventManager);
+    Scene* scene = new Scene();
 
     // ALL THIS CRAPOLA SHOULD BE PLACED INSIDE THE MECHANISM TO
     // PARSE THE XML FROM THE SCENE
     IdentifierProvider *idProvider = new RandomIdProvider();
-    ActorFactory *factory = new ActorFactory(idProvider, scene);
+    ActorFactory *factory = new ActorFactory(idProvider, scene, eventManager);
 
     Actor* spaceShip = factory->createPlayerSpaceship();
     scene->addActor(spaceShip);

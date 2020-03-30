@@ -8,6 +8,10 @@ AnimatedTextureComponent::AnimatedTextureComponent(long actorId,
     mHorizontalIndex = 0;
 }
 
+AnimatedTextureComponent::~AnimatedTextureComponent() {
+    delete mTextureMap;
+}
+
 XenonTextureMap::XenonSprite AnimatedTextureComponent::getFrame() {
     if (mHorizontalIndex < -7) {
         return XenonTextureMap::SPACESHIP_EXTREME_LEFT;

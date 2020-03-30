@@ -1,7 +1,9 @@
 #include "GunComponent.hpp"
 
-GunComponent::GunComponent(Vector2D initialPosition) {
+GunComponent::GunComponent(long actorId, Vector2D initialPosition, EventManager* evtManager) {
     mPosition = initialPosition;
+    mEventManager = evtManager;
+    mActorId = actorId;
 }
 
 void GunComponent::updatePosition(IEventData* pEventData) {
@@ -10,8 +12,11 @@ void GunComponent::updatePosition(IEventData* pEventData) {
     mPosition += lastMovement;
 }
 
-void GunComponent::receiveShotOrder(IEventData* pEventData) {
-
+void GunComponent::receiveShotOrder(IEventData* event) {
+    OrderActorToShotEventData* orderEvent = reinterpret_cast<OrderActorToShotEventData*>(event);
+    if (mActorId == orderEvent->getActorId()) {
+        mEventManager->queueEvent(new SpawnBulletEventData(mPosition));
+    }
 }
 
 std::string GunComponent::getType() {

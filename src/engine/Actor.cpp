@@ -8,7 +8,11 @@ long Actor::getId() {
     return mId;
 }
 
-Actor::~Actor() {}
+Actor::~Actor() {
+    for (std::map<std::string, Component*>::iterator it=mComponents.begin(); it != mComponents.end(); ++it) {
+        delete it->second;
+    }
+}
 
 void Actor::addComponent(Component *newComponent) {
     mComponents[newComponent->getType()] = newComponent;

@@ -24,7 +24,7 @@ void KeyboardInputManager::proccessInput() {
     }
 
 
-    if (IsKeyDown(KEY_BACKSPACE)) {
+    if (IsKeyDown(KEY_SPACE)) {
         mEventManager->queueEvent(new OrderActorToShotEventData(mPlayerId));
     }
 }

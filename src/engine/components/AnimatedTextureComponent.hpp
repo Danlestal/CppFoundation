@@ -14,6 +14,7 @@ class AnimatedTextureComponent : public GraphicComponent {
 
  public:
      explicit AnimatedTextureComponent(long actorId, TextureMap* textureMap);
+     ~AnimatedTextureComponent();
      void draw(Vector2D pos);
      void receiveOrder(IEventData* pEventData);
      void receiveTick(IEventData* pEventData);

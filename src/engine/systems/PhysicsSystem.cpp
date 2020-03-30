@@ -89,6 +89,9 @@ ActorPhysics* PhysicsSystem::findActor(long id) {
 void PhysicsSystem::updatePosition(IEventData* pEventData) {
     UpdateActorPositionEventData* moveEvent = reinterpret_cast<UpdateActorPositionEventData*>(pEventData);
     ActorPhysics* physics = findActor(moveEvent->getActorId());
+    if (physics == nullptr)
+        return;
+
     Vector2D lastMovement = moveEvent->getDelta();
     physics->lastMovement = lastMovement;
     physics->box += lastMovement;

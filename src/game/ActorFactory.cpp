@@ -10,11 +10,26 @@
 #include "../engine/components/BoundingSquareComponent.hpp"
 #include "../engine/components/AnimatedTextureComponent.hpp"
 #include "../engine/components/GunComponent.hpp"
+#include "../engine/components/BulletBehaviourComponent.hpp"
 
-ActorFactory::ActorFactory(IdentifierProvider* provider, Scene* scene) {
+#include "../engine/events/DestroyActorEventData.hpp"
+#include "../engine/events/SpawnBulletEventData.hpp"
+
+
+
+ActorFactory::ActorFactory( IdentifierProvider* provider,
+                            Scene* scene,
+                            EventManager* evtManager) {
     mIdProvider = provider;
     mScene = scene;
-    mEventManager = scene->getEventManager();
+    mEventManager = evtManager;
+    mEventManager->addListener(fastdelegate::MakeDelegate(this,
+                                                            &ActorFactory::destroyActor),
+                                                            "DestroyActorEventDataType");
+
+    mEventManager->addListener(fastdelegate::MakeDelegate(this,
+                                                        &ActorFactory::spawnBullet),
+                                                        "SpawnBulletEventDataType");
 }
 
 Actor* ActorFactory::createInvader() {
@@ -62,7 +77,7 @@ Actor* ActorFactory::createPlayerSpaceship() {
     spaceShip->addComponent(textureComponent);
     spaceShip->addComponent(new BoundingSquareComponent(Vector2D(30, 30)));
 
-    GunComponent* gunComponent = new GunComponent(initialVector);
+    GunComponent* gunComponent = new GunComponent(spaceShip->getId(), initialVector, mEventManager);
     mEventManager->addListener(fastdelegate::MakeDelegate(gunComponent,
                                                             &GunComponent::updatePosition),
                                                             "UpdateActorPositionEventDataType");
@@ -84,9 +99,26 @@ Actor* ActorFactory::createBullet(Vector2D initialPosition) {
                                                             &BidimensionalComponent::receiveCollision),
                                                             "ActorCollidesEventDataType");
 
+    mEventManager->addListener(fastdelegate::MakeDelegate(biComponent,
+                                                        &BidimensionalComponent::updatePosition),
+                                                        "OrderActorToMoveEventDataType");
+
+    bullet->addComponent(biComponent);
+    bullet->addComponent(new SquareGraphicComponent(20, 20));
+    bullet->addComponent(new BoundingSquareComponent(Vector2D(20, 20)));
+
+
+    BulletBehaviourComponent* bulletBehaviour = new BulletBehaviourComponent(bullet->getId(), mEventManager);
+    mEventManager->addListener(fastdelegate::MakeDelegate(bulletBehaviour,
+                                                    &BulletBehaviourComponent::update),
+                                                    "TickEventDataType");
+
+    bullet->addComponent(bulletBehaviour);
+
+
+
     return bullet;
 }
-
 
 std::vector<Actor*> ActorFactory::createBoundaries(int boardWith, int boardHeight) {
     Actor* leftBoundary = new Actor(mIdProvider->getUID());
@@ -105,4 +137,15 @@ std::vector<Actor*> ActorFactory::createBoundaries(int boardWith, int boardHeigh
     bottomBoundary->addComponent(new SquareGraphicComponent(boardWith, 2));
 
     return std::vector<Actor*>{ leftBoundary, rightBoundary, bottomBoundary};
+}
+
+void ActorFactory::destroyActor(IEventData* destroyActorEventData) {
+    DestroyActorEventData* destroyEvent = reinterpret_cast<DestroyActorEventData*>(destroyActorEventData);
+    mScene->removeActor(destroyEvent->getActorId());
+}
+
+void ActorFactory::spawnBullet(IEventData* spawnBulletData) {
+    SpawnBulletEventData* spawnEvent = reinterpret_cast<SpawnBulletEventData*>(spawnBulletData);
+    Actor* bullet = createBullet(spawnEvent->getInitialPosition());
+    mScene->addActor(bullet);
 }

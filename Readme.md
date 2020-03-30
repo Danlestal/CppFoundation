@@ -20,11 +20,19 @@ que estar comprobando el id del actor. Por ahora creo que puedo vivir con ello.
 
 
 
-2. Camino de ruta.
+
+
+2. Hoja de ruta.
+Ya soy capaz de disparar balas. Pero no se destruyen por algún problema con sus
+físicas y ademas hay algun problema a la hora de crearlass :_(
+
 
 2.1 Disparar balas.
     2.1.1 Spawn de actores en tiempo real
     2.1.2 Componente Bala, seguramente sea un componente behaviour.
+
+--->
+
     2.1.3 Atlas de texturas de la bala
     2.1.4 Animación de la bala
     2.1.5 Destruccion del actor bala cuando sale de las boundaries (esto va a empezar a hacer daño a nivel de memoria.)
@@ -32,3 +40,7 @@ que estar comprobando el id del actor. Por ahora creo que puedo vivir con ello.
 
 3. Cosas a revisar.
     Sospecho que tengo que cambiar todos lo pointes por smart_pointers. La pereza
+    Seria interesante tener una clase SceneManager? Ahi metería el event manager y la scene. 
+    Por ahora los métodos que tendria los he metido en la Factory.
+    El concepto de SceneManager en cualquier caso es algo muy específico del juego, no del Engine.
+    
