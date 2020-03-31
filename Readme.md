@@ -11,7 +11,6 @@ Voy a seguir una arquitectura estilo ECS. Gracias a esto puedo casi orientar tod
 Los delegates deberían utilizarse unicamente dentro de decoraciones de estos componentes, pero me da la sensacion que siguiendo esa aproximacion estoy complicando innecesariamente la estructura de clases.
 Por ejemplo, BidimensionalComponent tiene que tener 2 delegates para recibir eventos de actualizacion y colision. Ambos delegates son unicamente utilizados para controlar las ordenes que llegan a la nave.
 Al haberlos metido, estoy ensuciando el componente con métodos que solo utilizará la nave.
-Ahora si quiero utilizar el mismo componente para la bala tengo código redundante que no estoy utilizando.
 
 Me da la sensacion que esos 2 métodos deberían estar dentro de un behaviour component.
 
@@ -19,7 +18,7 @@ Toda comunicacion entre componentes se realiza a traves del EventManager. Esto t
 que estar comprobando el id del actor. Por ahora creo que puedo vivir con ello.
 
 
-
+Los sistemas tienen ahora una referencia a la escena. Suena lógico, porque basicamente los sistemas modifican el estado de la escena.
 
 
 2. Hoja de ruta.
@@ -32,10 +31,13 @@ físicas y ademas hay algun problema a la hora de crearlass :_(
     2.1.2 Componente Bala, seguramente sea un componente behaviour.
 
 --->
+    2.1.3 Añadir delay al componete GUN para evitar spawnear muchas balas.
+    2.1.4 Destruccion del actor bala cuando sale de las boundaries (esto va a empezar a hacer daño a nivel de memoria.)
+    2.1.5 Atlas de texturas de la bala
+    2.1.6 Animación de la bala
 
-    2.1.3 Atlas de texturas de la bala
-    2.1.4 Animación de la bala
-    2.1.5 Destruccion del actor bala cuando sale de las boundaries (esto va a empezar a hacer daño a nivel de memoria.)
+3.1 Marcianos
+    
 
 
 3. Cosas a revisar.

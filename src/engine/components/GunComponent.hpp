@@ -14,6 +14,8 @@ class GunComponent : public Component {
  private:
     Vector2D mPosition;
     EventManager* mEventManager;
+    const int GUN_FREQUENCY = 45;
+    int mTickCounter;
  public:
     explicit GunComponent(long actorId, Vector2D initialPosition, EventManager* evtManager);
     std::string getType();
