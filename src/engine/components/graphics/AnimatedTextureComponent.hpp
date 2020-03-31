@@ -1,8 +1,8 @@
 #pragma once
 #include "GraphicComponent.hpp"
-#include "../XenonTextureMap.hpp"
-#include "../Vector2d.hpp"
-#include "../events/OrderActorToMoveEventData.hpp"
+#include "../../XenonTextureMap.hpp"
+#include "../../Vector2d.hpp"
+#include "../../events/OrderActorToMoveEventData.hpp"
 
 class AnimatedTextureComponent : public GraphicComponent {
  private:

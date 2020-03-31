@@ -2,15 +2,18 @@
 #include "../engine/Vector2d.hpp"
 #include "../engine/components/Component.hpp"
 #include "../engine/components/LifeComponent.hpp"
-#include "../engine/components/GraphicComponent.hpp"
-#include "../engine/components/CircleGraphicComponent.hpp"
-#include "../engine/components/SquareGraphicComponent.hpp"
+#include "../engine/components/graphics/GraphicComponent.hpp"
+#include "../engine/components/graphics/CircleGraphicComponent.hpp"
+#include "../engine/components/graphics/SquareGraphicComponent.hpp"
+#include "../engine/components/graphics/AnimatedTextureComponent.hpp"
 #include "../engine/components/BidimensionalComponent.hpp"
-#include "../engine/components/BehaviourComponent.hpp"
+
+#include "../engine/components/behaviours/InvaderBehaviourComponent.hpp"
 #include "../engine/components/BoundingSquareComponent.hpp"
-#include "../engine/components/AnimatedTextureComponent.hpp"
+
 #include "../engine/components/GunComponent.hpp"
-#include "../engine/components/BulletBehaviourComponent.hpp"
+
+#include "../engine/components/behaviours/BulletBehaviourComponent.hpp"
 
 #include "../engine/events/DestroyActorEventData.hpp"
 #include "../engine/events/SpawnBulletEventData.hpp"
@@ -41,8 +44,7 @@ Actor* ActorFactory::createInvader() {
     invader->addComponent(biComponent);
     invader->addComponent(new CircleGraphicComponent());
 
-    invader->addComponent(new BehaviourComponent(invader->getId(),
-                                                mEventManager));
+    invader->addComponent(new InvaderBehaviourComponent(invader->getId(), mEventManager));
     invader->addComponent(new BoundingSquareComponent(Vector2D(10, 10)));
     return invader;
 }
@@ -109,10 +111,6 @@ Actor* ActorFactory::createBullet(Vector2D initialPosition) {
 
 
     BulletBehaviourComponent* bulletBehaviour = new BulletBehaviourComponent(bullet->getId(), mEventManager);
-    mEventManager->addListener(fastdelegate::MakeDelegate(bulletBehaviour,
-                                                    &BulletBehaviourComponent::update),
-                                                    "TickEventDataType");
-
     bullet->addComponent(bulletBehaviour);
 
 

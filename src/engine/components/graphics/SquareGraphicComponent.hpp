@@ -1,6 +1,7 @@
 #pragma once
 #include "GraphicComponent.hpp"
-#include "../Vector2d.hpp"
+#include "../../Vector2d.hpp"
+
 class SquareGraphicComponent : public GraphicComponent {
  private:
     int mHeight;

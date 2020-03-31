@@ -1,5 +1,5 @@
 #include "BulletBehaviourComponent.hpp"
-#include "../events/OrderActorToMoveEventData.hpp"
+#include "../../events/OrderActorToMoveEventData.hpp"
 
 BulletBehaviourComponent::BulletBehaviourComponent(long actorId, EventManager* evtManager) {
     mEventManager = evtManager;
@@ -7,11 +7,7 @@ BulletBehaviourComponent::BulletBehaviourComponent(long actorId, EventManager* e
     mActorId = actorId;
 }
 
-void BulletBehaviourComponent::update(IEventData* pEventData) {
-    mEventManager->triggerEvent(
-        new OrderActorToMoveEventData(
-            mActorId,
-            mSpeedVector));
+void BulletBehaviourComponent::update(Vector2D currentPosition ) {
     mEventManager->queueEvent(new OrderActorToMoveEventData(mActorId, mSpeedVector));
 }
 

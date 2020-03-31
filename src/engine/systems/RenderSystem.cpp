@@ -1,6 +1,6 @@
 #include "RenderSystem.hpp"
 #include <list>
-#include "../components/GraphicComponent.hpp"
+#include "../components/graphics/GraphicComponent.hpp"
 #include "../components/BidimensionalComponent.hpp"
 
 void RenderSystem::draw(Scene* scene) {
