@@ -3,8 +3,13 @@
 #include "../components/behaviours/BehaviourComponent.hpp"
 #include "../components/BidimensionalComponent.hpp"
 
-void LogicSystem::updateLogic(Scene* scene) {
-    std::list<Actor*> actors = scene->getActors();
+
+LogicSystem::LogicSystem(Scene* scene) {
+    mScene = scene;
+}
+
+void LogicSystem::updateLogic() {
+    std::list<Actor*> actors = mScene->getActors();
     for (auto it = actors.begin(); it != actors.end(); ++it) {
         Actor* actor = (*it);
         if (actor->hasComponent("BidimensionalComponent") && actor->hasComponent("BehaviourComponent")) {

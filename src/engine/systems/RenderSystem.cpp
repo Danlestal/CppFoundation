@@ -3,8 +3,13 @@
 #include "../components/graphics/GraphicComponent.hpp"
 #include "../components/BidimensionalComponent.hpp"
 
-void RenderSystem::draw(Scene* scene) {
-    std::list<Actor*> actors = scene->getActors();
+
+RenderSystem::RenderSystem(Scene* scene) {
+    mScene = scene;
+}
+
+void RenderSystem::draw() {
+    std::list<Actor*> actors = mScene->getActors();
     for (auto it = actors.begin(); it != actors.end(); ++it) {
         Actor* actor = (*it);
         if (actor->hasComponent("BidimensionalComponent") && actor->hasComponent("GraphicComponent")) {

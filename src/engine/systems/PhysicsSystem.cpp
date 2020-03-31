@@ -5,12 +5,14 @@
 #include "../components/BidimensionalComponent.hpp"
 #include "../events/ActorCollidesEventData.hpp"
 #include "../events/UpdateActorPositionEventData.hpp"
+#include "../events/AddActorEventData.hpp"
+#include "../events/DestroyActorEventData.hpp"
 
 
 
-
-PhysicsSystem::PhysicsSystem(EventManager* eventManager) {
+PhysicsSystem::PhysicsSystem(Scene* scene, EventManager* eventManager) {
     mEventManager = eventManager;
+    mScene = scene;
 }
 
 void PhysicsSystem::checkActorPhysics(ActorPhysics* toCheck) {
@@ -26,23 +28,22 @@ void PhysicsSystem::checkActorPhysics(ActorPhysics* toCheck) {
     }
 }
 
-
 static bool compareXAxis(const ActorPhysics* first, const ActorPhysics* second) {
     return (first->box.min.x < second->box.min.x);
 }
 
-
 void PhysicsSystem::initAxisList(std::list<Actor*> actors) {
     for (auto it = actors.begin(); it != actors.end(); ++it) {
         Actor* actor = (*it);
-        if (actor->hasComponent("BidimensionalComponent")
-            && actor->hasComponent("BoundingSquareComponent")) {
+        createAndAddActorIfNeeded(actor);
+    }
+}
+
+void PhysicsSystem::createAndAddActorIfNeeded(Actor* actor) {
+    if (actor->hasComponent("BidimensionalComponent") && actor->hasComponent("BoundingSquareComponent")) {
             ActorPhysics* actorPhysics = createActorPhysics(actor);
             mAxisList.push_back(actorPhysics);
-        }
     }
-
-    std::sort(mAxisList.begin(), mAxisList.end(), compareYAxis);
 }
 
 ActorPhysics* PhysicsSystem::createActorPhysics(Actor* actor) {
@@ -61,11 +62,21 @@ ActorPhysics* PhysicsSystem::createActorPhysics(Actor* actor) {
     return phys;
 }
 
-void PhysicsSystem::init(Scene* scene) {
-    initAxisList(scene->getActors());
+void PhysicsSystem::init() {
+    // initAxisList(mScene->getActors());
     mEventManager->addListener(fastdelegate::MakeDelegate(this,
                                 &PhysicsSystem::updatePosition),
                                 "UpdateActorPositionEventDataType");
+
+    mEventManager->addListener(fastdelegate::MakeDelegate(
+                                    this,
+                                    &PhysicsSystem::addActor),
+                                    "AddActorEventDataType");
+
+    mEventManager->addListener(fastdelegate::MakeDelegate(
+                                this,
+                                &PhysicsSystem::removeActor),
+                                "DestroyActorEventDataType");
 }
 
 bool PhysicsSystem::collides(AABB firstBox, AABB secondBox) {
@@ -74,7 +85,6 @@ bool PhysicsSystem::collides(AABB firstBox, AABB secondBox) {
         firstBox.min.y < secondBox.max.y &&
         firstBox.max.y > secondBox.min.y);
 }
-
 
 ActorPhysics* PhysicsSystem::findActor(long id) {
     for (auto it = mAxisList.begin(); it != mAxisList.end(); ++it) {
@@ -96,4 +106,15 @@ void PhysicsSystem::updatePosition(IEventData* pEventData) {
     physics->lastMovement = lastMovement;
     physics->box += lastMovement;
     checkActorPhysics(physics);
+}
+
+void PhysicsSystem::addActor(IEventData* newActorAddedEvent) {
+    AddActorEventData* addEvent = reinterpret_cast<AddActorEventData*>(newActorAddedEvent);
+    Actor* actorToAdd = mScene->getActor(addEvent->getActorId());
+    createAndAddActorIfNeeded(actorToAdd);
+}
+
+void PhysicsSystem::removeActor(IEventData* removeActorEvent) {
+    DestroyActorEventData* removeEvent = reinterpret_cast<DestroyActorEventData*>(removeActorEvent);
+    Actor* actorToAdd = mScene->getActor(removeEvent->getActorId());
 }

@@ -2,12 +2,12 @@
 #include <string>
 #include "BaseEventData.hpp"
 
-class DestroyActorEventData : public BaseEventData {
+class AddActorEventData : public BaseEventData {
  private:
     long mActorId;
 
  public:
-    explicit DestroyActorEventData( long actorId) {
+    explicit AddActorEventData(long actorId) {
         mActorId = actorId;
     }
 
@@ -16,6 +16,6 @@ class DestroyActorEventData : public BaseEventData {
     }
 
     std::string getEventType(void) const {
-        return "DestroyActorEventDataType";
+        return "AddActorEventDataType";
     }
 };

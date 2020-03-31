@@ -20,13 +20,15 @@ int main(void) {
     const int screenWidth = 800;
     const int screenHeight = 450;
 
-    InitWindow(screenWidth,
-    screenHeight,
-    "raylib");
+    InitWindow(screenWidth, screenHeight, "raylib");
 
     SetTargetFPS(60);
     EventManager* eventManager = new EventManager();
-    Scene* scene = new Scene();
+    Scene* scene = new Scene(eventManager);
+    RenderSystem* view = new RenderSystem(scene);
+    LogicSystem* logic = new LogicSystem(scene);
+    PhysicsSystem* phys = new PhysicsSystem(scene, eventManager);
+    phys->init();  // This should be called inside the constructor. Probably.
 
     // ALL THIS CRAPOLA SHOULD BE PLACED INSIDE THE MECHANISM TO
     // PARSE THE XML FROM THE SCENE
@@ -41,12 +43,6 @@ int main(void) {
         scene->addActor(actor);
     }
     // PARSE THE XML FROM THE SCENE END
-
-    RenderSystem* view = new RenderSystem();
-    LogicSystem* logic = new LogicSystem();
-    PhysicsSystem* phys = new PhysicsSystem(eventManager);
-    phys->init(scene);
-
     KeyboardInputManager inputManager = KeyboardInputManager(spaceShip->getId(), eventManager);
     DebugProbe probe = DebugProbe(spaceShip);
 
@@ -56,8 +52,8 @@ int main(void) {
         eventManager->update();
         BeginDrawing();
         ClearBackground(RAYWHITE);
-        view->draw(scene);
-        logic->updateLogic(scene);
+        view->draw();
+        logic->updateLogic();
         probe.display();
         EndDrawing();
         eventManager->queueEvent(tick);

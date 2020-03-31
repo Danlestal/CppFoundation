@@ -1,7 +1,13 @@
 #include "Scene.hpp"
 
+
+Scene::Scene(EventManager* eventManager){
+    mEventManager = eventManager;
+}
+
 void Scene::addActor(Actor* actor) {
     mActors.push_back(actor);
+    mEventManager->queueEvent(new AddActorEventData(actor->getId()));
 }
 
 void Scene::removeActor(long mActorId) {

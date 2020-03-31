@@ -29,15 +29,21 @@ static bool compareYAxis(const ActorPhysics* first, const ActorPhysics* second) 
 class PhysicsSystem {
  private:
     EventManager* mEventManager;
+    Scene* mScene;
     std::vector<ActorPhysics*> mAxisList;
+
     void initAxisList(std::list<Actor*> actors);
+    void createAndAddActorIfNeeded(Actor* actor);
     ActorPhysics* createActorPhysics(Actor* actor);
     ActorPhysics* findActor(long id);
+    
     void updatePosition(IEventData* pEventData);
+    void addActor(IEventData* pEventData);
+    void removeActor(IEventData* pEventData);
 
  public:
-    explicit PhysicsSystem(EventManager* eventManager);
-    void init(Scene* scene);
+    explicit PhysicsSystem(Scene* scene, EventManager* eventManager);
+    void init();
     bool collides(AABB firstBox, AABB secondBox);
     void checkActorPhysics(ActorPhysics* toCheck);
 };

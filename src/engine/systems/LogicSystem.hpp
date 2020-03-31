@@ -1,6 +1,9 @@
 #pragma once
 #include "../Scene.hpp"
 class LogicSystem {
+ private:
+    Scene* mScene;
  public:
-    void updateLogic(Scene* sceneToDraw);
+    explicit LogicSystem(Scene* scene);
+    void updateLogic();
 };
