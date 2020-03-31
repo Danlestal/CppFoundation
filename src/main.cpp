@@ -27,8 +27,8 @@ int main(void) {
     Scene* scene = new Scene(eventManager);
     RenderSystem* view = new RenderSystem(scene);
     LogicSystem* logic = new LogicSystem(scene);
-    PhysicsSystem* phys = new PhysicsSystem(scene, eventManager);
-    phys->init();  // This should be called inside the constructor. Probably.
+    PhysicsSystem* phys = new PhysicsSystem(scene);
+
 
     // ALL THIS CRAPOLA SHOULD BE PLACED INSIDE THE MECHANISM TO
     // PARSE THE XML FROM THE SCENE

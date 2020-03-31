@@ -41,9 +41,9 @@ class PhysicsSystem {
     void addActor(IEventData* pEventData);
     void removeActor(IEventData* pEventData);
 
- public:
-    explicit PhysicsSystem(Scene* scene, EventManager* eventManager);
-    void init();
-    bool collides(AABB firstBox, AABB secondBox);
     void checkActorPhysics(ActorPhysics* toCheck);
+
+ public:
+    explicit PhysicsSystem(Scene* scene);
+    bool collides(AABB firstBox, AABB secondBox);
 };

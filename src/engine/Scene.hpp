@@ -8,12 +8,13 @@
 
 class Scene {
  private:
-    std::list<Actor*> mActors;
-    EventManager* mEventManager;
+   std::list<Actor*> mActors;
+   EventManager* mEventManager;
  public:
-    explicit Scene(EventManager* eventManager);
-    void addActor(Actor* newActor);
-    std::list<Actor*>  getActors();
-    Actor* getActor(long mActorId);
-    void removeActor(long mActorId);
+   explicit Scene(EventManager* eventManager);
+   void addActor(Actor* newActor);
+   std::list<Actor*>  getActors();
+   Actor* getActor(long mActorId);
+   void removeActor(long mActorId);
+   EventManager* getEventManager(); 
 };

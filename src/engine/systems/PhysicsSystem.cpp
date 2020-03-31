@@ -10,9 +10,23 @@
 
 
 
-PhysicsSystem::PhysicsSystem(Scene* scene, EventManager* eventManager) {
-    mEventManager = eventManager;
+PhysicsSystem::PhysicsSystem(Scene* scene) {
     mScene = scene;
+    mEventManager = scene->getEventManager();
+
+    mEventManager->addListener(fastdelegate::MakeDelegate(this,
+                                &PhysicsSystem::updatePosition),
+                                "UpdateActorPositionEventDataType");
+
+    mEventManager->addListener(fastdelegate::MakeDelegate(
+                                    this,
+                                    &PhysicsSystem::addActor),
+                                    "AddActorEventDataType");
+
+    mEventManager->addListener(fastdelegate::MakeDelegate(
+                                this,
+                                &PhysicsSystem::removeActor),
+                                "DestroyActorEventDataType");
 }
 
 void PhysicsSystem::checkActorPhysics(ActorPhysics* toCheck) {
@@ -32,12 +46,6 @@ static bool compareXAxis(const ActorPhysics* first, const ActorPhysics* second) 
     return (first->box.min.x < second->box.min.x);
 }
 
-void PhysicsSystem::initAxisList(std::list<Actor*> actors) {
-    for (auto it = actors.begin(); it != actors.end(); ++it) {
-        Actor* actor = (*it);
-        createAndAddActorIfNeeded(actor);
-    }
-}
 
 void PhysicsSystem::createAndAddActorIfNeeded(Actor* actor) {
     if (actor->hasComponent("BidimensionalComponent") && actor->hasComponent("BoundingSquareComponent")) {
@@ -60,23 +68,6 @@ ActorPhysics* PhysicsSystem::createActorPhysics(Actor* actor) {
     phys->actorId = actor->getId();
     phys->lastMovement = Vector2D();
     return phys;
-}
-
-void PhysicsSystem::init() {
-    // initAxisList(mScene->getActors());
-    mEventManager->addListener(fastdelegate::MakeDelegate(this,
-                                &PhysicsSystem::updatePosition),
-                                "UpdateActorPositionEventDataType");
-
-    mEventManager->addListener(fastdelegate::MakeDelegate(
-                                    this,
-                                    &PhysicsSystem::addActor),
-                                    "AddActorEventDataType");
-
-    mEventManager->addListener(fastdelegate::MakeDelegate(
-                                this,
-                                &PhysicsSystem::removeActor),
-                                "DestroyActorEventDataType");
 }
 
 bool PhysicsSystem::collides(AABB firstBox, AABB secondBox) {
