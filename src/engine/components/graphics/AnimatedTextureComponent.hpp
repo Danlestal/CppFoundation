@@ -6,6 +6,7 @@
 
 class AnimatedTextureComponent : public GraphicComponent {
  private:
+    EventManager* mEventManager;
     TextureMap* mTextureMap;
     int mHorizontalIndex;
     int mVerticalIndex;
@@ -13,7 +14,7 @@ class AnimatedTextureComponent : public GraphicComponent {
     XenonTextureMap::XenonSprite getFrame();
 
  public:
-     explicit AnimatedTextureComponent(long actorId, TextureMap* textureMap);
+     explicit AnimatedTextureComponent(long actorId, TextureMap* textureMap, EventManager* eventManager);
      ~AnimatedTextureComponent();
      void draw(Vector2D pos);
      void receiveOrder(IEventData* pEventData);

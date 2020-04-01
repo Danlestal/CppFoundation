@@ -5,6 +5,27 @@ GunComponent::GunComponent(long actorId, Vector2D initialPosition, EventManager*
     mEventManager = evtManager;
     mActorId = actorId;
     mTicksSinceLastShot = 0;
+    mEventManager->addListener(fastdelegate::MakeDelegate(this,
+                                                            &GunComponent::updatePosition),
+                                                            "UpdateActorPositionEventDataType");
+    mEventManager->addListener(fastdelegate::MakeDelegate(this,
+                                                        &GunComponent::receiveShotOrder),
+                                                        "OrderActorToShotEventDataType");
+    mEventManager->addListener(fastdelegate::MakeDelegate(this,
+                                                            &GunComponent::receiveTick),
+                                                            "TickEventDataType");
+}
+
+GunComponent::~GunComponent() {
+    mEventManager->removeListener(fastdelegate::MakeDelegate(this,
+                                                            &GunComponent::updatePosition),
+                                                            "UpdateActorPositionEventDataType");
+    mEventManager->removeListener(fastdelegate::MakeDelegate(this,
+                                                        &GunComponent::receiveShotOrder),
+                                                        "OrderActorToShotEventDataType");
+    mEventManager->removeListener(fastdelegate::MakeDelegate(this,
+                                                            &GunComponent::receiveTick),
+                                                            "TickEventDataType");
 }
 
 void GunComponent::updatePosition(IEventData* pEventData) {

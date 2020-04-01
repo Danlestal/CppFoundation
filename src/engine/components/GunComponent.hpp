@@ -16,6 +16,7 @@ class GunComponent : public Component {
     int mTicksSinceLastShot;
  public:
     explicit GunComponent(long mActorId, Vector2D initialPosition, EventManager* evtManager);
+    ~GunComponent();
     std::string getType();
     void updatePosition(IEventData* pEventData);
     void receiveShotOrder(IEventData* pEventData);

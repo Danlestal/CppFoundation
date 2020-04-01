@@ -51,41 +51,13 @@ Actor* ActorFactory::createInvader() {
 
 Actor* ActorFactory::createPlayerSpaceship() {
     Actor* spaceShip = new Actor(mIdProvider->getUID());
-
     Vector2D initialVector = Vector2D(200, 350);
-    BidimensionalComponent* biComponent =
-    new BidimensionalComponent(spaceShip->getId(), initialVector, mEventManager);
-    spaceShip->addComponent(biComponent);
-
-
+    spaceShip->addComponent(new BidimensionalComponent(spaceShip->getId(), initialVector, mEventManager));
+    spaceShip->addComponent(new BoundingSquareComponent(Vector2D(30, 30)));
+    spaceShip->addComponent(new GunComponent(spaceShip->getId(), initialVector, mEventManager));
     Texture2D xenonTexture = LoadTexture("./resources/xenon2_sprites.png");
     TextureMap* textureMap = new XenonTextureMap(xenonTexture);
-    AnimatedTextureComponent* textureComponent = new AnimatedTextureComponent(spaceShip->getId(), textureMap);
-    mEventManager->addListener(fastdelegate::MakeDelegate(textureComponent,
-                                                            &AnimatedTextureComponent::receiveTick),
-                                                            "TickEventDataType");
-    mEventManager->addListener(fastdelegate::MakeDelegate(textureComponent,
-                                                            &AnimatedTextureComponent::receiveOrder),
-                                                            "OrderActorToMoveEventDataType");
-
-
-    spaceShip->addComponent(textureComponent);
-    spaceShip->addComponent(new BoundingSquareComponent(Vector2D(30, 30)));
-
-    GunComponent* gunComponent = new GunComponent(spaceShip->getId(), initialVector, mEventManager);
-    mEventManager->addListener(fastdelegate::MakeDelegate(gunComponent,
-                                                            &GunComponent::updatePosition),
-                                                            "UpdateActorPositionEventDataType");
-    mEventManager->addListener(fastdelegate::MakeDelegate(gunComponent,
-                                                        &GunComponent::receiveShotOrder),
-                                                        "OrderActorToShotEventDataType");
-    mEventManager->addListener(fastdelegate::MakeDelegate(gunComponent,
-                                                            &GunComponent::receiveTick),
-                                                            "TickEventDataType");
-    spaceShip->addComponent(gunComponent);
-
-
-
+    spaceShip->addComponent(new AnimatedTextureComponent(spaceShip->getId(), textureMap, mEventManager));
     return spaceShip;
 }
 
@@ -96,13 +68,7 @@ Actor* ActorFactory::createBullet(Vector2D initialPosition) {
     bullet->addComponent(biComponent);
     bullet->addComponent(new SquareGraphicComponent(20, 20));
     bullet->addComponent(new BoundingSquareComponent(Vector2D(20, 20)));
-
-
-    BulletBehaviourComponent* bulletBehaviour = new BulletBehaviourComponent(bullet->getId(), mEventManager);
-    bullet->addComponent(bulletBehaviour);
-
-
-
+    bullet->addComponent(new BulletBehaviourComponent(bullet->getId(), mEventManager));
     return bullet;
 }
 

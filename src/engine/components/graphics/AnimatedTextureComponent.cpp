@@ -1,15 +1,28 @@
 #include "AnimatedTextureComponent.hpp"
 
 AnimatedTextureComponent::AnimatedTextureComponent(long actorId,
-                                                    TextureMap* textureMap): GraphicComponent() {
+                                                    TextureMap* textureMap,
+                                                    EventManager* eventManager): GraphicComponent() {
     mTextureMap = textureMap;
     mActorId = actorId;
     mVerticalIndex = 0;
     mHorizontalIndex = 0;
+    mEventManager = eventManager;
+    mEventManager->addListener(fastdelegate::MakeDelegate(this,
+                                                            &AnimatedTextureComponent::receiveTick),
+                                                            "TickEventDataType");
+    mEventManager->addListener(fastdelegate::MakeDelegate(this,
+                                                            &AnimatedTextureComponent::receiveOrder),
+                                                            "OrderActorToMoveEventDataType");
 }
 
 AnimatedTextureComponent::~AnimatedTextureComponent() {
-    delete mTextureMap;
+    mEventManager->removeListener(fastdelegate::MakeDelegate(this,
+                                                            &AnimatedTextureComponent::receiveTick),
+                                                            "TickEventDataType");
+    mEventManager->removeListener(fastdelegate::MakeDelegate(this,
+                                                            &AnimatedTextureComponent::receiveOrder),
+                                                            "OrderActorToMoveEventDataType");
 }
 
 XenonTextureMap::XenonSprite AnimatedTextureComponent::getFrame() {
