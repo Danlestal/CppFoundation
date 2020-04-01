@@ -6,6 +6,7 @@
 #include "../engine/components/graphics/CircleGraphicComponent.hpp"
 #include "../engine/components/graphics/SquareGraphicComponent.hpp"
 #include "../engine/components/graphics/AnimatedTextureComponent.hpp"
+#include "../engine/components/graphics/BulletTextureComponent.hpp"
 #include "../engine/components/BidimensionalComponent.hpp"
 
 #include "../engine/components/behaviours/InvaderBehaviourComponent.hpp"
@@ -66,7 +67,10 @@ Actor* ActorFactory::createBullet(Vector2D initialPosition) {
     BidimensionalComponent* biComponent =
     new BidimensionalComponent(bullet->getId(), initialPosition, mEventManager);
     bullet->addComponent(biComponent);
-    bullet->addComponent(new SquareGraphicComponent(20, 20));
+    Texture2D xenonTexture = LoadTexture("./resources/xenon2_sprites.png");
+    TextureMap* textureMap = new XenonTextureMap(xenonTexture);
+
+    bullet->addComponent(new BulletTextureComponent(bullet->getId(), textureMap, mEventManager));
     bullet->addComponent(new BoundingSquareComponent(Vector2D(20, 20)));
     bullet->addComponent(new BulletBehaviourComponent(bullet->getId(), mEventManager));
     return bullet;
