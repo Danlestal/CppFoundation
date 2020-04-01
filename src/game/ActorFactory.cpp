@@ -101,10 +101,6 @@ Actor* ActorFactory::createBullet(Vector2D initialPosition) {
     BidimensionalComponent* biComponent =
     new BidimensionalComponent(bullet->getId(), initialPosition, mEventManager);
     mEventManager->addListener(fastdelegate::MakeDelegate(biComponent,
-                                                            &BidimensionalComponent::receiveCollision),
-                                                            "ActorCollidesEventDataType");
-
-    mEventManager->addListener(fastdelegate::MakeDelegate(biComponent,
                                                         &BidimensionalComponent::updatePosition),
                                                         "OrderActorToMoveEventDataType");
 
@@ -114,6 +110,9 @@ Actor* ActorFactory::createBullet(Vector2D initialPosition) {
 
 
     BulletBehaviourComponent* bulletBehaviour = new BulletBehaviourComponent(bullet->getId(), mEventManager);
+    mEventManager->addListener(fastdelegate::MakeDelegate(bulletBehaviour,
+                                                        &BulletBehaviourComponent::receiveCollision),
+                                                        "ActorCollidesEventDataType");
     bullet->addComponent(bulletBehaviour);
 
 
@@ -137,7 +136,13 @@ std::vector<Actor*> ActorFactory::createBoundaries(int boardWith, int boardHeigh
     bottomBoundary->addComponent(new BoundingSquareComponent(Vector2D(boardWith, 2)));
     bottomBoundary->addComponent(new SquareGraphicComponent(boardWith, 2));
 
-    return std::vector<Actor*>{ leftBoundary, rightBoundary, bottomBoundary};
+
+    Actor* upperBoundary = new Actor(mIdProvider->getUID());
+    upperBoundary->addComponent(new BidimensionalComponent(upperBoundary->getId(), Vector2D(0, 5), mEventManager));
+    upperBoundary->addComponent(new BoundingSquareComponent(Vector2D(boardWith, 2)));
+    upperBoundary->addComponent(new SquareGraphicComponent(boardWith, 2));
+
+    return std::vector<Actor*>{ leftBoundary, rightBoundary, bottomBoundary, upperBoundary};
 }
 
 void ActorFactory::destroyActor(IEventData* destroyActorEventData) {

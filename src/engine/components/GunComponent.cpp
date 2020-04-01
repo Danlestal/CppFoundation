@@ -9,8 +9,11 @@ GunComponent::GunComponent(long actorId, Vector2D initialPosition, EventManager*
 
 void GunComponent::updatePosition(IEventData* pEventData) {
     UpdateActorPositionEventData* moveEvent = reinterpret_cast<UpdateActorPositionEventData*>(pEventData);
-    Vector2D lastMovement = moveEvent->getDelta();
-    mPosition += lastMovement;
+    if (moveEvent->getActorId() == mActorId) {
+        UpdateActorPositionEventData* moveEvent = reinterpret_cast<UpdateActorPositionEventData*>(pEventData);
+        Vector2D lastMovement = moveEvent->getDelta();
+        mPosition += lastMovement;
+    }
 }
 
 void GunComponent::receiveShotOrder(IEventData* event) {
@@ -18,7 +21,8 @@ void GunComponent::receiveShotOrder(IEventData* event) {
     if (mActorId == orderEvent->getActorId()) {
         if (mTicksSinceLastShot >= GUN_FREQUENCY) {
             mTicksSinceLastShot = 0;
-            mEventManager->queueEvent(new SpawnBulletEventData(mPosition));
+            Vector2D spawnPosition = mPosition + Vector2D(0, -30);
+            mEventManager->queueEvent(new SpawnBulletEventData(spawnPosition));
         }
     }
 }

@@ -8,8 +8,6 @@
 #include "../events/SpawnBulletEventData.hpp"
 #include "../events/OrderActorToShotEventData.hpp"
 
-
-
 class GunComponent : public Component {
  private:
     Vector2D mPosition;
@@ -17,7 +15,7 @@ class GunComponent : public Component {
     const int GUN_FREQUENCY = 45;
     int mTicksSinceLastShot;
  public:
-    explicit GunComponent(long actorId, Vector2D initialPosition, EventManager* evtManager);
+    explicit GunComponent(long mActorId, Vector2D initialPosition, EventManager* evtManager);
     std::string getType();
     void updatePosition(IEventData* pEventData);
     void receiveShotOrder(IEventData* pEventData);
