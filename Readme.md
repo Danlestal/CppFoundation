@@ -32,9 +32,10 @@ Los sistemas tienen ahora una referencia a la escena. Suena lógico, porque basi
     2.1.6 Bullet texture atlas
     2.1.7 Bullet animation.
 
-3.1 Invaders
+2.2 Invaders
     ......
 
+2.3 First editor iteration
 
 3. Things to review.
     Sospecho que tengo que cambiar todos lo pointes por smart_pointers. La pereza
