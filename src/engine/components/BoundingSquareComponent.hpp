@@ -8,6 +8,7 @@ class BoundingSquareComponent : public Component {
   Vector2D mDimensions;
  public:
     explicit BoundingSquareComponent(Vector2D dimensions);
+    ~BoundingSquareComponent();
 
     Vector2D getDimensions();
 

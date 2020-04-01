@@ -12,6 +12,7 @@ class BulletBehaviourComponent : public BehaviourComponent {
     EventManager* mEventManager;
  public:
     BulletBehaviourComponent(long actorId, EventManager* eventManager);
+    ~BulletBehaviourComponent(void);
     void update(Vector2D position);
     void receiveCollision(IEventData* pEventData);
 };

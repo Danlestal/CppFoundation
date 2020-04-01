@@ -87,6 +87,18 @@ ActorPhysics* PhysicsSystem::findActor(long id) {
     return NULL;
 }
 
+int PhysicsSystem::findActorIndex(long id) {
+    int index = 0;
+    for (auto it = mAxisList.begin(); it != mAxisList.end(); ++it) {
+        ActorPhysics* actor = (*it);
+        if (actor->actorId == id) {
+            return index;
+        }
+        index++;
+    }
+    return -1;
+}
+
 void PhysicsSystem::updatePosition(IEventData* pEventData) {
     UpdateActorPositionEventData* moveEvent = reinterpret_cast<UpdateActorPositionEventData*>(pEventData);
     ActorPhysics* physics = findActor(moveEvent->getActorId());
@@ -105,7 +117,12 @@ void PhysicsSystem::addActor(IEventData* newActorAddedEvent) {
     createAndAddActorIfNeeded(actorToAdd);
 }
 
+void PhysicsSystem::removeActorById(long id) {
+    int index = findActorIndex(id);
+    mAxisList.erase(mAxisList.begin() + index);
+}
+
 void PhysicsSystem::removeActor(IEventData* removeActorEvent) {
     DestroyActorEventData* removeEvent = reinterpret_cast<DestroyActorEventData*>(removeActorEvent);
-    Actor* actorToAdd = mScene->getActor(removeEvent->getActorId());
+    removeActorById(removeEvent->getActorId());
 }

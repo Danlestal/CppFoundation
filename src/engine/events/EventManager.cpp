@@ -77,6 +77,7 @@ bool EventManager::update() {
                 listener(pEvent);
             }
         }
+        // delete pEvent;
     }
 
     bool queueFlushed = (mQueues[queueToProcess].empty());
@@ -89,9 +90,4 @@ bool EventManager::update() {
     }
 
     return queueFlushed;
-}
-
-
-int EventManager::getNumberOfEvents(){
-    return static_cast<int>(mQueues[mActiveQueue].size());
 }

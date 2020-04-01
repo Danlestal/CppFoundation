@@ -24,11 +24,12 @@ class EventManager {
     EventManager() {
         mActiveQueue = 0;
     }
-    ~EventManager(void) {}
+    ~EventManager(void) {
+        mActiveQueue = 0;
+    }
     virtual bool addListener(const EventListenerDelegate& eventDelegate, const std::string type);
     virtual bool removeListener(const EventListenerDelegate& eventDelegate, const std::string type);
     virtual bool triggerEvent(IEventData* pEvent) const;
     virtual bool queueEvent(IEventData* pEvent);
-    virtual int getNumberOfEvents();
     virtual bool update();
 };

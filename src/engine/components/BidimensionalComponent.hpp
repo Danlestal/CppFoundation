@@ -16,6 +16,8 @@ class BidimensionalComponent : public Component {
 
  public:
     BidimensionalComponent(long actorId, Vector2D position, EventManager* evtManager);
+   ~BidimensionalComponent();
+
 
     void updatePosition(IEventData* pEventData);
 

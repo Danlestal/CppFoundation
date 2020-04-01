@@ -55,13 +55,6 @@ Actor* ActorFactory::createPlayerSpaceship() {
     Vector2D initialVector = Vector2D(200, 350);
     BidimensionalComponent* biComponent =
     new BidimensionalComponent(spaceShip->getId(), initialVector, mEventManager);
-    mEventManager->addListener(fastdelegate::MakeDelegate(biComponent,
-                                                            &BidimensionalComponent::updatePosition),
-                                                            "OrderActorToMoveEventDataType");
-
-    mEventManager->addListener(fastdelegate::MakeDelegate(biComponent,
-                                                            &BidimensionalComponent::receiveCollision),
-                                                            "ActorCollidesEventDataType");
     spaceShip->addComponent(biComponent);
 
 
@@ -100,19 +93,12 @@ Actor* ActorFactory::createBullet(Vector2D initialPosition) {
     Actor* bullet = new Actor(mIdProvider->getUID());
     BidimensionalComponent* biComponent =
     new BidimensionalComponent(bullet->getId(), initialPosition, mEventManager);
-    mEventManager->addListener(fastdelegate::MakeDelegate(biComponent,
-                                                        &BidimensionalComponent::updatePosition),
-                                                        "OrderActorToMoveEventDataType");
-
     bullet->addComponent(biComponent);
     bullet->addComponent(new SquareGraphicComponent(20, 20));
     bullet->addComponent(new BoundingSquareComponent(Vector2D(20, 20)));
 
 
     BulletBehaviourComponent* bulletBehaviour = new BulletBehaviourComponent(bullet->getId(), mEventManager);
-    mEventManager->addListener(fastdelegate::MakeDelegate(bulletBehaviour,
-                                                        &BulletBehaviourComponent::receiveCollision),
-                                                        "ActorCollidesEventDataType");
     bullet->addComponent(bulletBehaviour);
 
 

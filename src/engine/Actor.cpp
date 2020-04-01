@@ -4,15 +4,17 @@ Actor::Actor(long id) {
     mId = id;
 }
 
-long Actor::getId() {
-    return mId;
-}
-
-Actor::~Actor() {
+Actor::~Actor(void) {
     for (std::map<std::string, Component*>::iterator it=mComponents.begin(); it != mComponents.end(); ++it) {
         delete it->second;
     }
 }
+
+long Actor::getId() {
+    return mId;
+}
+
+
 
 void Actor::addComponent(Component *newComponent) {
     mComponents[newComponent->getType()] = newComponent;

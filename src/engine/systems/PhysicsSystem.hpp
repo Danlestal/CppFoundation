@@ -36,7 +36,9 @@ class PhysicsSystem {
     void createAndAddActorIfNeeded(Actor* actor);
     ActorPhysics* createActorPhysics(Actor* actor);
     ActorPhysics* findActor(long id);
-    
+    int findActorIndex(long id);
+    void removeActorById(long id);
+
     void updatePosition(IEventData* pEventData);
     void addActor(IEventData* pEventData);
     void removeActor(IEventData* pEventData);

@@ -6,6 +6,22 @@ BidimensionalComponent::BidimensionalComponent(long actorId, Vector2D position, 
     mActorId = actorId;
     mForbiddenDirection = Vector2D();
     mEvtManager = evtManager;
+    mEvtManager->addListener(fastdelegate::MakeDelegate(this, &BidimensionalComponent::updatePosition),
+                                                    "OrderActorToMoveEventDataType");
+    mEvtManager->addListener(fastdelegate::MakeDelegate(this,
+                                                            &BidimensionalComponent::receiveCollision),
+                                                            "ActorCollidesEventDataType");
+}
+
+
+BidimensionalComponent::~BidimensionalComponent() {
+    mEvtManager->removeListener(fastdelegate::MakeDelegate(
+        this,
+        &BidimensionalComponent::updatePosition), "OrderActorToMoveEventDataType");
+
+    mEvtManager->removeListener(fastdelegate::MakeDelegate(this,
+                                                            &BidimensionalComponent::receiveCollision),
+                                                            "ActorCollidesEventDataType");
 }
 
 void BidimensionalComponent::updatePosition(IEventData* pEventData) {

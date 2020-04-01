@@ -5,6 +5,15 @@ BulletBehaviourComponent::BulletBehaviourComponent(long actorId, EventManager* e
     mEventManager = evtManager;
     mSpeedVector = Vector2D(0, -2);
     mActorId = actorId;
+    mEventManager->addListener(fastdelegate::MakeDelegate(this,
+                                                    &BulletBehaviourComponent::receiveCollision),
+                                                    "ActorCollidesEventDataType");
+}
+
+BulletBehaviourComponent::~BulletBehaviourComponent(void) {
+    mEventManager->removeListener(fastdelegate::MakeDelegate(this,
+                                                &BulletBehaviourComponent::receiveCollision),
+                                                "ActorCollidesEventDataType");
 }
 
 void BulletBehaviourComponent::update(Vector2D currentPosition ) {
