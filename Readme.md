@@ -27,8 +27,8 @@ Los sistemas tienen ahora una referencia a la escena. Suena lógico, porque basi
     2.1.2 Bullet Component, It should probably be a behaviour component
     2.1.3 Add a delay to the gun componet to avoid bullet spam
     2.1.4 Bullet actor destruction when it collides with something
---->
     2.1.5 Deal with memory problems
+    --->
     2.1.6 Bullet texture atlas
     2.1.7 Bullet animation.
 
