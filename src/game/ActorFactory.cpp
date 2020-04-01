@@ -71,7 +71,7 @@ Actor* ActorFactory::createBullet(Vector2D initialPosition) {
     TextureMap* textureMap = new XenonTextureMap(xenonTexture);
 
     bullet->addComponent(new BulletTextureComponent(bullet->getId(), textureMap, mEventManager));
-    bullet->addComponent(new BoundingSquareComponent(Vector2D(20, 20)));
+    bullet->addComponent(new BoundingSquareComponent(Vector2D(16, 16)));
     bullet->addComponent(new BulletBehaviourComponent(bullet->getId(), mEventManager));
     return bullet;
 }

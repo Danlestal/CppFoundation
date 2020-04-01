@@ -42,7 +42,7 @@ void GunComponent::receiveShotOrder(IEventData* event) {
     if (mActorId == orderEvent->getActorId()) {
         if (mTicksSinceLastShot >= GUN_FREQUENCY) {
             mTicksSinceLastShot = 0;
-            Vector2D spawnPosition = mPosition + Vector2D(0, -30);
+            Vector2D spawnPosition = mPosition + Vector2D(8, -18);
             mEventManager->queueEvent(new SpawnBulletEventData(spawnPosition));
         }
     }
