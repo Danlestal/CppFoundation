@@ -86,6 +86,9 @@ Actor* ActorFactory::createPlayerSpaceship() {
     mEventManager->addListener(fastdelegate::MakeDelegate(gunComponent,
                                                         &GunComponent::receiveShotOrder),
                                                         "OrderActorToShotEventDataType");
+    mEventManager->addListener(fastdelegate::MakeDelegate(gunComponent,
+                                                            &GunComponent::receiveTick),
+                                                            "TickEventDataType");
     spaceShip->addComponent(gunComponent);
 
 

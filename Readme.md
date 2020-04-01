@@ -29,9 +29,8 @@ físicas y ademas hay algun problema a la hora de crearlass :_(
 2.1 Disparar balas.
     2.1.1 Spawn de actores en tiempo real
     2.1.2 Componente Bala, seguramente sea un componente behaviour.
-
---->
     2.1.3 Añadir delay al componete GUN para evitar spawnear muchas balas.
+--->
     2.1.4 Destruccion del actor bala cuando sale de las boundaries (esto va a empezar a hacer daño a nivel de memoria.)
     2.1.5 Atlas de texturas de la bala
     2.1.6 Animación de la bala

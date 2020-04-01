@@ -15,10 +15,11 @@ class GunComponent : public Component {
     Vector2D mPosition;
     EventManager* mEventManager;
     const int GUN_FREQUENCY = 45;
-    int mTickCounter;
+    int mTicksSinceLastShot;
  public:
     explicit GunComponent(long actorId, Vector2D initialPosition, EventManager* evtManager);
     std::string getType();
     void updatePosition(IEventData* pEventData);
     void receiveShotOrder(IEventData* pEventData);
+    void receiveTick(IEventData* pEventData);
 };
