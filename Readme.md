@@ -28,13 +28,18 @@ Los sistemas tienen ahora una referencia a la escena. Suena lógico, porque basi
     2.1.3 Add a delay to the gun componet to avoid bullet spam
     2.1.4 Bullet actor destruction when it collides with something
     2.1.5 Deal with memory problems
-    --->
     2.1.6 Bullet texture atlas
     2.1.7 Bullet animation.
+    --->
+    2.1.7 Improve texture management. Probably I need some kind of resource manager.
 
 2.2 Invaders
-    ......
+    2.2.1 Review Invader Behaviour
+    2.2.2 Add animation to invader
+    2.2.3 Try different movement patterns.
 
+2.3 Play with different resolutions.
+2.4.Music
 2.3 First editor iteration
 
 3. Things to review.
