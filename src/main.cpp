@@ -33,7 +33,9 @@ int main(void) {
     // ALL THIS CRAPOLA SHOULD BE PLACED INSIDE THE MECHANISM TO
     // PARSE THE XML FROM THE SCENE
     IdentifierProvider *idProvider = new RandomIdProvider();
-    ActorFactory *factory = new ActorFactory(idProvider, scene, eventManager);
+    ResourceManager resources = ResourceManager();
+    resources.loadTexture("xenon2_textures", "./resources/xenon2_sprites.png");
+    ActorFactory *factory = new ActorFactory(idProvider, scene, eventManager, resources);
 
     Actor* spaceShip = factory->createPlayerSpaceship();
     scene->addActor(spaceShip);

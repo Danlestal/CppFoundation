@@ -5,14 +5,16 @@
 #include "../engine/IdentifierProvider.hpp"
 #include "../engine/Scene.hpp"
 #include "../engine/events/EventManager.hpp"
+#include "../engine/ResourceManager.hpp"
 
 class ActorFactory {
  private:
     Scene* mScene;
     IdentifierProvider* mIdProvider;
     EventManager* mEventManager;
+    ResourceManager mResources;
  public:
-    ActorFactory(IdentifierProvider* provider, Scene* eventManager, EventManager* evtManager);
+    ActorFactory(IdentifierProvider* provider, Scene* eventManager, EventManager* evtManager, ResourceManager resources);
     Actor* createInvader();
     Actor* createPlayerSpaceship();
     Actor* createBullet(Vector2D initialPosition);

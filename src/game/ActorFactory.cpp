@@ -23,9 +23,11 @@
 
 ActorFactory::ActorFactory( IdentifierProvider* provider,
                             Scene* scene,
-                            EventManager* evtManager) {
+                            EventManager* evtManager,
+                            ResourceManager resources) {
     mIdProvider = provider;
     mScene = scene;
+    mResources = resources;
     mEventManager = evtManager;
     mEventManager->addListener(fastdelegate::MakeDelegate(this,
                                                             &ActorFactory::destroyActor),
@@ -39,12 +41,8 @@ ActorFactory::ActorFactory( IdentifierProvider* provider,
 Actor* ActorFactory::createInvader() {
     Actor* invader = new Actor(mIdProvider->getUID());
     BidimensionalComponent* biComponent = new BidimensionalComponent(invader->getId(), Vector2D(), mEventManager);
-    mEventManager->addListener(fastdelegate::MakeDelegate(biComponent,
-                                                            &BidimensionalComponent::updatePosition),
-                                                            "OrderActorToMoveEventDataType");
     invader->addComponent(biComponent);
     invader->addComponent(new CircleGraphicComponent());
-
     invader->addComponent(new InvaderBehaviourComponent(invader->getId(), mEventManager));
     invader->addComponent(new BoundingSquareComponent(Vector2D(10, 10)));
     return invader;
@@ -56,8 +54,7 @@ Actor* ActorFactory::createPlayerSpaceship() {
     spaceShip->addComponent(new BidimensionalComponent(spaceShip->getId(), initialVector, mEventManager));
     spaceShip->addComponent(new BoundingSquareComponent(Vector2D(30, 30)));
     spaceShip->addComponent(new GunComponent(spaceShip->getId(), initialVector, mEventManager));
-    Texture2D xenonTexture = LoadTexture("./resources/xenon2_sprites.png");
-    TextureMap* textureMap = new XenonTextureMap(xenonTexture);
+    TextureMap* textureMap = new XenonTextureMap(mResources.getTexture("xenon2_textures"));
     spaceShip->addComponent(new AnimatedTextureComponent(spaceShip->getId(), textureMap, mEventManager));
     return spaceShip;
 }
@@ -67,8 +64,7 @@ Actor* ActorFactory::createBullet(Vector2D initialPosition) {
     BidimensionalComponent* biComponent =
     new BidimensionalComponent(bullet->getId(), initialPosition, mEventManager);
     bullet->addComponent(biComponent);
-    Texture2D xenonTexture = LoadTexture("./resources/xenon2_sprites.png");
-    TextureMap* textureMap = new XenonTextureMap(xenonTexture);
+    TextureMap* textureMap = new XenonTextureMap(mResources.getTexture("xenon2_textures"));
 
     bullet->addComponent(new BulletTextureComponent(bullet->getId(), textureMap, mEventManager));
     bullet->addComponent(new BoundingSquareComponent(Vector2D(16, 16)));
