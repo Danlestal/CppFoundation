@@ -32,4 +32,5 @@ class EventManager {
     virtual bool triggerEvent(IEventData* pEvent) const;
     virtual bool queueEvent(IEventData* pEvent);
     virtual bool update();
+    int getEventsNumber();
 };

@@ -1,20 +1,34 @@
 #include "InvaderBehaviourComponent.hpp"
-#include "../../events/OrderActorToMoveEventData.hpp"
+
 
 InvaderBehaviourComponent::InvaderBehaviourComponent(long actorId, EventManager* evtManager) {
     mEventManager = evtManager;
-    mSpeedVector = Vector2D(5, 0);
+    mSpeedVector = Vector2D(2, 0);
     mActorId = actorId;
+    mEventManager->addListener(fastdelegate::MakeDelegate(this,
+                                                &InvaderBehaviourComponent::receiveCollision),
+                                                "ActorCollidesEventDataType");
+}
+
+
+InvaderBehaviourComponent::~InvaderBehaviourComponent(void) {
+    mEventManager->removeListener(fastdelegate::MakeDelegate(this,
+                                                &InvaderBehaviourComponent::receiveCollision),
+                                                "ActorCollidesEventDataType");
 }
 
 void InvaderBehaviourComponent::update(Vector2D position) {
-    if ((position.x > 400) || (position.x < 0)) {
-        mSpeedVector *= (-1);
-        mEventManager->triggerEvent(
-            new OrderActorToMoveEventData(
-                mActorId,
-                mSpeedVector + Vector2D(0, 5)));
-    }
-
     mEventManager->queueEvent(new OrderActorToMoveEventData(mActorId, mSpeedVector));
+}
+
+void InvaderBehaviourComponent::receiveCollision(IEventData* pEventData) {
+    ActorCollidesEventData* collisionEvent = reinterpret_cast<ActorCollidesEventData*>(pEventData);
+    if ((collisionEvent->getActorId() == mActorId) || (collisionEvent->getCollidesWithId() == mActorId)) {
+        if (collisionEvent->boundaryCollision()) {
+            // make invader bounce for the lulz
+            mSpeedVector = mSpeedVector - collisionEvent->getCollisionVector();
+        } else {
+            mEventManager->queueEvent(new DestroyActorEventData(mActorId));
+        }
+    }
 }

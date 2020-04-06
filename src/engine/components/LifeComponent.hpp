@@ -2,31 +2,21 @@
 
 #include <string>
 #include "Component.hpp"
+#include "../events/EventManager.hpp"
+#include "../events/DestroyActorEventData.hpp"
+#include "../events/ActorCollidesEventData.hpp"
 
 
 class LifeComponent : public Component {
  private:
     int mLife;
+    EventManager* mEventManager;
  public:
-    explicit LifeComponent(int initialLife) {
-        mLife = initialLife;
-    }
-
-    int updateLife(int lifeDelta) {
-        mLife += lifeDelta;
-        return mLife;
-    }
-
-    int getLife() {
-        return mLife;
-    }
-
-    bool isAlive() {
-        return (mLife > 0);
-    }
-
-    std::string getType(){
-        return "LifeComponent";
-    }
+     LifeComponent(long actorId, int initialLife, EventManager* eventManager);
+    ~LifeComponent(void);
+    int reduceLife(int lifeDecrement);
+    int getLife();
+    std::string getType();
+    void collisionDetected(IEventData* collisionDetected);
 };
 

@@ -8,14 +8,17 @@ class ActorCollidesEventData : public BaseEventData {
     long mActorId;
     long mCollidesWithId;
     Vector2D mCollisionVector;
+    bool mBoundaryCollision;
 
  public:
     explicit ActorCollidesEventData( long actorId,
                             long collidesWithId,
-                            Vector2D collisionVector) {
+                            Vector2D collisionVector,
+                            bool boundaryCollision) {
         mActorId = actorId;
         mCollidesWithId = collidesWithId;
         mCollisionVector = collisionVector;
+        mBoundaryCollision = boundaryCollision;
     }
 
     long getActorId() {
@@ -24,6 +27,10 @@ class ActorCollidesEventData : public BaseEventData {
 
     long getCollidesWithId() {
         return mCollidesWithId;
+    }
+
+    bool boundaryCollision(){
+        return mBoundaryCollision;
     }
 
     Vector2D getCollisionVector() {

@@ -30,10 +30,10 @@ Los sistemas tienen ahora una referencia a la escena. Suena lógico, porque basi
     2.1.5 Deal with memory problems
     2.1.6 Bullet texture atlas
     2.1.7 Bullet animation.
-    --->
     2.1.7 Improve texture management. Probably I need some kind of resource manager.
 
 2.2 Invaders
+    --->
     2.2.1 Review Invader Behaviour
     2.2.2 Add animation to invader
     2.2.3 Try different movement patterns.

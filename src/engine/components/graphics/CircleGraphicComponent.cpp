@@ -3,5 +3,5 @@
 CircleGraphicComponent::CircleGraphicComponent(): GraphicComponent() {}
 
 void CircleGraphicComponent::draw(Vector2D position) {
-    DrawCircle(position.x, position.y, 30, BLACK);
+    DrawCircle(position.x, position.y, 10, BLACK);
 }

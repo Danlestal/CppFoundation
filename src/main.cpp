@@ -44,6 +44,7 @@ int main(void) {
         Actor* actor = (*it);
         scene->addActor(actor);
     }
+    scene->addActor(factory->createInvader());
     // PARSE THE XML FROM THE SCENE END
     KeyboardInputManager inputManager = KeyboardInputManager(spaceShip->getId(), eventManager);
     DebugProbe probe = DebugProbe(spaceShip);

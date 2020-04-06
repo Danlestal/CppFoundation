@@ -35,9 +35,12 @@ void PhysicsSystem::checkActorPhysics(ActorPhysics* toCheck) {
         if (other == toCheck)
             continue;
         if (collides(toCheck->box, other->box)) {
+            bool collidesWithBoundary = toCheck->isBoundary || other->isBoundary;
+
             mEventManager->queueEvent(new ActorCollidesEventData( toCheck->actorId,
                                                                     other->actorId,
-                                                                    toCheck->lastMovement));
+                                                                    toCheck->lastMovement,
+                                                                    collidesWithBoundary));
         }
     }
 }
@@ -67,6 +70,7 @@ ActorPhysics* PhysicsSystem::createActorPhysics(Actor* actor) {
     phys->box = box;
     phys->actorId = actor->getId();
     phys->lastMovement = Vector2D();
+    phys->isBoundary = squareComponent->isBoundary();
     return phys;
 }
 

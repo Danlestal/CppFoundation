@@ -40,11 +40,12 @@ ActorFactory::ActorFactory( IdentifierProvider* provider,
 
 Actor* ActorFactory::createInvader() {
     Actor* invader = new Actor(mIdProvider->getUID());
-    BidimensionalComponent* biComponent = new BidimensionalComponent(invader->getId(), Vector2D(), mEventManager);
+    BidimensionalComponent* biComponent = new BidimensionalComponent(invader->getId(), Vector2D(50, 50), mEventManager);
     invader->addComponent(biComponent);
     invader->addComponent(new CircleGraphicComponent());
     invader->addComponent(new InvaderBehaviourComponent(invader->getId(), mEventManager));
     invader->addComponent(new BoundingSquareComponent(Vector2D(10, 10)));
+    //invader->addComponent(new LifeComponent(invader->getId(), 1, mEventManager));
     return invader;
 }
 
@@ -54,6 +55,7 @@ Actor* ActorFactory::createPlayerSpaceship() {
     spaceShip->addComponent(new BidimensionalComponent(spaceShip->getId(), initialVector, mEventManager));
     spaceShip->addComponent(new BoundingSquareComponent(Vector2D(30, 30)));
     spaceShip->addComponent(new GunComponent(spaceShip->getId(), initialVector, mEventManager));
+    spaceShip->addComponent(new LifeComponent(spaceShip->getId(), 3, mEventManager));
     TextureMap* textureMap = new XenonTextureMap(mResources.getTexture("xenon2_textures"));
     spaceShip->addComponent(new AnimatedTextureComponent(spaceShip->getId(), textureMap, mEventManager));
     return spaceShip;
@@ -75,23 +77,23 @@ Actor* ActorFactory::createBullet(Vector2D initialPosition) {
 std::vector<Actor*> ActorFactory::createBoundaries(int boardWith, int boardHeight) {
     Actor* leftBoundary = new Actor(mIdProvider->getUID());
     leftBoundary->addComponent(new BidimensionalComponent(leftBoundary->getId(), Vector2D(), mEventManager));
-    leftBoundary->addComponent(new BoundingSquareComponent(Vector2D(2, 600)));
+    leftBoundary->addComponent(new BoundingSquareComponent(Vector2D(2, 600), true));
     leftBoundary->addComponent(new SquareGraphicComponent(2, 600));
 
     Actor* rightBoundary = new Actor(mIdProvider->getUID());
     rightBoundary->addComponent(new BidimensionalComponent(rightBoundary->getId(), Vector2D(boardWith, 0), mEventManager));
-    rightBoundary->addComponent(new BoundingSquareComponent(Vector2D(2, 600)));
+    rightBoundary->addComponent(new BoundingSquareComponent(Vector2D(2, 600), true));
     rightBoundary->addComponent(new SquareGraphicComponent(2, 600));
 
     Actor* bottomBoundary = new Actor(mIdProvider->getUID());
     bottomBoundary->addComponent(new BidimensionalComponent(bottomBoundary->getId(), Vector2D(0, boardHeight), mEventManager));
-    bottomBoundary->addComponent(new BoundingSquareComponent(Vector2D(boardWith, 2)));
+    bottomBoundary->addComponent(new BoundingSquareComponent(Vector2D(boardWith, 2), true));
     bottomBoundary->addComponent(new SquareGraphicComponent(boardWith, 2));
 
 
     Actor* upperBoundary = new Actor(mIdProvider->getUID());
     upperBoundary->addComponent(new BidimensionalComponent(upperBoundary->getId(), Vector2D(0, 5), mEventManager));
-    upperBoundary->addComponent(new BoundingSquareComponent(Vector2D(boardWith, 2)));
+    upperBoundary->addComponent(new BoundingSquareComponent(Vector2D(boardWith, 2), true));
     upperBoundary->addComponent(new SquareGraphicComponent(boardWith, 2));
 
     return std::vector<Actor*>{ leftBoundary, rightBoundary, bottomBoundary, upperBoundary};

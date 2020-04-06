@@ -19,6 +19,7 @@ struct AABB {
 struct ActorPhysics{
     long actorId;
     Vector2D lastMovement;
+    bool isBoundary;
     AABB box;
 };
 

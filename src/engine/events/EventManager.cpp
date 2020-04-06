@@ -91,3 +91,7 @@ bool EventManager::update() {
 
     return queueFlushed;
 }
+
+int EventManager::getEventsNumber() {
+    return mQueues[mActiveQueue].size();
+}
