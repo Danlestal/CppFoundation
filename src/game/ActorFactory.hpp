@@ -15,6 +15,7 @@ class ActorFactory {
     ResourceManager mResources;
  public:
     ActorFactory(IdentifierProvider* provider, Scene* eventManager, EventManager* evtManager, ResourceManager resources);
+    Actor*  createScoreboard();
     Actor* createInvader();
     Actor* createPlayerSpaceship();
     Actor* createBullet(Vector2D initialPosition);
@@ -23,4 +24,5 @@ class ActorFactory {
 
     void destroyActor(IEventData* spawnActorEventData);
     void spawnBullet(IEventData* spawnBulletData);
+    void spawnNewInvader(IEventData* spawnBulletData);
 };

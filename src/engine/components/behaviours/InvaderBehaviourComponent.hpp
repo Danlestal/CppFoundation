@@ -7,6 +7,7 @@
 #include "../../events/OrderActorToMoveEventData.hpp"
 #include "../../events/ActorCollidesEventData.hpp"
 #include "../../events/DestroyActorEventData.hpp"
+#include "../../events/InvaderKilledEventData.hpp"
 
 class InvaderBehaviourComponent : public BehaviourComponent {
  private:

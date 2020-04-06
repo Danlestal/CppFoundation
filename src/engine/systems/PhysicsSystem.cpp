@@ -93,9 +93,13 @@ ActorPhysics* PhysicsSystem::findActor(long id) {
 
 int PhysicsSystem::findActorIndex(long id) {
     int index = 0;
+    if (mAxisList.size() == 0) {
+        return -1;
+    }
+
     for (auto it = mAxisList.begin(); it != mAxisList.end(); ++it) {
         ActorPhysics* actor = (*it);
-        if (actor->actorId == id) {
+        if (actor != nullptr && actor->actorId == id) {
             return index;
         }
         index++;
@@ -123,7 +127,9 @@ void PhysicsSystem::addActor(IEventData* newActorAddedEvent) {
 
 void PhysicsSystem::removeActorById(long id) {
     int index = findActorIndex(id);
-    mAxisList.erase(mAxisList.begin() + index);
+    if (index != -1) {
+        mAxisList.erase(mAxisList.begin() + index);
+    }
 }
 
 void PhysicsSystem::removeActor(IEventData* removeActorEvent) {

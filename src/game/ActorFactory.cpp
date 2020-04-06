@@ -1,25 +1,25 @@
 #include "ActorFactory.hpp"
 #include "../engine/Vector2d.hpp"
+
 #include "../engine/components/Component.hpp"
 #include "../engine/components/LifeComponent.hpp"
+#include "../engine/components/BidimensionalComponent.hpp"
+#include "../engine/components/GunComponent.hpp"
+#include "../engine/components/BoundingSquareComponent.hpp"
+
 #include "../engine/components/graphics/GraphicComponent.hpp"
 #include "../engine/components/graphics/CircleGraphicComponent.hpp"
 #include "../engine/components/graphics/SquareGraphicComponent.hpp"
 #include "../engine/components/graphics/AnimatedTextureComponent.hpp"
 #include "../engine/components/graphics/BulletTextureComponent.hpp"
-#include "../engine/components/BidimensionalComponent.hpp"
+#include "../engine/components/graphics/ScoreBoardComponent.hpp"
 
 #include "../engine/components/behaviours/InvaderBehaviourComponent.hpp"
-#include "../engine/components/BoundingSquareComponent.hpp"
-
-#include "../engine/components/GunComponent.hpp"
-
 #include "../engine/components/behaviours/BulletBehaviourComponent.hpp"
+
 
 #include "../engine/events/DestroyActorEventData.hpp"
 #include "../engine/events/SpawnBulletEventData.hpp"
-
-
 
 ActorFactory::ActorFactory( IdentifierProvider* provider,
                             Scene* scene,
@@ -36,6 +36,18 @@ ActorFactory::ActorFactory( IdentifierProvider* provider,
     mEventManager->addListener(fastdelegate::MakeDelegate(this,
                                                         &ActorFactory::spawnBullet),
                                                         "SpawnBulletEventDataType");
+
+    mEventManager->addListener(fastdelegate::MakeDelegate(this,
+                                                    &ActorFactory::spawnNewInvader),
+                                                    "InvaderKilledEventDataType");
+}
+
+Actor* ActorFactory::createScoreboard() {
+    Actor* scoreBoard = new Actor(mIdProvider->getUID());
+    BidimensionalComponent* biComponent = new BidimensionalComponent(scoreBoard->getId(), Vector2D(100, 100), mEventManager);
+    scoreBoard->addComponent(biComponent);
+    scoreBoard->addComponent(new ScoreBoardComponent(mEventManager));
+    return scoreBoard;
 }
 
 Actor* ActorFactory::createInvader() {
@@ -45,7 +57,6 @@ Actor* ActorFactory::createInvader() {
     invader->addComponent(new CircleGraphicComponent());
     invader->addComponent(new InvaderBehaviourComponent(invader->getId(), mEventManager));
     invader->addComponent(new BoundingSquareComponent(Vector2D(10, 10)));
-    //invader->addComponent(new LifeComponent(invader->getId(), 1, mEventManager));
     return invader;
 }
 
@@ -108,4 +119,8 @@ void ActorFactory::spawnBullet(IEventData* spawnBulletData) {
     SpawnBulletEventData* spawnEvent = reinterpret_cast<SpawnBulletEventData*>(spawnBulletData);
     Actor* bullet = createBullet(spawnEvent->getInitialPosition());
     mScene->addActor(bullet);
+}
+
+void ActorFactory::spawnNewInvader(IEventData* killedInvaderEvent) {
+    mScene->addActor(createInvader());
 }

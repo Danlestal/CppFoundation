@@ -33,14 +33,20 @@ Los sistemas tienen ahora una referencia a la escena. Suena lógico, porque basi
     2.1.7 Improve texture management. Probably I need some kind of resource manager.
 
 2.2 Invaders
-    --->
     2.2.1 Review Invader Behaviour
-    2.2.2 Add animation to invader
+    --->
+    2.2.2 Add a new invader each time we kill one
     2.2.3 Try different movement patterns.
+    2.2.4 Randomize the movement pattern.
+    2.2.2 Add animation to invader
 
-2.3 Play with different resolutions.
-2.4.Music
-2.3 First editor iteration
+2.3 Explosions
+
+2.3 Create a menu to choose different whiteboxes.
+
+2.4 Play with different resolutions.
+2.5.Music
+2.6 First editor iteration
 
 3. Things to review.
     Sospecho que tengo que cambiar todos lo pointes por smart_pointers. La pereza

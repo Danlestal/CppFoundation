@@ -28,6 +28,7 @@ void InvaderBehaviourComponent::receiveCollision(IEventData* pEventData) {
             // make invader bounce for the lulz
             mSpeedVector = mSpeedVector - collisionEvent->getCollisionVector();
         } else {
+            mEventManager->queueEvent(new InvaderKilledEventData());
             mEventManager->queueEvent(new DestroyActorEventData(mActorId));
         }
     }
