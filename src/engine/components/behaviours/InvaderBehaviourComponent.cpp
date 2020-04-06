@@ -23,13 +23,13 @@ void InvaderBehaviourComponent::update(Vector2D position) {
 
 void InvaderBehaviourComponent::receiveCollision(IEventData* pEventData) {
     ActorCollidesEventData* collisionEvent = reinterpret_cast<ActorCollidesEventData*>(pEventData);
-    if ((collisionEvent->getActorId() == mActorId) || (collisionEvent->getCollidesWithId() == mActorId)) {
+    if (collisionEvent->getActorId() == mActorId) {
         if (collisionEvent->boundaryCollision()) {
             // make invader bounce for the lulz
             mSpeedVector = mSpeedVector - collisionEvent->getCollisionVector();
         } else {
-            mEventManager->queueEvent(new InvaderKilledEventData());
             mEventManager->queueEvent(new DestroyActorEventData(mActorId));
+            mEventManager->queueEvent(new InvaderKilledEventData());
         }
     }
 }
