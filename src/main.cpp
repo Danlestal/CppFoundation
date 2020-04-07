@@ -48,7 +48,7 @@ int main(void) {
     scene->addActor(factory->createScoreboard());
     // PARSE THE XML FROM THE SCENE END
     KeyboardInputManager inputManager = KeyboardInputManager(spaceShip->getId(), eventManager);
-    DebugProbe probe = DebugProbe(spaceShip);
+    //DebugProbe probe = DebugProbe(spaceShip);
 
     TickEventData* tick = new TickEventData();
     while (!WindowShouldClose()) {
@@ -58,7 +58,7 @@ int main(void) {
         ClearBackground(RAYWHITE);
         view->draw();
         logic->updateLogic();
-        probe.display();
+        //probe.display();
         EndDrawing();
         eventManager->queueEvent(tick);
     }
