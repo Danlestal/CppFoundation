@@ -10,7 +10,7 @@
 #include "../engine/components/graphics/GraphicComponent.hpp"
 #include "../engine/components/graphics/CircleGraphicComponent.hpp"
 #include "../engine/components/graphics/SquareGraphicComponent.hpp"
-#include "../engine/components/graphics/AnimatedTextureComponent.hpp"
+#include "../engine/components/graphics/SpaceshipTextureComponent.hpp"
 #include "../engine/components/graphics/BulletTextureComponent.hpp"
 #include "../engine/components/graphics/ScoreBoardComponent.hpp"
 
@@ -71,7 +71,7 @@ Actor* ActorFactory::createPlayerSpaceship() {
     spaceShip->addComponent(new GunComponent(spaceShip->getId(), initialVector, mEventManager));
     spaceShip->addComponent(new LifeComponent(spaceShip->getId(), 3, mEventManager));
     TextureMap* textureMap = new XenonTextureMap(mResources.getTexture("xenon2_textures"));
-    spaceShip->addComponent(new AnimatedTextureComponent(spaceShip->getId(), textureMap, mEventManager));
+    spaceShip->addComponent(new SpaceshipTextureComponent(spaceShip->getId(), textureMap, mEventManager));
     return spaceShip;
 }
 

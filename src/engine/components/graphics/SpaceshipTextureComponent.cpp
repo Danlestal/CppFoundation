@@ -1,6 +1,6 @@
-#include "AnimatedTextureComponent.hpp"
+#include "SpaceshipTextureComponent.hpp"
 
-AnimatedTextureComponent::AnimatedTextureComponent(long actorId,
+SpaceshipTextureComponent::SpaceshipTextureComponent(long actorId,
                                                     TextureMap* textureMap,
                                                     EventManager* eventManager): GraphicComponent() {
     mTextureMap = textureMap;
@@ -9,23 +9,23 @@ AnimatedTextureComponent::AnimatedTextureComponent(long actorId,
     mHorizontalIndex = 0;
     mEventManager = eventManager;
     mEventManager->addListener(fastdelegate::MakeDelegate(this,
-                                                            &AnimatedTextureComponent::receiveTick),
+                                                            &SpaceshipTextureComponent::receiveTick),
                                                             "TickEventDataType");
     mEventManager->addListener(fastdelegate::MakeDelegate(this,
-                                                            &AnimatedTextureComponent::receiveOrder),
+                                                            &SpaceshipTextureComponent::receiveOrder),
                                                             "OrderActorToMoveEventDataType");
 }
 
-AnimatedTextureComponent::~AnimatedTextureComponent() {
+SpaceshipTextureComponent::~SpaceshipTextureComponent() {
     mEventManager->removeListener(fastdelegate::MakeDelegate(this,
-                                                            &AnimatedTextureComponent::receiveTick),
+                                                            &SpaceshipTextureComponent::receiveTick),
                                                             "TickEventDataType");
     mEventManager->removeListener(fastdelegate::MakeDelegate(this,
-                                                            &AnimatedTextureComponent::receiveOrder),
+                                                            &SpaceshipTextureComponent::receiveOrder),
                                                             "OrderActorToMoveEventDataType");
 }
 
-XenonTextureMap::XenonSprite AnimatedTextureComponent::getFrame() {
+XenonTextureMap::XenonSprite SpaceshipTextureComponent::getFrame() {
     if (mHorizontalIndex < -7) {
         return XenonTextureMap::SPACESHIP_EXTREME_LEFT;
     }
@@ -47,14 +47,14 @@ XenonTextureMap::XenonSprite AnimatedTextureComponent::getFrame() {
     }
 }
 
-void AnimatedTextureComponent::draw(Vector2D pos) {
+void SpaceshipTextureComponent::draw(Vector2D pos) {
     DrawTextureRec(mTextureMap->getTexture(),
                     mTextureMap->getRectangle(getFrame()),
                     {pos.x, pos.y},
                     WHITE);
 }
 
-void AnimatedTextureComponent::receiveTick(IEventData* pEventData) {
+void SpaceshipTextureComponent::receiveTick(IEventData* pEventData) {
     if (mVerticalIndex > 0) {
         mVerticalIndex--;
     }
@@ -72,7 +72,7 @@ void AnimatedTextureComponent::receiveTick(IEventData* pEventData) {
     }
 }
 
-void AnimatedTextureComponent::receiveOrder(IEventData* pEventData) {
+void SpaceshipTextureComponent::receiveOrder(IEventData* pEventData) {
     OrderActorToMoveEventData* moveEvent = reinterpret_cast<OrderActorToMoveEventData*>(pEventData);
     if (moveEvent->getActorId() == mActorId) {
         Vector2D newVector = moveEvent->getDelta();
