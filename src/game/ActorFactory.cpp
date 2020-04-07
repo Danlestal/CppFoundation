@@ -44,7 +44,10 @@ ActorFactory::ActorFactory( IdentifierProvider* provider,
 
 Actor* ActorFactory::createScoreboard() {
     Actor* scoreBoard = new Actor(mIdProvider->getUID());
-    BidimensionalComponent* biComponent = new BidimensionalComponent(scoreBoard->getId(), Vector2D(100, 100), mEventManager);
+    BidimensionalComponent* biComponent = new BidimensionalComponent(
+                                                        scoreBoard->getId(),
+                                                        Vector2D(100, 100),
+                                                        mEventManager);
     scoreBoard->addComponent(biComponent);
     scoreBoard->addComponent(new ScoreBoardComponent(mEventManager));
     return scoreBoard;
