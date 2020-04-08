@@ -3,7 +3,8 @@
 struct Vector2D {
     float x;
     float y;
-    explicit Vector2D(float x = 0, float y = 0) : x(x), y(y) {}
+    Vector2D() : x(0), y(0) {}
+    Vector2D(float x, float y) : x(x), y(y) {}
 
     Vector2D& operator=(const Vector2D& a) {
         x = a.x;

@@ -32,10 +32,12 @@ int LifeComponent::getLife() {
 void LifeComponent::collisionDetected(IEventData* event) {
     ActorCollidesEventData* collisionEvent = reinterpret_cast<ActorCollidesEventData*>(event);
     if ((collisionEvent->getActorId() == mActorId) || (collisionEvent->getCollidesWithId() == mActorId)) {
-        reduceLife(1);
+        if (!collisionEvent->boundaryCollision()) {
+            reduceLife(1);
+        }
     }
 }
 
-std::string LifeComponent::getType(){
+std::string LifeComponent::getType() {
     return "LifeComponent";
 }

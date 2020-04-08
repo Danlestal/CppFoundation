@@ -67,7 +67,8 @@
         "list": "cpp",
         "deque": "cpp",
         "queue": "cpp",
-        "strstream": "cpp"
+        "strstream": "cpp",
+        "*.m": "cpp"
     },
     "CXX_FLAGS": [
         "/Users/eudvazquez/personal/raylib/raylib/src" // header files

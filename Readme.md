@@ -18,9 +18,9 @@ Review Invader Behaviour
 Add a new invader each time we kill one
 Added a proto scoreboard.
     --->
-Play with different resolutions.
-Add a 2d camera
-Add vertical scroll
+Add a 2d camera.
+Add vertical scrolling.
+Play with different resolutions (It will be done by rendering into a texture and later one scalling to a target resolution.)
 Add triggers
 Try different movement patterns for the invaders
 Add animation to invader

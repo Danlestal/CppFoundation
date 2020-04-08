@@ -21,14 +21,16 @@
 #include "../engine/events/DestroyActorEventData.hpp"
 #include "../engine/events/SpawnBulletEventData.hpp"
 
-ActorFactory::ActorFactory( IdentifierProvider* provider,
+ActorFactory::ActorFactory(IdentifierProvider* provider,
                             Scene* scene,
                             EventManager* evtManager,
-                            ResourceManager resources) {
+                            ResourceManager resources,
+                            Vector2D gameResolution) {
     mIdProvider = provider;
     mScene = scene;
     mResources = resources;
     mEventManager = evtManager;
+    mGameResolution = gameResolution;
     mEventManager->addListener(fastdelegate::MakeDelegate(this,
                                                             &ActorFactory::destroyActor),
                                                             "DestroyActorEventDataType");
@@ -46,7 +48,7 @@ Actor* ActorFactory::createScoreboard() {
     Actor* scoreBoard = new Actor(mIdProvider->getUID());
     BidimensionalComponent* biComponent = new BidimensionalComponent(
                                                         scoreBoard->getId(),
-                                                        Vector2D(100, 100),
+                                                        Vector2D(mGameResolution.x - 150, mGameResolution.y - 80),
                                                         mEventManager);
     scoreBoard->addComponent(biComponent);
     scoreBoard->addComponent(new ScoreBoardComponent(mEventManager));
@@ -88,27 +90,34 @@ Actor* ActorFactory::createBullet(Vector2D initialPosition) {
     return bullet;
 }
 
-std::vector<Actor*> ActorFactory::createBoundaries(int boardWith, int boardHeight) {
+std::vector<Actor*> ActorFactory::createBoundaries() {
+    float boardWidth = mGameResolution.x -100;
+    float boardHeight = mGameResolution.y -100;
+
     Actor* leftBoundary = new Actor(mIdProvider->getUID());
     leftBoundary->addComponent(new BidimensionalComponent(leftBoundary->getId(), Vector2D(), mEventManager));
-    leftBoundary->addComponent(new BoundingSquareComponent(Vector2D(2, 600), true));
-    leftBoundary->addComponent(new SquareGraphicComponent(2, 600));
+    leftBoundary->addComponent(new BoundingSquareComponent(Vector2D(2, boardHeight), true));
+    leftBoundary->addComponent(new SquareGraphicComponent(2, boardHeight));
 
     Actor* rightBoundary = new Actor(mIdProvider->getUID());
-    rightBoundary->addComponent(new BidimensionalComponent(rightBoundary->getId(), Vector2D(boardWith, 0), mEventManager));
-    rightBoundary->addComponent(new BoundingSquareComponent(Vector2D(2, 600), true));
-    rightBoundary->addComponent(new SquareGraphicComponent(2, 600));
+    rightBoundary->addComponent(new BidimensionalComponent(rightBoundary->getId(),
+                                                            Vector2D(boardWidth, 0),
+                                                            mEventManager));
+    rightBoundary->addComponent(new BoundingSquareComponent(Vector2D(2, boardHeight), true));
+    rightBoundary->addComponent(new SquareGraphicComponent(2, boardHeight));
 
     Actor* bottomBoundary = new Actor(mIdProvider->getUID());
-    bottomBoundary->addComponent(new BidimensionalComponent(bottomBoundary->getId(), Vector2D(0, boardHeight), mEventManager));
-    bottomBoundary->addComponent(new BoundingSquareComponent(Vector2D(boardWith, 2), true));
-    bottomBoundary->addComponent(new SquareGraphicComponent(boardWith, 2));
+    bottomBoundary->addComponent(new BidimensionalComponent(bottomBoundary->getId(),
+                                                            Vector2D(0, boardHeight),
+                                                            mEventManager));
+    bottomBoundary->addComponent(new BoundingSquareComponent(Vector2D(boardWidth, 2), true));
+    bottomBoundary->addComponent(new SquareGraphicComponent(boardWidth, 2));
 
 
     Actor* upperBoundary = new Actor(mIdProvider->getUID());
     upperBoundary->addComponent(new BidimensionalComponent(upperBoundary->getId(), Vector2D(0, 5), mEventManager));
-    upperBoundary->addComponent(new BoundingSquareComponent(Vector2D(boardWith, 2), true));
-    upperBoundary->addComponent(new SquareGraphicComponent(boardWith, 2));
+    upperBoundary->addComponent(new BoundingSquareComponent(Vector2D(boardWidth, 2), true));
+    upperBoundary->addComponent(new SquareGraphicComponent(boardWidth, 2));
 
     return std::vector<Actor*>{ leftBoundary, rightBoundary, bottomBoundary, upperBoundary};
 }

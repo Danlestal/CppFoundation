@@ -17,29 +17,25 @@
 
 
 int main(void) {
-    const int screenWidth = 800;
-    const int screenHeight = 450;
-
-    InitWindow(screenWidth, screenHeight, "raylib");
-
+    Vector2D nativeResolution = {1024, 768};
+    InitWindow(nativeResolution.x, nativeResolution.y, "Invaders");
     SetTargetFPS(60);
     EventManager* eventManager = new EventManager();
     Scene* scene = new Scene(eventManager);
     RenderSystem* view = new RenderSystem(scene);
     LogicSystem* logic = new LogicSystem(scene);
     PhysicsSystem* phys = new PhysicsSystem(scene);
-
+    IdentifierProvider *idProvider = new RandomIdProvider();
 
     // ALL THIS CRAPOLA SHOULD BE PLACED INSIDE THE MECHANISM TO
     // PARSE THE XML FROM THE SCENE
-    IdentifierProvider *idProvider = new RandomIdProvider();
     ResourceManager resources = ResourceManager();
     resources.loadTexture("xenon2_textures", "./resources/xenon2_sprites.png");
-    ActorFactory *factory = new ActorFactory(idProvider, scene, eventManager, resources);
+    ActorFactory *factory = new ActorFactory(idProvider, scene, eventManager, resources, nativeResolution);
 
     Actor* spaceShip = factory->createPlayerSpaceship();
     scene->addActor(spaceShip);
-    std::vector<Actor*> boundaries = factory->createBoundaries(400, 420);
+    std::vector<Actor*> boundaries = factory->createBoundaries();
     for (auto it = boundaries.begin(); it != boundaries.end(); ++it) {
         Actor* actor = (*it);
         scene->addActor(actor);
@@ -47,9 +43,8 @@ int main(void) {
     scene->addActor(factory->createInvader());
     scene->addActor(factory->createScoreboard());
     // PARSE THE XML FROM THE SCENE END
-    KeyboardInputManager inputManager = KeyboardInputManager(spaceShip->getId(), eventManager);
-    //DebugProbe probe = DebugProbe(spaceShip);
 
+    KeyboardInputManager inputManager = KeyboardInputManager(spaceShip->getId(), eventManager);
     TickEventData* tick = new TickEventData();
     while (!WindowShouldClose()) {
         inputManager.proccessInput();
@@ -58,7 +53,6 @@ int main(void) {
         ClearBackground(RAYWHITE);
         view->draw();
         logic->updateLogic();
-        //probe.display();
         EndDrawing();
         eventManager->queueEvent(tick);
     }

@@ -13,13 +13,18 @@ class ActorFactory {
     IdentifierProvider* mIdProvider;
     EventManager* mEventManager;
     ResourceManager mResources;
+    Vector2D mGameResolution;
  public:
-    ActorFactory(IdentifierProvider* provider, Scene* eventManager, EventManager* evtManager, ResourceManager resources);
+    ActorFactory(IdentifierProvider* provider,
+                  Scene* eventManager,
+                  EventManager* evtManager,
+                  ResourceManager resources,
+                  Vector2D gameResolution);
     Actor*  createScoreboard();
     Actor* createInvader();
     Actor* createPlayerSpaceship();
     Actor* createBullet(Vector2D initialPosition);
-    std::vector<Actor*> createBoundaries(int boardWith, int boardHeight);
+    std::vector<Actor*> createBoundaries();
 
 
     void destroyActor(IEventData* spawnActorEventData);
