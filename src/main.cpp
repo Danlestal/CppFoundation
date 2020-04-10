@@ -19,6 +19,7 @@
 int main(void) {
     Vector2D nativeResolution = {1024, 768};
     InitWindow(nativeResolution.x, nativeResolution.y, "Invaders");
+
     SetTargetFPS(60);
     EventManager* eventManager = new EventManager();
     Scene* scene = new Scene(eventManager);
@@ -44,6 +45,13 @@ int main(void) {
     scene->addActor(factory->createScoreboard());
     // PARSE THE XML FROM THE SCENE END
 
+    Camera2D rayCamera = { 0 };
+    rayCamera.target = (Vector2){ nativeResolution.x/2, nativeResolution.y/2 };
+    rayCamera.offset = (Vector2){ nativeResolution.x/2, nativeResolution.y/2 };
+    rayCamera.rotation = 0.0f;
+    rayCamera.zoom = 1.0f;
+    scene->addActor(factory->createCameraComponent(&rayCamera));
+
     KeyboardInputManager inputManager = KeyboardInputManager(spaceShip->getId(), eventManager);
     TickEventData* tick = new TickEventData();
     while (!WindowShouldClose()) {
@@ -51,6 +59,7 @@ int main(void) {
         eventManager->update();
         BeginDrawing();
         ClearBackground(RAYWHITE);
+        BeginMode2D(rayCamera);
         view->draw();
         logic->updateLogic();
         EndDrawing();

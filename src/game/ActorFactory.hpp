@@ -23,6 +23,7 @@ class ActorFactory {
     Actor*  createScoreboard();
     Actor* createInvader();
     Actor* createPlayerSpaceship();
+    Actor* createCameraComponent(Camera2D* rayCamera);
     Actor* createBullet(Vector2D initialPosition);
     std::vector<Actor*> createBoundaries();
 

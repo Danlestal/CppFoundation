@@ -13,6 +13,7 @@
 #include "../engine/components/graphics/SpaceshipTextureComponent.hpp"
 #include "../engine/components/graphics/BulletTextureComponent.hpp"
 #include "../engine/components/graphics/ScoreBoardComponent.hpp"
+#include "../engine/components/CameraComponent.hpp"
 
 #include "../engine/components/behaviours/InvaderBehaviourComponent.hpp"
 #include "../engine/components/behaviours/BulletBehaviourComponent.hpp"
@@ -67,7 +68,7 @@ Actor* ActorFactory::createInvader() {
 
 Actor* ActorFactory::createPlayerSpaceship() {
     Actor* spaceShip = new Actor(mIdProvider->getUID());
-    Vector2D initialVector = Vector2D(200, 350);
+    Vector2D initialVector = Vector2D(mGameResolution.x / 2, mGameResolution.y -150);
     spaceShip->addComponent(new BidimensionalComponent(spaceShip->getId(), initialVector, mEventManager));
     spaceShip->addComponent(new BoundingSquareComponent(Vector2D(30, 30)));
     spaceShip->addComponent(new GunComponent(spaceShip->getId(), initialVector, mEventManager));
@@ -75,6 +76,13 @@ Actor* ActorFactory::createPlayerSpaceship() {
     TextureMap* textureMap = new XenonTextureMap(mResources.getTexture("xenon2_textures"));
     spaceShip->addComponent(new SpaceshipTextureComponent(spaceShip->getId(), textureMap, mEventManager));
     return spaceShip;
+}
+
+Actor* ActorFactory::createCameraComponent(Camera2D* rayCamera) {
+    Actor* camera = new Actor(mIdProvider->getUID());
+    Vector2D initialVector = Vector2D(mGameResolution.x / 2, mGameResolution.y / 2);
+    camera->addComponent(new CameraComponent(rayCamera, mEventManager, initialVector));
+    return camera;
 }
 
 Actor* ActorFactory::createBullet(Vector2D initialPosition) {
