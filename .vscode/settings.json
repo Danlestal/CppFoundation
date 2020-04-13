@@ -71,7 +71,9 @@
         "*.m": "cpp"
     },
     "CXX_FLAGS": [
-        "/Users/eudvazquez/personal/raylib/raylib/src" // header files
+        "/Users/eudvazquez/personal/raylib/raylib/src",
+        "/Users/eudvazquez/personal/raylib/raygui/src",
+
     ],
     "terminal.integrated.shell.windows": "cmd.exe"
 }

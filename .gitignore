@@ -3,3 +3,10 @@ bin/tester
 bin/main.dSYM/
 bin/tester.dSYM/
 .vscode
+bin/editor
+bin/editor.dSYM/Contents/Info.plist
+bin/editor.dSYM/Contents/Resources/DWARF/editor
+.vscode/c_cpp_properties.json
+.vscode/settings.json
+.vscode/tasks.json
+

@@ -4,6 +4,8 @@ RAYLIB_FLAGS := -framework CoreVideo -framework IOKit -framework Cocoa -framewor
 BIN		:= bin
 SRC		:= src
 INCLUDE	:= include 
+RAYLIB := "/Users/eudvazquez/personal/raylib/raylib/src"
+RAYGUI := "/Users/eudvazquez/personal/raylib/raygui/src"
 LIB		:= lib
 
 LIBRARIES	:=
@@ -16,18 +18,27 @@ SYTEMS := $(SRC)/engine/systems/*.cpp
 ENGINE := $(SRC)/engine/*.cpp
 GAME := $(SRC)/game/*.cpp
 
-all: $(BIN)/$(EXECUTABLE)
-
-run: clean all
-	./$(BIN)/$(EXECUTABLE)
 
 $(BIN)/$(EXECUTABLE): $(EVENTS) $(COMPONENTS) $(GRAPHIC_COMPONENTS) $(BEHAVIOUR_COMPONENTS) $(SYTEMS) $(ENGINE) $(GAME) $(SRC)/main.cpp
-	$(CXX) $(CXX_FLAGS) $(RAYLIB_FLAGS) -I$(INCLUDE) -I"/Users/eudvazquez/personal/raylib/raylib/src" -L$(LIB) $^ -o $@ $(LIBRARIES)
+	$(CXX) $(CXX_FLAGS) $(RAYLIB_FLAGS) -I$(INCLUDE) -I$(RAYLIB) -L$(LIB) $^ -o $@ $(LIBRARIES)
 
+all: 
+	$(BIN)/$(EXECUTABLE)
+
+run-game:
+	./$(BIN)/$(EXECUTABLE)
+
+run-editor:
+	./$(BIN)/editor
+	
 clean:
 	-rm $(BIN)/*
 
+editor:
+	$(CXX) $(CXX_FLAGS) $(RAYLIB_FLAGS) $(EVENTS) $(COMPONENTS) $(GRAPHIC_COMPONENTS) $(BEHAVIOUR_COMPONENTS) $(SYTEMS) $(ENGINE) $(GAME) $(SRC)/editor.cpp -I$(INCLUDE) -I$(RAYLIB) -I$(RAYGUI) -L$(LIB) $^ -o bin/editor
+	./$(BIN)/editor
+
 # Tests
 tester:
-	$(CXX) $(CXX_FLAGS) $(RAYLIB_FLAGS) $(EVENTS) $(COMPONENTS) $(GRAPHIC_COMPONENTS) $(BEHAVIOUR_COMPONENTS) $(SYTEMS) $(ENGINE) $(GAME) test/tester.cpp -I$(INCLUDE) -I"/Users/eudvazquez/personal/raylib/raylib/src" -L$(LIB) $^ -o bin/tester
+	$(CXX) $(CXX_FLAGS) $(RAYLIB_FLAGS) $(EVENTS) $(COMPONENTS) $(GRAPHIC_COMPONENTS) $(BEHAVIOUR_COMPONENTS) $(SYTEMS) $(ENGINE) $(GAME) test/tester.cpp -I$(INCLUDE) -I$(RAYLIB) -L$(LIB) $^ -o bin/tester
 	./$(BIN)/tester
