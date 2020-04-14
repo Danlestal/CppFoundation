@@ -31,9 +31,7 @@ GunComponent::~GunComponent() {
 void GunComponent::updatePosition(IEventData* pEventData) {
     UpdateActorPositionEventData* moveEvent = reinterpret_cast<UpdateActorPositionEventData*>(pEventData);
     if (moveEvent->getActorId() == mActorId) {
-        UpdateActorPositionEventData* moveEvent = reinterpret_cast<UpdateActorPositionEventData*>(pEventData);
-        Vector2D lastMovement = moveEvent->getDelta();
-        mPosition += lastMovement;
+        mPosition += moveEvent->getDelta();
     }
 }
 

@@ -7,11 +7,11 @@ CameraComponent::CameraComponent(Camera2D* camera,
     mCameraTarget = cameraTarget;
     mEvtManager = evtManager;
     mEvtManager->addListener(fastdelegate::MakeDelegate(this,
-                                                            &CameraComponent::updateCameraTarget),
-                                                            "TickEventDataType");
+                                                        &CameraComponent::updateCameraTarget),
+                                                        "OrderActorToShotEventDataType");
 }
 
-CameraComponent::~CameraComponent(){
+CameraComponent::~CameraComponent() {
     mEvtManager->removeListener(fastdelegate::MakeDelegate(this,
                                                             &CameraComponent::updateCameraTarget),
                                                             "TickEventDataType");
@@ -19,11 +19,13 @@ CameraComponent::~CameraComponent(){
 
 
 void CameraComponent::updateCameraTarget(IEventData* pEventData) {
-        mCameraTarget += {0, -0.5};
-        mCamera->target = {mCameraTarget.x, mCameraTarget.y};
+    UpdateActorPositionEventData* moveEvent = reinterpret_cast<UpdateActorPositionEventData*>(pEventData);
+    if (moveEvent->getActorId() == mActorId) {
+        mCameraTarget += moveEvent->getDelta();
+    }
 }
 
 
-std::string CameraComponent::getType(){
+std::string CameraComponent::getType() {
     return "CameraComponent";
 }
