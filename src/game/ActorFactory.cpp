@@ -79,9 +79,16 @@ Actor* ActorFactory::createPlayerSpaceship() {
 }
 
 Actor* ActorFactory::createCameraComponent(Camera2D* rayCamera) {
+    float boardWidth = mGameResolution.x -100;
+    float boardHeight = mGameResolution.y -100;
+
     Actor* camera = new Actor(mIdProvider->getUID());
     Vector2D initialVector = Vector2D(mGameResolution.x / 2, mGameResolution.y / 2);
+    camera->addComponent(new BidimensionalComponent(camera->getId(), initialVector, mEventManager));
     camera->addComponent(new CameraComponent(rayCamera, mEventManager, initialVector));
+    camera->addComponent(new SquareGraphicComponent(boardWidth, 2, Vector2D(-(mGameResolution.x / 2), -50), BLUE));
+    camera->addComponent(new SquareGraphicComponent(boardWidth, 2, Vector2D(-(mGameResolution.x / 2), +50), BLUE));
+
     return camera;
 }
 
