@@ -15,7 +15,7 @@ class CameraComponent : public Component {
     Vector2D mCameraTarget;
 
  public:
-    CameraComponent(Camera2D* camera, EventManager* evtManager, Vector2D cameraTarget);
+    CameraComponent(long actorId, Camera2D* camera, EventManager* evtManager, Vector2D cameraTarget);
     ~CameraComponent();
 
 
