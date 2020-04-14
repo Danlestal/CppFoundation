@@ -36,7 +36,6 @@ void PhysicsSystem::checkActorPhysics(ActorPhysics* toCheck) {
             continue;
         if (collides(toCheck->box, other->box)) {
             bool collidesWithBoundary = toCheck->isBoundary || other->isBoundary;
-
             mEventManager->queueEvent(new ActorCollidesEventData( toCheck->actorId,
                                                                     other->actorId,
                                                                     toCheck->lastMovement,
@@ -49,29 +48,36 @@ static bool compareXAxis(const ActorPhysics* first, const ActorPhysics* second) 
     return (first->box.min.x < second->box.min.x);
 }
 
-
 void PhysicsSystem::createAndAddActorIfNeeded(Actor* actor) {
     if (actor->hasComponent("BidimensionalComponent") && actor->hasComponent("BoundingSquareComponent")) {
-            ActorPhysics* actorPhysics = createActorPhysics(actor);
-            mAxisList.push_back(actorPhysics);
+            std::vector<ActorPhysics*> actorPhysics = createActorPhysics(actor);
+            mAxisList.insert(mAxisList.end(),
+                                actorPhysics.begin(),
+                                actorPhysics.end());
     }
 }
 
-ActorPhysics* PhysicsSystem::createActorPhysics(Actor* actor) {
-    BoundingSquareComponent* squareComponent = reinterpret_cast<BoundingSquareComponent*>
-                                            (actor->getComponent("BoundingSquareComponent"));
-
+std::vector<ActorPhysics*> PhysicsSystem::createActorPhysics(Actor* actor) {
     BidimensionalComponent* positionComponent = reinterpret_cast<BidimensionalComponent*>
-                (actor->getComponent("BidimensionalComponent"));
-    AABB box = AABB();
-    box.min = positionComponent->getPos();
-    box.max = box.min + squareComponent->getDimensions();
-    ActorPhysics *phys = new ActorPhysics();
-    phys->box = box;
-    phys->actorId = actor->getId();
-    phys->lastMovement = Vector2D();
-    phys->isBoundary = squareComponent->isBoundary();
-    return phys;
+                (actor->getComponents("BidimensionalComponent")[0]);
+
+
+    std::vector<ActorPhysics*> result;
+    std::vector<Component*> boundingComponents = actor->getComponents("BoundingSquareComponent");
+    for (auto it = boundingComponents.begin(); it != boundingComponents.end(); ++it) {
+        BoundingSquareComponent* squareComponent = reinterpret_cast<BoundingSquareComponent*>(*it);
+        AABB box = AABB();
+        box.min = positionComponent->getPos();
+        box.max = box.min + squareComponent->getDimensions();
+        ActorPhysics *phys = new ActorPhysics();
+        phys->box = box;
+        phys->actorId = actor->getId();
+        phys->lastMovement = Vector2D();
+        phys->isBoundary = squareComponent->isBoundary();
+        result.push_back(phys);
+    }
+
+    return result;
 }
 
 bool PhysicsSystem::collides(AABB firstBox, AABB secondBox) {

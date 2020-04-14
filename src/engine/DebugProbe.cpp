@@ -3,7 +3,7 @@
 
 DebugProbe::DebugProbe(Actor* mainActor){
     mMainActor = mainActor;
-    mMainActorPosition = reinterpret_cast<BidimensionalComponent*>(mainActor->getComponent("BidimensionalComponent"));
+    mMainActorPosition = reinterpret_cast<BidimensionalComponent*>(mainActor->getComponents("BidimensionalComponent")[0]);
 }
 
 void DebugProbe::display() {

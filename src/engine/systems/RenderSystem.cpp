@@ -1,5 +1,6 @@
 #include "RenderSystem.hpp"
 #include <list>
+#include <vector>
 #include "../components/graphics/GraphicComponent.hpp"
 #include "../components/BidimensionalComponent.hpp"
 
@@ -14,10 +15,16 @@ void RenderSystem::draw() {
         Actor* actor = (*it);
         if (actor->hasComponent("BidimensionalComponent") && actor->hasComponent("GraphicComponent")) {
             BidimensionalComponent* positionComponent = reinterpret_cast<BidimensionalComponent*>
-            (actor->getComponent("BidimensionalComponent"));
-            GraphicComponent* component = reinterpret_cast<GraphicComponent*> (actor->getComponent("GraphicComponent"));
+            (actor->getComponents("BidimensionalComponent")[0]);
+
+            std::vector<Component*> graphicComponents = actor->getComponents("GraphicComponent");
             Vector2D position = positionComponent->getPos();
-            component->draw(position);
+            for (auto graphicComponentIt = graphicComponents.begin();
+                graphicComponentIt != graphicComponents.end();
+                ++graphicComponentIt) {
+                    GraphicComponent* component = reinterpret_cast<GraphicComponent*> (*graphicComponentIt);
+                    component->draw(position);
+            }
         }
     }
 }

@@ -14,9 +14,9 @@ void LogicSystem::updateLogic() {
         Actor* actor = (*it);
         if (actor->hasComponent("BidimensionalComponent") && actor->hasComponent("BehaviourComponent")) {
             BidimensionalComponent* positionComponent = reinterpret_cast<BidimensionalComponent*>(
-                actor->getComponent("BidimensionalComponent"));
+                actor->getComponents("BidimensionalComponent")[0]);
             BehaviourComponent* component = reinterpret_cast<BehaviourComponent*>(
-                actor->getComponent("BehaviourComponent"));
+                actor->getComponents("BehaviourComponent")[0]);
             component->update(positionComponent->getPos());
         }
     }

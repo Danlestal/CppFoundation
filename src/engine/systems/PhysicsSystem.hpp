@@ -33,9 +33,8 @@ class PhysicsSystem {
     Scene* mScene;
     std::vector<ActorPhysics*> mAxisList;
 
-    void initAxisList(std::list<Actor*> actors);
     void createAndAddActorIfNeeded(Actor* actor);
-    ActorPhysics* createActorPhysics(Actor* actor);
+    std::vector<ActorPhysics*> createActorPhysics(Actor* actor);
     ActorPhysics* findActor(long id);
     int findActorIndex(long id);
     void removeActorById(long id);
