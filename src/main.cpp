@@ -12,6 +12,7 @@
 #include "./engine/systems/LogicSystem.hpp"
 #include "./engine/systems/RenderSystem.hpp"
 #include "./engine/systems/PhysicsSystem.hpp"
+#include "./engine/systems/EditorRenderingSystem.hpp"
 #include "./game/ActorFactory.hpp"
 #include "./engine/DebugProbe.hpp"
 
@@ -42,7 +43,6 @@ int main(void) {
     ResourceManager resources = ResourceManager();
     resources.loadTexture("xenon2_textures", "./resources/xenon2_sprites.png");
     ActorFactory *factory = new ActorFactory(idProvider, scene, eventManager, resources, nativeResolution);
-
     Actor* spaceShip = factory->createPlayerSpaceship();
     scene->addActor(spaceShip);
     // std::vector<Actor*> boundaries = factory->createBoundaries();
@@ -62,6 +62,8 @@ int main(void) {
     Actor* camera = factory->createCameraComponent(&rayCamera);
     scene->addActor(camera);
 
+    EditorRenderingSystem* editorView = new EditorRenderingSystem(camera);
+
     KeyboardInputManager inputManager = KeyboardInputManager(eventManager);
     TickEventData* tick = new TickEventData();
     while (!WindowShouldClose()) {
@@ -75,8 +77,7 @@ int main(void) {
         BeginMode2D(rayCamera);
         view->draw();
         if (editMode) {
-            mousePosition = GetMousePosition();
-            DrawText(FormatText("Mouse Position: [ %.0f, %.0f ]", mousePosition.x, mousePosition.y), 10, 40, 10, DARKGRAY);
+            editorView->draw();
             inputManager.proccessEditorInput(camera->getId());
         } else {
             inputManager.proccessPlayerInput(spaceShip->getId());

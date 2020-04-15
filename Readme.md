@@ -21,14 +21,14 @@ Add a 2d camera.
 Add vertical scrolling.
     --->
 First editor iteration
-Add Editor Render View
-Add create wall buttom (it would be a template)
-Add create invader buttom (it would be a template)
-Actor explorer
-Actor editor
-
-
-
+    Add Editor Render View
+    Add create wall buttom (it would be a template)
+    Add create invader buttom (it would be a template)
+    Actor explorer
+    Actor editor
+    Serialize to json
+    Deserialize from json.
+    
 Play with different resolutions (It will be done by rendering into a texture and later one scalling to a target resolution.)
 Add triggers
 Try different movement patterns for the invaders
