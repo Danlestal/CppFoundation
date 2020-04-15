@@ -20,7 +20,7 @@
 int main(void) {
     Vector2D nativeResolution = {1024, 768};
     InitWindow(nativeResolution.x, nativeResolution.y, "Invaders");
-    bool editMode = false;
+    bool editMode = true;
 
 
     //
