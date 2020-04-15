@@ -5,12 +5,12 @@
 #include "./events/OrderActorToMoveEventData.hpp"
 #include "./events/OrderActorToShotEventData.hpp"
 
-KeyboardInputManager::KeyboardInputManager(long playerId, EventManager* eventManager) {
-    mPlayerId = playerId;
+KeyboardInputManager::KeyboardInputManager(EventManager* eventManager) {
     mEventManager = eventManager;
+    mEditorMode = false;
 }
 
-void KeyboardInputManager::proccessInput() {
+void KeyboardInputManager::proccessPlayerInput(long playerId) {
     OrderActorToMoveEventData* movement = NULL;
     Vector2D vector = Vector2D(0, 0);
 
@@ -20,11 +20,11 @@ void KeyboardInputManager::proccessInput() {
     if (IsKeyDown(KEY_DOWN)) vector += Vector2D(0, 1);
 
     if (vector.x != 0 || vector.y != 0) {
-        mEventManager->queueEvent(new OrderActorToMoveEventData(mPlayerId, vector));
+        mEventManager->queueEvent(new OrderActorToMoveEventData(playerId, vector));
     }
 
 
     if (IsKeyDown(KEY_SPACE)) {
-        mEventManager->queueEvent(new OrderActorToShotEventData(mPlayerId));
+        mEventManager->queueEvent(new OrderActorToShotEventData(playerId));
     }
 }

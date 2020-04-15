@@ -34,6 +34,11 @@ run-editor:
 clean:
 	-rm $(BIN)/*
 
+
+game-editor:
+	$(CXX) $(CXX_FLAGS) $(RAYLIB_FLAGS) $(EVENTS) $(COMPONENTS) $(GRAPHIC_COMPONENTS) $(BEHAVIOUR_COMPONENTS) $(SYTEMS) $(ENGINE) $(GAME) $(SRC)/main.cpp -I$(INCLUDE) -I$(RAYLIB) -I$(RAYGUI) -L$(LIB) $^ -o bin/main
+	./$(BIN)/main
+
 editor:
 	$(CXX) $(CXX_FLAGS) $(RAYLIB_FLAGS) $(EVENTS) $(COMPONENTS) $(GRAPHIC_COMPONENTS) $(BEHAVIOUR_COMPONENTS) $(SYTEMS) $(ENGINE) $(GAME) $(SRC)/editor.cpp -I$(INCLUDE) -I$(RAYLIB) -I$(RAYGUI) -L$(LIB) $^ -o bin/editor
 	./$(BIN)/editor

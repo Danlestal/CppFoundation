@@ -1,6 +1,7 @@
 #include <iostream>
 #include "raylib.h"
-
+#define RAYGUI_IMPLEMENTATION
+#include "raygui.h"
 
 #include "./engine/events/EventManager.hpp"
 #include "./engine/events/TickEventData.hpp"
@@ -19,6 +20,14 @@
 int main(void) {
     Vector2D nativeResolution = {1024, 768};
     InitWindow(nativeResolution.x, nativeResolution.y, "Invaders");
+    bool editMode = false;
+
+
+    //
+    Vector2 mousePosition = { 0 };
+    Vector2 panOffset = mousePosition;
+    bool dragWindow = false;
+    //
 
     SetTargetFPS(60);
     EventManager* eventManager = new EventManager();
@@ -41,8 +50,8 @@ int main(void) {
         Actor* actor = (*it);
         scene->addActor(actor);
     }
-    scene->addActor(factory->createInvader());
-    scene->addActor(factory->createScoreboard());
+    // scene->addActor(factory->createInvader());
+    // scene->addActor(factory->createScoreboard());
     // PARSE THE XML FROM THE SCENE END
 
     Camera2D rayCamera = { 0 };
@@ -52,18 +61,34 @@ int main(void) {
     rayCamera.zoom = 1.0f;
     scene->addActor(factory->createCameraComponent(&rayCamera));
 
-    KeyboardInputManager inputManager = KeyboardInputManager(spaceShip->getId(), eventManager);
+    KeyboardInputManager inputManager = KeyboardInputManager(eventManager);
     TickEventData* tick = new TickEventData();
     while (!WindowShouldClose()) {
-        inputManager.proccessInput();
+        inputManager.proccessPlayerInput(spaceShip->getId());
         eventManager->update();
         BeginDrawing();
         ClearBackground(RAYWHITE);
         BeginMode2D(rayCamera);
         view->draw();
-        logic->updateLogic();
+        if (editMode) {
+            mousePosition = GetMousePosition();
+        
+            if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+            {
+                if (CheckCollisionPointRec(mousePosition, (Rectangle){ 0, 0, nativeResolution.x, 20 }))
+                {
+                    dragWindow = true;
+                    panOffset = mousePosition;
+                }
+            }
+
+            DrawText(FormatText("Mouse Position: [ %.0f, %.0f ]", mousePosition.x, mousePosition.y), 10, 40, 10, DARKGRAY);
+        } else {
+            logic->updateLogic();
+            eventManager->queueEvent(tick);
+        }
+
         EndDrawing();
-        eventManager->queueEvent(tick);
     }
     CloseWindow();
 
