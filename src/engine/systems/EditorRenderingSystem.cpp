@@ -13,9 +13,15 @@ void EditorRenderingSystem::draw() {
     Vector2D cameraPosition = cameraPositionComponent->getPos();
 
     Vector2 mousePosition = GetMousePosition();
-    DrawText(FormatText("Mouse Position: [ %.0f, %.0f ]", mousePosition.x, mousePosition.y),
+    DrawText("Editor Enabled",
     cameraPosition.x,
     cameraPosition.y,
+    10,
+    DARKGRAY);
+
+    DrawText(FormatText("Mouse Position: [ %.0f, %.0f ]", mousePosition.x, mousePosition.y),
+    cameraPosition.x,
+    cameraPosition.y  + 15,
     10,
     DARKGRAY);
 }
