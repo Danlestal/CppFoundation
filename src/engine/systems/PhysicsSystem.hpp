@@ -23,10 +23,6 @@ struct ActorPhysics{
     AABB box;
 };
 
-static bool compareYAxis(const ActorPhysics* first, const ActorPhysics* second) {
-    return (first->box.min.y < second->box.min.y);
-}
-
 class PhysicsSystem {
  private:
     EventManager* mEventManager;

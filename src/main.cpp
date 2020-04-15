@@ -2,6 +2,7 @@
 #include "raylib.h"
 #define RAYGUI_IMPLEMENTATION
 #include "raygui.h"
+#undef RAYGUI_IMPLEMENTATION            // Avoid including raygui implementation again
 
 #include "./engine/events/EventManager.hpp"
 #include "./engine/events/TickEventData.hpp"
@@ -23,12 +24,6 @@ int main(void) {
     InitWindow(nativeResolution.x, nativeResolution.y, "Invaders");
     bool editMode = true;
 
-
-    //
-    Vector2 mousePosition = { 0 };
-    Vector2 panOffset = mousePosition;
-    bool dragWindow = false;
-    //
 
     SetTargetFPS(60);
     EventManager* eventManager = new EventManager();
@@ -54,15 +49,16 @@ int main(void) {
     // scene->addActor(factory->createScoreboard());
     // PARSE THE XML FROM THE SCENE END
 
+    Vector2 cameraOffset = { nativeResolution.x/2, nativeResolution.y/2 };
     Camera2D rayCamera = { 0 };
-    rayCamera.target = (Vector2){ nativeResolution.x/2, nativeResolution.y/2 };
-    rayCamera.offset = (Vector2){ nativeResolution.x/2, nativeResolution.y/2 };
+    rayCamera.target = cameraOffset;
+    rayCamera.offset = cameraOffset;
     rayCamera.rotation = 0.0f;
     rayCamera.zoom = 1.0f;
     Actor* camera = factory->createCameraComponent(&rayCamera);
     scene->addActor(camera);
 
-    EditorRenderingSystem* editorView = new EditorRenderingSystem(camera);
+    EditorRenderingSystem* editorView = new EditorRenderingSystem(camera, cameraOffset);
 
     KeyboardInputManager inputManager = KeyboardInputManager(eventManager);
     TickEventData* tick = new TickEventData();
