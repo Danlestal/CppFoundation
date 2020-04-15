@@ -10,7 +10,7 @@ KeyboardInputManager::KeyboardInputManager(EventManager* eventManager) {
     mEditorMode = false;
 }
 
-void KeyboardInputManager::proccessPlayerInput(long playerId) {
+void KeyboardInputManager::emitMovementOrdersToActor(long actorId) {
     OrderActorToMoveEventData* movement = NULL;
     Vector2D vector = Vector2D(0, 0);
 
@@ -20,10 +20,18 @@ void KeyboardInputManager::proccessPlayerInput(long playerId) {
     if (IsKeyDown(KEY_DOWN)) vector += Vector2D(0, 1);
 
     if (vector.x != 0 || vector.y != 0) {
-        mEventManager->queueEvent(new OrderActorToMoveEventData(playerId, vector));
+        mEventManager->queueEvent(new OrderActorToMoveEventData(actorId, vector));
     }
+}
+
+void KeyboardInputManager::proccessEditorInput(long cameraId) {
+    emitMovementOrdersToActor(cameraId);
+}
 
 
+
+void KeyboardInputManager::proccessPlayerInput(long playerId) {
+    emitMovementOrdersToActor(playerId);
     if (IsKeyDown(KEY_SPACE)) {
         mEventManager->queueEvent(new OrderActorToShotEventData(playerId));
     }

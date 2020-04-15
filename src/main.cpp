@@ -59,12 +59,16 @@ int main(void) {
     rayCamera.offset = (Vector2){ nativeResolution.x/2, nativeResolution.y/2 };
     rayCamera.rotation = 0.0f;
     rayCamera.zoom = 1.0f;
-    scene->addActor(factory->createCameraComponent(&rayCamera));
+    Actor* camera = factory->createCameraComponent(&rayCamera);
+    scene->addActor(camera);
 
     KeyboardInputManager inputManager = KeyboardInputManager(eventManager);
     TickEventData* tick = new TickEventData();
     while (!WindowShouldClose()) {
-        inputManager.proccessPlayerInput(spaceShip->getId());
+        if (IsKeyDown(KEY_F1)) {
+             editMode = !editMode;
+        }
+
         eventManager->update();
         BeginDrawing();
         ClearBackground(RAYWHITE);
@@ -72,22 +76,13 @@ int main(void) {
         view->draw();
         if (editMode) {
             mousePosition = GetMousePosition();
-        
-            if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
-            {
-                if (CheckCollisionPointRec(mousePosition, (Rectangle){ 0, 0, nativeResolution.x, 20 }))
-                {
-                    dragWindow = true;
-                    panOffset = mousePosition;
-                }
-            }
-
             DrawText(FormatText("Mouse Position: [ %.0f, %.0f ]", mousePosition.x, mousePosition.y), 10, 40, 10, DARKGRAY);
+            inputManager.proccessEditorInput(camera->getId());
         } else {
+            inputManager.proccessPlayerInput(spaceShip->getId());
             logic->updateLogic();
-            eventManager->queueEvent(tick);
         }
-
+        eventManager->queueEvent(tick);
         EndDrawing();
     }
     CloseWindow();
