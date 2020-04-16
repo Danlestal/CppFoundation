@@ -5,6 +5,8 @@ To run the tests:
 make tester
 
 
+RoadMap
+-------
 
 Actor spawn in real time
 Bullet Component, It should probably be a behaviour component
@@ -19,9 +21,11 @@ Add a new invader each time we kill one
 Added a proto scoreboard.
 Add a 2d camera.
 Add vertical scrolling.
-    --->
 First editor iteration
-    Add Editor Render View
+Add Editor Render View
+Mechanism to query actors using the mouse
+--->
+    Kind of property grid for actors
     Add create wall buttom (it would be a template)
     Add create invader buttom (it would be a template)
     Actor explorer
