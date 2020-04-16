@@ -40,17 +40,17 @@ int main(void) {
     ActorFactory *factory = new ActorFactory(idProvider, scene, eventManager, resources, nativeResolution);
     Actor* spaceShip = factory->createPlayerSpaceship();
     scene->addActor(spaceShip);
-    std::vector<Actor*> boundaries = factory->createBoundaries();
-    for (auto it = boundaries.begin(); it != boundaries.end(); ++it) {
-         Actor* actor = (*it);
-         scene->addActor(actor);
-    }
+    // std::vector<Actor*> boundaries = factory->createBoundaries();
+    // for (auto it = boundaries.begin(); it != boundaries.end(); ++it) {
+    //      Actor* actor = (*it);
+    //      scene->addActor(actor);
+    // }
     // scene->addActor(factory->createInvader());
     // scene->addActor(factory->createScoreboard());
     // PARSE THE XML FROM THE SCENE END
 
     Vector2 cameraOffset = { nativeResolution.x/2, nativeResolution.y/2 };
-    Camera2D rayCamera = { 0 };
+    Camera2D rayCamera;
     rayCamera.target = cameraOffset;
     rayCamera.offset = cameraOffset;
     rayCamera.rotation = 0.0f;
@@ -58,7 +58,7 @@ int main(void) {
     Actor* camera = factory->createCameraComponent(&rayCamera);
     scene->addActor(camera);
 
-    EditorRenderingSystem* editorView = new EditorRenderingSystem(camera, cameraOffset);
+    EditorRenderingSystem* editorView = new EditorRenderingSystem(eventManager, camera, cameraOffset);
 
     KeyboardInputManager inputManager = KeyboardInputManager(eventManager);
     TickEventData* tick = new TickEventData();

@@ -4,7 +4,6 @@
 class KeyboardInputManager {
  private:
     EventManager* mEventManager;
-    long mPlayerId;
     bool mEditorMode;
     void emitMovementOrdersToActor(long actorId);
  public:

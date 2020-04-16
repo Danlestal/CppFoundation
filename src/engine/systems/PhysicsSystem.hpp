@@ -31,17 +31,24 @@ class PhysicsSystem {
 
     void createAndAddActorIfNeeded(Actor* actor);
     std::vector<ActorPhysics*> createActorPhysics(Actor* actor);
+    ActorPhysics* createMockActorPhysics(Vector2D actor);
+
     ActorPhysics* findActor(long id);
     int findActorIndex(long id);
     void removeActorById(long id);
 
+    AABB createMockAABBBox(Vector2D position);
+
     void updatePosition(IEventData* pEventData);
     void addActor(IEventData* pEventData);
     void removeActor(IEventData* pEventData);
+    void answer2dQuery(IEventData* pEventData);
 
     void checkActorPhysics(ActorPhysics* toCheck);
 
  public:
     explicit PhysicsSystem(Scene* scene);
+    ~PhysicsSystem();
+
     bool collides(AABB firstBox, AABB secondBox);
 };

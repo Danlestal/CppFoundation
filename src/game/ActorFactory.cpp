@@ -80,7 +80,7 @@ Actor* ActorFactory::createPlayerSpaceship() {
 
 Actor* ActorFactory::createCameraComponent(Camera2D* rayCamera) {
     float boardWidth = mGameResolution.x -100;
-    float boardHeight = mGameResolution.y -100;
+    // float boardHeight = mGameResolution.y -100;
 
     Actor* camera = new Actor(mIdProvider->getUID());
     Vector2D initialVector = Vector2D(mGameResolution.x / 2, mGameResolution.y / 2);

@@ -1,30 +1,80 @@
 #include "EditorRenderingSystem.hpp"
 #include "../components/BidimensionalComponent.hpp"
+#include "../events/MouseClickEventData.hpp"
+#include "../events/ActorQueryEventData.hpp"
 
-EditorRenderingSystem::EditorRenderingSystem(Actor* camera, Vector2 cameraOffset) {
+
+EditorRenderingSystem::EditorRenderingSystem(EventManager* eventManager, Actor* camera, Vector2 cameraOffset) {
     mCamera = camera;
     mOffset = cameraOffset;
+    mEventManager = eventManager;
+    mEventManager->addListener(fastdelegate::MakeDelegate(
+                                this,
+                                &EditorRenderingSystem::mouseClickReceived),
+                                "MouseClickEventDataType");
 }
 
+EditorRenderingSystem::~EditorRenderingSystem() {
+    mEventManager->removeListener(fastdelegate::MakeDelegate(
+                                this,
+                                &EditorRenderingSystem::mouseClickReceived),
+                                "MouseClickEventDataType");
+}
 
-
-void EditorRenderingSystem::draw() {
+Vector2D EditorRenderingSystem::getCameraIngamePosition() {
     BidimensionalComponent* cameraPositionComponent =
     reinterpret_cast<BidimensionalComponent*>(mCamera->getComponents("BidimensionalComponent")[0]);
-    Vector2D renderWindowOrigin = cameraPositionComponent->getPos() - Vector2D(mOffset.x, mOffset.y);
+    return cameraPositionComponent->getPos();
+}
+
+void EditorRenderingSystem::mouseClickReceived(IEventData* pEventData) {
+    MouseClickEventData* mouseEvent = reinterpret_cast<MouseClickEventData*>(pEventData);
+    if (mouseEvent->getMouseButton() == 0) {
+        // Try to select an in-game actor
+        Vector2 mousePosition = GetMousePosition();
+        Vector2D vectorMousePosition = Vector2D(mousePosition.x, mousePosition.y);
+        Vector2D result = vectorMousePosition + getCameraIngamePosition();
+        result.x -= mOffset.x;
+        result.y -= mOffset.y;
+        mEventManager->queueEvent(new ActorQueryEventData(result));
+    }
+
+    if (mouseEvent->getMouseButton() == 1) {
+        // Context Menu?
+    }
+}
+
+void EditorRenderingSystem::draw() {
+    Vector2D cameraGamePosition = getCameraIngamePosition();
+
+    Vector2D renderWindowOrigin = cameraGamePosition - Vector2D(mOffset.x, mOffset.y);
 
     Vector2 mousePosition = GetMousePosition();
     DrawText("Editor Enabled",
-    renderWindowOrigin.x + 10,
-    renderWindowOrigin.y + 30,
-    10,
-    DARKGRAY);
+                renderWindowOrigin.x + 10,
+                renderWindowOrigin.y + 30,
+                10,
+                DARKGRAY);
 
     DrawText(FormatText("Mouse Position: [ %.0f, %.0f ]", mousePosition.x, mousePosition.y),
-    renderWindowOrigin.x + 10,
-    renderWindowOrigin.y + 40,
-    10,
-    DARKGRAY);
+            renderWindowOrigin.x + 10,
+            renderWindowOrigin.y + 40,
+            10,
+            DARKGRAY);
+
+    DrawText(FormatText("Mouse In Game Position: [ %.0f, %.0f ]",
+            mousePosition.x + cameraGamePosition.x - mOffset.x,
+            mousePosition.y + cameraGamePosition.y - mOffset.y),
+            renderWindowOrigin.x + 10,
+            renderWindowOrigin.y + 50,
+            10,
+            DARKGRAY);
+
+    DrawText(FormatText("Camera In Game Position: [ %.0f, %.0f ]", cameraGamePosition.x, cameraGamePosition.y),
+            renderWindowOrigin.x + 10,
+            renderWindowOrigin.y + 60,
+            10,
+            DARKGRAY);
 
     GuiButton((Rectangle){ renderWindowOrigin.x + 900, 30, 115, 30 }, "Add boundary");
 }

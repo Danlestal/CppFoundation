@@ -7,7 +7,8 @@
 #include "../events/UpdateActorPositionEventData.hpp"
 #include "../events/AddActorEventData.hpp"
 #include "../events/DestroyActorEventData.hpp"
-
+#include "../events/ActorQueryEventData.hpp"
+#include "../events/AnswerToActorQueryEventData.hpp"
 
 
 PhysicsSystem::PhysicsSystem(Scene* scene) {
@@ -27,7 +28,34 @@ PhysicsSystem::PhysicsSystem(Scene* scene) {
                                 this,
                                 &PhysicsSystem::removeActor),
                                 "DestroyActorEventDataType");
+
+    mEventManager->addListener(fastdelegate::MakeDelegate(
+                            this,
+                            &PhysicsSystem::answer2dQuery),
+                            "ActorQueryEventDataType");
 }
+
+PhysicsSystem::~PhysicsSystem() {
+    mEventManager->removeListener(fastdelegate::MakeDelegate(this,
+                                &PhysicsSystem::updatePosition),
+                                "UpdateActorPositionEventDataType");
+
+    mEventManager->removeListener(fastdelegate::MakeDelegate(
+                                    this,
+                                    &PhysicsSystem::addActor),
+                                    "AddActorEventDataType");
+
+    mEventManager->removeListener(fastdelegate::MakeDelegate(
+                                this,
+                                &PhysicsSystem::removeActor),
+                                "DestroyActorEventDataType");
+                                
+    mEventManager->removeListener(fastdelegate::MakeDelegate(
+                        this,
+                        &PhysicsSystem::answer2dQuery),
+                        "ActorQueryEventDataType");
+}
+
 
 void PhysicsSystem::checkActorPhysics(ActorPhysics* toCheck) {
     for ( int i = 0; i< mAxisList.size(); ++i ) {
@@ -78,6 +106,13 @@ std::vector<ActorPhysics*> PhysicsSystem::createActorPhysics(Actor* actor) {
     }
 
     return result;
+}
+
+AABB PhysicsSystem::createMockAABBBox(Vector2D position) {
+    AABB box = AABB();
+    box.min = position;
+    box.max = position + Vector2D(5, 5);  // The mock box has 5x5 pixels
+    return box;
 }
 
 bool PhysicsSystem::collides(AABB firstBox, AABB secondBox) {
@@ -141,4 +176,19 @@ void PhysicsSystem::removeActorById(long id) {
 void PhysicsSystem::removeActor(IEventData* removeActorEvent) {
     DestroyActorEventData* removeEvent = reinterpret_cast<DestroyActorEventData*>(removeActorEvent);
     removeActorById(removeEvent->getActorId());
+}
+
+
+void PhysicsSystem::answer2dQuery(IEventData* pEventData) {
+    ActorQueryEventData* queryEvent = reinterpret_cast<ActorQueryEventData*>(pEventData);
+    AABB mockBox = createMockAABBBox(queryEvent->getPositionToQuery());
+    std::vector<long> actorsThatCollide;
+    for ( int i = 0; i< mAxisList.size(); ++i ) {
+        ActorPhysics* actorPhysics = mAxisList.at(i);
+        if (collides(mockBox, actorPhysics->box)) {
+            actorsThatCollide.push_back(actorPhysics->actorId);
+        }
+    }
+
+    mEventManager->queueEvent(new AnswerToActorQueryEventData(actorsThatCollide));
 }
