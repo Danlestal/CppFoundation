@@ -76,5 +76,5 @@ void UIRenderingSystem::draw() {
             10,
             DARKGRAY);
 
-    GuiButton((Rectangle){ renderWindowOrigin.x + 900, 30, 115, 30 }, "Add boundary");
+    GuiButton((Rectangle){ renderWindowOrigin.x + 900, renderWindowOrigin.y + 30, 115, 30 }, "Add boundary");
 }

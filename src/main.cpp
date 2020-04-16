@@ -40,11 +40,11 @@ int main(void) {
     ActorFactory *factory = new ActorFactory(idProvider, scene, eventManager, resources, nativeResolution);
     Actor* spaceShip = factory->createPlayerSpaceship();
     scene->addActor(spaceShip);
-    // std::vector<Actor*> boundaries = factory->createBoundaries();
-    // for (auto it = boundaries.begin(); it != boundaries.end(); ++it) {
-    //      Actor* actor = (*it);
-    //      scene->addActor(actor);
-    // }
+    std::vector<Actor*> boundaries = factory->createBoundaries();
+    for (auto it = boundaries.begin(); it != boundaries.end(); ++it) {
+         Actor* actor = (*it);
+         scene->addActor(actor);
+    }
     // scene->addActor(factory->createInvader());
     // scene->addActor(factory->createScoreboard());
     // PARSE THE XML FROM THE SCENE END
