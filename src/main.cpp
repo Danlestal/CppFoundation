@@ -13,7 +13,7 @@
 #include "./engine/systems/LogicSystem.hpp"
 #include "./engine/systems/RenderSystem.hpp"
 #include "./engine/systems/PhysicsSystem.hpp"
-#include "./engine/systems/EditorRenderingSystem.hpp"
+#include "./engine/systems/UIRenderingSystem.hpp"
 #include "./game/ActorFactory.hpp"
 #include "./engine/DebugProbe.hpp"
 
@@ -58,7 +58,7 @@ int main(void) {
     Actor* camera = factory->createCameraComponent(&rayCamera);
     scene->addActor(camera);
 
-    EditorRenderingSystem* editorView = new EditorRenderingSystem(eventManager, camera, cameraOffset);
+    UIRenderingSystem* editorView = new UIRenderingSystem(eventManager, camera, cameraOffset);
 
     KeyboardInputManager inputManager = KeyboardInputManager(eventManager);
     TickEventData* tick = new TickEventData();
@@ -83,6 +83,13 @@ int main(void) {
         EndDrawing();
     }
     CloseWindow();
+
+    delete phys;
+    delete idProvider;
+    delete logic;
+    delete view;
+    delete eventManager;
+    delete scene;
 
     return 0;
 }

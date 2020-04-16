@@ -8,7 +8,7 @@
 
 
 
-class EditorRenderingSystem {
+class UIRenderingSystem {
  private:
     EventManager* mEventManager;
     Actor* mCamera;
@@ -16,8 +16,8 @@ class EditorRenderingSystem {
 
     Vector2D getCameraIngamePosition();
  public:
-    EditorRenderingSystem(EventManager* eventManager, Actor* camera, Vector2 cameraOffset);
-    ~EditorRenderingSystem();
+    UIRenderingSystem(EventManager* eventManager, Actor* camera, Vector2 cameraOffset);
+    ~UIRenderingSystem();
     void draw();
     void mouseClickReceived(IEventData* pEventData);
 };

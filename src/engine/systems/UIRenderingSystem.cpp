@@ -1,33 +1,33 @@
-#include "EditorRenderingSystem.hpp"
+#include "UIRenderingSystem.hpp"
 #include "../components/BidimensionalComponent.hpp"
 #include "../events/MouseClickEventData.hpp"
 #include "../events/ActorQueryEventData.hpp"
 
 
-EditorRenderingSystem::EditorRenderingSystem(EventManager* eventManager, Actor* camera, Vector2 cameraOffset) {
+UIRenderingSystem::UIRenderingSystem(EventManager* eventManager, Actor* camera, Vector2 cameraOffset) {
     mCamera = camera;
     mOffset = cameraOffset;
     mEventManager = eventManager;
     mEventManager->addListener(fastdelegate::MakeDelegate(
                                 this,
-                                &EditorRenderingSystem::mouseClickReceived),
+                                &UIRenderingSystem::mouseClickReceived),
                                 "MouseClickEventDataType");
 }
 
-EditorRenderingSystem::~EditorRenderingSystem() {
+UIRenderingSystem::~UIRenderingSystem() {
     mEventManager->removeListener(fastdelegate::MakeDelegate(
                                 this,
-                                &EditorRenderingSystem::mouseClickReceived),
+                                &UIRenderingSystem::mouseClickReceived),
                                 "MouseClickEventDataType");
 }
 
-Vector2D EditorRenderingSystem::getCameraIngamePosition() {
+Vector2D UIRenderingSystem::getCameraIngamePosition() {
     BidimensionalComponent* cameraPositionComponent =
     reinterpret_cast<BidimensionalComponent*>(mCamera->getComponents("BidimensionalComponent")[0]);
     return cameraPositionComponent->getPos();
 }
 
-void EditorRenderingSystem::mouseClickReceived(IEventData* pEventData) {
+void UIRenderingSystem::mouseClickReceived(IEventData* pEventData) {
     MouseClickEventData* mouseEvent = reinterpret_cast<MouseClickEventData*>(pEventData);
     if (mouseEvent->getMouseButton() == 0) {
         // Try to select an in-game actor
@@ -44,7 +44,7 @@ void EditorRenderingSystem::mouseClickReceived(IEventData* pEventData) {
     }
 }
 
-void EditorRenderingSystem::draw() {
+void UIRenderingSystem::draw() {
     Vector2D cameraGamePosition = getCameraIngamePosition();
 
     Vector2D renderWindowOrigin = cameraGamePosition - Vector2D(mOffset.x, mOffset.y);
