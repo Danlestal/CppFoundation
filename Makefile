@@ -16,10 +16,11 @@ BEHAVIOUR_COMPONENTS := $(SRC)/engine/components/behaviours/*.cpp
 EVENTS := $(SRC)/engine/events/*.cpp
 SYTEMS := $(SRC)/engine/systems/*.cpp
 ENGINE := $(SRC)/engine/*.cpp
+UICOMPONENTS := $(SRC)/engine/uiComponents/*.cpp
 GAME := $(SRC)/game/*.cpp
 
 
-$(BIN)/$(EXECUTABLE): $(EVENTS) $(COMPONENTS) $(GRAPHIC_COMPONENTS) $(BEHAVIOUR_COMPONENTS) $(SYTEMS) $(ENGINE) $(GAME) $(SRC)/main.cpp
+$(BIN)/$(EXECUTABLE): $(EVENTS) $(COMPONENTS) $(GRAPHIC_COMPONENTS) $(BEHAVIOUR_COMPONENTS) $(SYTEMS) $(ENGINE) $(GAME) $(UICOMPONENTS) $(SRC)/main.cpp
 	$(CXX) $(CXX_FLAGS) $(RAYLIB_FLAGS) -I$(INCLUDE) -I$(RAYLIB) -I$(RAYGUI) -L$(LIB) $^ -o $@ $(LIBRARIES)
 
 

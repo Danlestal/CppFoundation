@@ -59,6 +59,7 @@ int main(void) {
     scene->addActor(camera);
 
     UIRenderingSystem* editorView = new UIRenderingSystem(eventManager, camera, cameraOffset);
+    editorView->init();
 
     KeyboardInputManager inputManager = KeyboardInputManager(eventManager);
     TickEventData* tick = new TickEventData();

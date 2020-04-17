@@ -1,9 +1,9 @@
 #pragma once
 #include <string>
-#include "../../Vector2d.hpp"
-#include "../Component.hpp"
+#include "../Vector2d.hpp"
 
 class UIComponent {
  public:
-    virtual void draw(Vector2D) = 0;
+    virtual void draw(Vector2D offsetVector) = 0;
+    virtual ~UIComponent() {}
 };

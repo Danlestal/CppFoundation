@@ -2,6 +2,7 @@
 #include "../components/BidimensionalComponent.hpp"
 #include "../events/MouseClickEventData.hpp"
 #include "../events/ActorQueryEventData.hpp"
+#include "../uiComponents/ButtonComponent.hpp"
 
 
 UIRenderingSystem::UIRenderingSystem(EventManager* eventManager, Actor* camera, Vector2 cameraOffset) {
@@ -46,9 +47,7 @@ void UIRenderingSystem::mouseClickReceived(IEventData* pEventData) {
 
 void UIRenderingSystem::draw() {
     Vector2D cameraGamePosition = getCameraIngamePosition();
-
     Vector2D renderWindowOrigin = cameraGamePosition - Vector2D(mOffset.x, mOffset.y);
-
     Vector2 mousePosition = GetMousePosition();
     DrawText("Editor Enabled",
                 renderWindowOrigin.x + 10,
@@ -75,6 +74,11 @@ void UIRenderingSystem::draw() {
             renderWindowOrigin.y + 60,
             10,
             DARKGRAY);
+    for (std::vector<UIComponent*>::iterator it = mUIComponents.begin() ; it != mUIComponents.end(); ++it) {
+        (*it)->draw(renderWindowOrigin);
+    }
+}
 
-    GuiButton((Rectangle){ renderWindowOrigin.x + 900, renderWindowOrigin.y + 30, 115, 30 }, "Add boundary");
+void UIRenderingSystem::init() {
+    mUIComponents.push_back(new ButtonComponent(Vector2D(900, 30), Vector2D(115, 30), "saveButton", "Save"));
 }
