@@ -86,8 +86,8 @@ Actor* ActorFactory::createCameraComponent(Camera2D* rayCamera) {
     Vector2D initialVector = Vector2D(mGameResolution.x / 2, mGameResolution.y / 2);
     camera->addComponent(new BidimensionalComponent(camera->getId(), initialVector, mEventManager));
     camera->addComponent(new CameraComponent(camera->getId(), rayCamera, mEventManager, initialVector));
-    camera->addComponent(new SquareGraphicComponent(boardWidth, 2, Vector2D(-(mGameResolution.x / 2), -50), BLUE));
-    camera->addComponent(new SquareGraphicComponent(boardWidth, 2, Vector2D(-(mGameResolution.x / 2), +50), BLUE));
+    // camera->addComponent(new SquareGraphicComponent(boardWidth, 2, Vector2D(-(mGameResolution.x / 2), -50), BLUE));
+    // camera->addComponent(new SquareGraphicComponent(boardWidth, 2, Vector2D(-(mGameResolution.x / 2), +50), BLUE));
     camera->addComponent(new VerticalCameraComponent(camera->getId(), mEventManager));
 
     return camera;

@@ -2,17 +2,26 @@
 #include "../components/BidimensionalComponent.hpp"
 #include "../events/MouseClickEventData.hpp"
 #include "../events/ActorQueryEventData.hpp"
+#include "../events/AnswerToActorQueryEventData.hpp"
 #include "../uiComponents/ButtonComponent.hpp"
 
 
-UIRenderingSystem::UIRenderingSystem(EventManager* eventManager, Actor* camera, Vector2 cameraOffset) {
+UIRenderingSystem::UIRenderingSystem(Scene* scene, Actor* camera, Vector2 cameraOffset) {
+    mScene = scene;
     mCamera = camera;
     mOffset = cameraOffset;
-    mEventManager = eventManager;
+    mEventManager = scene->getEventManager();
+    mSelectedActor = nullptr;
     mEventManager->addListener(fastdelegate::MakeDelegate(
                                 this,
                                 &UIRenderingSystem::mouseClickReceived),
                                 "MouseClickEventDataType");
+
+    mEventManager->addListener(fastdelegate::MakeDelegate(
+                            this,
+                            &UIRenderingSystem::actorSelected),
+                            "AnswerToActorQueryEventDataType");
+
 }
 
 UIRenderingSystem::~UIRenderingSystem() {
@@ -45,9 +54,19 @@ void UIRenderingSystem::mouseClickReceived(IEventData* pEventData) {
     }
 }
 
+void UIRenderingSystem::actorSelected(IEventData* pEventData) {
+    AnswerToActorQueryEventData* mouseEvent = reinterpret_cast<AnswerToActorQueryEventData*>(pEventData);
+    std::vector<long> actorIds = mouseEvent->getAnswer();
+    if (actorIds.size() > 0) {
+        mSelectedActor = mScene->getActor(actorIds[0]);
+    }
+}
+
 void UIRenderingSystem::draw() {
     Vector2D cameraGamePosition = getCameraIngamePosition();
+
     Vector2D renderWindowOrigin = cameraGamePosition - Vector2D(mOffset.x, mOffset.y);
+
     Vector2 mousePosition = GetMousePosition();
     DrawText("Editor Enabled",
                 renderWindowOrigin.x + 10,
@@ -74,11 +93,29 @@ void UIRenderingSystem::draw() {
             renderWindowOrigin.y + 60,
             10,
             DARKGRAY);
-    for (std::vector<UIComponent*>::iterator it = mUIComponents.begin() ; it != mUIComponents.end(); ++it) {
-        (*it)->draw(renderWindowOrigin);
+
+    if (GuiButton((Rectangle){ renderWindowOrigin.x + 900, renderWindowOrigin.y + 30, 115, 30 }, "LOAD")) {
+        TraceLog(LOG_INFO, "Loading");
+    }
+
+    if (GuiButton((Rectangle){ renderWindowOrigin.x + 900, renderWindowOrigin.y + 70, 115, 30 }, "SAVE")) {
+        TraceLog(LOG_INFO, "Saving");
+    }
+
+
+    if (mSelectedActor) {
+        GuiToggleGroup({  renderWindowOrigin.x + 10,
+                                    renderWindowOrigin.y + 110,
+                                    300,
+                                    100}, "", true);
+
+        DrawText(FormatText("Id: [ %ld ]", mSelectedActor->getId()),
+                    renderWindowOrigin.x + 15,
+                    renderWindowOrigin.y + 120,
+                    10,
+                    BLACK);
     }
 }
 
 void UIRenderingSystem::init() {
-    mUIComponents.push_back(new ButtonComponent(Vector2D(900, 30), Vector2D(115, 30), "saveButton", "Save"));
 }

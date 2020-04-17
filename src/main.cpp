@@ -58,7 +58,7 @@ int main(void) {
     Actor* camera = factory->createCameraComponent(&rayCamera);
     scene->addActor(camera);
 
-    UIRenderingSystem* editorView = new UIRenderingSystem(eventManager, camera, cameraOffset);
+    UIRenderingSystem* editorView = new UIRenderingSystem(scene, camera, cameraOffset);
     editorView->init();
 
     KeyboardInputManager inputManager = KeyboardInputManager(eventManager);
