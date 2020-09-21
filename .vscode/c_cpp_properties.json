@@ -4,8 +4,8 @@
             "name": "Mac",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/Users/eudvazquez/personal/raylib/raylib/src",
-                "/Users/eudvazquez/personal/raylib/raygui/src"
+                "../raylib/src",
+                "../raygui/src"
             ],
             "defines": [],
             "macFrameworkPath": [
