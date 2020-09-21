@@ -1,11 +1,11 @@
 CXX		  := clang++
-CXX_FLAGS := -Wall -Wextra -std=c++17 -g
-RAYLIB_FLAGS := -framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL /Users/eudvazquez/personal/raylib/raylib/src/libraylib.a
+CXX_FLAGS := -Wno-c++11-narrowing -Wall -Wextra -std=c++17 -g 
+RAYLIB_FLAGS := -framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL ../raylib/src/libraylib.a
 BIN		:= bin
 SRC		:= src
 INCLUDE	:= include 
-RAYLIB := "/Users/eudvazquez/personal/raylib/raylib/src"
-RAYGUI := "/Users/eudvazquez/personal/raylib/raygui/src"
+RAYLIB := "../raylib/src"
+RAYGUI := "../raygui/src"
 LIB		:= lib
 
 LIBRARIES	:=
@@ -21,7 +21,7 @@ GAME := $(SRC)/game/*.cpp
 
 
 $(BIN)/$(EXECUTABLE): $(EVENTS) $(COMPONENTS) $(GRAPHIC_COMPONENTS) $(BEHAVIOUR_COMPONENTS) $(SYTEMS) $(ENGINE) $(GAME) $(UICOMPONENTS) $(SRC)/main.cpp
-	$(CXX) $(CXX_FLAGS) $(RAYLIB_FLAGS) -I$(INCLUDE) -I$(RAYLIB) -I$(RAYGUI) -L$(LIB) $^ -o $@ $(LIBRARIES)
+	$(CXX) $(CXX_FLAGS) $(RAYLIB_FLAGS) -I$(INCLUDE) -I$(RAYLIB) -I$(RAYGUI) -L$(LIB) $^ -o $@ $(LIBRARIES) 
 
 
 run:
