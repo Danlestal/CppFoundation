@@ -76,5 +76,6 @@
         "/Users/eudvazquez/personal/raylib/raygui/src",
 
     ],
-    "terminal.integrated.shell.windows": "cmd.exe"
+    "terminal.integrated.shell.windows": "cmd.exe",
+    "C_Cpp.errorSquiggles": "Disabled"
 }

@@ -21,7 +21,8 @@ class ActorFactory {
                   ResourceManager resources,
                   Vector2D gameResolution);
     Actor*  createScoreboard();
-    Actor* createInvader();
+    Actor* createInvader(Vector2D position);
+    Actor* createWallRock(Vector2D position, Vector2D dimensions);
     Actor* createPlayerSpaceship();
     Actor* createCameraComponent(Camera2D* rayCamera);
     Actor* createBullet(Vector2D initialPosition);
@@ -30,5 +31,4 @@ class ActorFactory {
 
     void destroyActor(IEventData* spawnActorEventData);
     void spawnBullet(IEventData* spawnBulletData);
-    void spawnNewInvader(IEventData* spawnBulletData);
 };

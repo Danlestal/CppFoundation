@@ -56,9 +56,17 @@ Actor* ActorFactory::createScoreboard() {
     return scoreBoard;
 }
 
-Actor* ActorFactory::createInvader() {
+Actor* ActorFactory::createWallRock(Vector2D position, Vector2D dimensions){
+    Actor* wall = new Actor(mIdProvider->getUID());
+    wall->addComponent(new BidimensionalComponent(wall->getId(), position, mEventManager));
+    wall->addComponent(new BoundingSquareComponent(dimensions, true));
+    wall->addComponent(new NonAnimatedTextureComponent(position, dimensionss));
+    return wall;
+}
+
+Actor* ActorFactory::createInvader(Vector2D position) {
     Actor* invader = new Actor(mIdProvider->getUID());
-    BidimensionalComponent* biComponent = new BidimensionalComponent(invader->getId(), Vector2D(50, 50), mEventManager);
+    BidimensionalComponent* biComponent = new BidimensionalComponent(invader->getId(), position, mEventManager);
     invader->addComponent(biComponent);
     invader->addComponent(new CircleGraphicComponent());
     invader->addComponent(new InvaderBehaviourComponent(invader->getId(), mEventManager));
@@ -80,14 +88,11 @@ Actor* ActorFactory::createPlayerSpaceship() {
 
 Actor* ActorFactory::createCameraComponent(Camera2D* rayCamera) {
     float boardWidth = mGameResolution.x -100;
-    // float boardHeight = mGameResolution.y -100;
 
     Actor* camera = new Actor(mIdProvider->getUID());
     Vector2D initialVector = Vector2D(mGameResolution.x / 2, mGameResolution.y / 2);
     camera->addComponent(new BidimensionalComponent(camera->getId(), initialVector, mEventManager));
     camera->addComponent(new CameraComponent(camera->getId(), rayCamera, mEventManager, initialVector));
-    // camera->addComponent(new SquareGraphicComponent(boardWidth, 2, Vector2D(-(mGameResolution.x / 2), -50), BLUE));
-    // camera->addComponent(new SquareGraphicComponent(boardWidth, 2, Vector2D(-(mGameResolution.x / 2), +50), BLUE));
     camera->addComponent(new VerticalCameraComponent(camera->getId(), mEventManager));
 
     return camera;
@@ -147,8 +152,4 @@ void ActorFactory::spawnBullet(IEventData* spawnBulletData) {
     SpawnBulletEventData* spawnEvent = reinterpret_cast<SpawnBulletEventData*>(spawnBulletData);
     Actor* bullet = createBullet(spawnEvent->getInitialPosition());
     mScene->addActor(bullet);
-}
-
-void ActorFactory::spawnNewInvader(IEventData* killedInvaderEvent) {
-    mScene->addActor(createInvader());
 }
